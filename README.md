@@ -10,6 +10,22 @@ Each prototype is its own public repository under [manselldesign](https://github
 
 This repository is only the list. Do not put a new prototype’s files in here. Publish the prototype as its own repo, then add one line item to this page.
 
+## Publish from Cursor
+
+Open the prototype folder in Cursor. That folder needs an `index.html` file at the top. In Agent chat, type `/git-publish` and send it. Add a link name and one sentence in the same message when you know them:
+
+```text
+/git-publish search-drawer — Search opens in a drawer.
+```
+
+The agent creates the public repository, turns on GitHub Pages, adds the prototype to this page, and replies with the shareable link:
+
+`https://manselldesign.github.io/search-drawer/`
+
+The first time you open that link, wait about a minute for GitHub Pages to finish building.
+
+The skill is stored in this repository at `.cursor/skills/git-publish/`. Cursor’s skill name is lowercase, so the command is `/git-publish`. To use that command from every prototype folder, copy `.cursor/skills/git-publish` to `~/.cursor/skills/git-publish` on your computer once. Then open Cursor Settings, go to Agents, and turn on Sync Skills for Cloud Agents.
+
 ## Publish the next prototype
 
 You need a GitHub personal access token that can create a public repository, push files, and turn on GitHub Pages. In the terminal, that token must be available as `GH_TOKEN` (or as `GITHUB_TOKEN`). Do not paste the token into a file, and do not commit it.
