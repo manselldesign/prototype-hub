@@ -47,6 +47,7 @@ if [[ -z "${GH_TOKEN:-}" ]]; then
   echo "Set GH_TOKEN to your GitHub personal access token, then run this command again." >&2
   exit 1
 fi
+export GH_TOKEN
 
 if [[ ! -d "$SRC" ]]; then
   echo "Folder not found: $SRC" >&2
@@ -139,10 +140,13 @@ git -C "$WORK" add -A
 git -C "$WORK" -c user.name="$OWNER" -c user.email="$EMAIL" commit -m "Publish HTML prototype" >/dev/null
 
 echo "Pushing main..."
+# GitHub's git endpoint expects basic auth. The token stays out of the remote URL.
+BASIC="$(python3 -c 'import os,base64; t=os.environ["GH_TOKEN"]; print(base64.b64encode(("x-access-token:"+t).encode()).decode())')"
 GIT_TERMINAL_PROMPT=0 git -C "$WORK" \
   -c credential.helper= \
-  -c "http.extraheader=AUTHORIZATION: bearer ${GH_TOKEN}" \
+  -c "http.extraheader=AUTHORIZATION: basic ${BASIC}" \
   push "https://github.com/${OWNER}/${REPO}.git" HEAD:main
+unset BASIC
 
 echo "Turning on GitHub Pages from main at / ..."
 PAGES_OK=0
