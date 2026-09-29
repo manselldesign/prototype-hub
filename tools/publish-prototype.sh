@@ -34,6 +34,15 @@ fi
 SRC="$1"
 REPO="$2"
 
+# Never overwrite existing standalone prototypes. Default publish is a hub folder.
+PROTECTED="prototype-hub mega-hover rivet-nav-prototype rivet-nav-zoo-header rivet-nav-zoo-source"
+if [[ " $PROTECTED " == *" $REPO "* ]]; then
+  echo "Stopped. manselldesign/${REPO} is a protected existing repo." >&2
+  echo "Do not create or overwrite it. Publish into prototype-hub as a folder instead:" >&2
+  echo "  bash .cursor/skills/git-publish/scripts/publish-to-hub.sh <folder> <slug> \"<title>\" \"<description>\"" >&2
+  exit 1
+fi
+
 if [[ -z "${GH_TOKEN:-}" && -n "${GITHUB_TOKEN:-}" ]]; then
   GH_TOKEN="$GITHUB_TOKEN"
 fi

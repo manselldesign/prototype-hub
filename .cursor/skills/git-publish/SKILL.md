@@ -1,84 +1,70 @@
 ---
 name: git-publish
 description: >-
-  Publish an HTML prototype from the current Cursor project to
-  github.com/manselldesign, turn on GitHub Pages, add it to the prototype
-  review hub, and return the shareable link. Use when the user invokes
-  /git-publish or /GitPublish, or asks to publish a local prototype, get a
-  shareable link, or turn on GitHub Pages for manselldesign.
+  Publish an HTML prototype into manselldesign/prototype-hub as a folder plus
+  homepage card, and return the GitHub Pages URL. Use when the user invokes
+  /git-publish or /GitPublish, or asks to publish a local prototype or get a
+  shareable review link. Default is the hub, not a new repository.
 ---
 
 # GitPublish
 
-Publish the open HTML prototype to the GitHub account **manselldesign** and reply with the live link.
+Put the open prototype on **manselldesign/prototype-hub** and reply with:
 
-The shareable link is always:
+`https://manselldesign.github.io/prototype-hub/<slug>/#/`
 
-`https://manselldesign.github.io/<repo-name>/`
+That is a **folder** on the hub (`<slug>/index.html`) plus a card on the hub homepage. Do **not** create a new GitHub repo unless the user clearly asks for a **standalone repo**.
 
-Reviewers also see it on https://manselldesign.github.io/prototype-hub/ after it is added to that hub.
+Never push to, overwrite, or recreate these existing standalone repos: `rivet-nav-prototype` (Prototype A), `rivet-nav-zoo-header` (B), `rivet-nav-zoo-source` (C), or the unrelated `manselldesign/mega-hover`. Prototype-Mega-Hover lives at **`prototype-hub/mega-hover/`**, not in `manselldesign/mega-hover`.
 
-## What the user must have open
+## Stay in this chat
 
-The prototype folder must be the current workspace, or a folder inside it that the user named. `index.html` must sit at the top of that folder. CSS, images, and scripts may sit beside it.
+1. Run `gh auth status`. If it is signed in as **manselldesign**, keep working in this chat.
+2. If it is not signed in, do **GitHub device login here**: `gh auth login` (GitHub.com, HTTPS, login with a web browser). Wait for her to finish the device code. Then continue.
+3. Do **not** tell her to start a new Cloud Agent as the first instruction.
+4. Never paste a token into chat, a file, or a command the user can see. Never commit a token.
 
-If `index.html` is not in the workspace, stop. Tell the user to open the prototype folder in Cursor and send `/git-publish` again. Do not invent a prototype.
+## What must be open
 
-## What to collect
+Need the prototype’s `index.html`. Prefer the folder she named. In this Vite hub that is often `prototypes/<slug>/index.html`. If there is no `index.html`, stop. Do not invent a prototype.
 
-Use these defaults when the user already supplied them. Ask only for what is missing.
+## Slug, title, description
+
+Use what she already typed. Ask only for what is missing.
 
 | Item | Rule |
 | --- | --- |
-| Folder | Directory that contains `index.html`. Prefer the workspace root. |
-| Repo name | Short public repository name. Lowercase letters, numbers, and hyphens. Example: `search-drawer`. |
-| Title | Name reviewers see on the hub. |
-| One-line description | What the reviewer should look at. |
+| Folder | Directory that contains `index.html`. |
+| Slug | From the prototype name: drop a leading `Prototype-`, lowercase, hyphens only. Example: `Prototype-Mega-Hover` → `mega-hover`. |
+| Title | Name on the hub card. |
+| Description | One line about what a reviewer should look at. |
 
-If the user typed `/git-publish search-drawer — Search opens in a drawer`, the repo name is `search-drawer`, the title is `Search drawer`, and the description is `Search opens in a drawer`.
+`/git-publish Prototype-Mega-Hover — desktop mega menu and mobile header CTAs` → slug `mega-hover`, title `Prototype-Mega-Hover`.
 
-## Publish
+Refuse slugs `tools`, `index`, or `.cursor`.
 
-Run the script in this skill. Do not paste a token into a file, a command argument, or the chat. Do not commit a token.
-
-```bash
-bash .cursor/skills/git-publish/scripts/publish-prototype.sh "<folder>" "<repo-name>"
-```
-
-If this skill is installed in the home directory instead of the project, run:
+## Publish (this is the usual path)
 
 ```bash
-bash ~/.cursor/skills/git-publish/scripts/publish-prototype.sh "<folder>" "<repo-name>"
+bash .cursor/skills/git-publish/scripts/publish-to-hub.sh "<folder>" "<slug>" "<title>" "<description>"
 ```
 
-The script creates the public repo `manselldesign/<repo-name>` when it does not already exist, pushes `main`, and turns on GitHub Pages from `main` at `/`.
-
-If the repo already has files, the script stops and does not replace them. Tell the user the name is taken and ask for a new one. Do not force-push and do not delete the existing repo.
-
-The script skips `.git`, `node_modules`, `.env` files, and key files. It adds `.nojekyll` so Pages serves the prototype as plain files.
-
-## Add it to the review hub
-
-After the script prints the link, add one entry at the top of the hub list:
+If the skill is only in the home directory:
 
 ```bash
-bash .cursor/skills/git-publish/scripts/add-to-hub.sh "<repo-name>" "<title>" "<one-line description>"
+bash ~/.cursor/skills/git-publish/scripts/publish-to-hub.sh "<folder>" "<slug>" "<title>" "<description>"
 ```
 
-Use the home-directory path when the skill is installed there. This edits only `index.html` in `manselldesign/prototype-hub`. It does not copy the prototype into the hub.
+The script copies `index.html` into `prototype-hub/<slug>/index.html`, adds or updates the homepage list item, and pushes **main**. Updating the same slug is OK (that is how iterations work).
+
+## Standalone repo (only if she asks)
+
+Only if she explicitly wants a **new standalone repo**, run `scripts/publish-prototype.sh`, then stop if the name is protected (see above). The shareable link for that rare path is `https://manselldesign.github.io/<repo-name>/`.
 
 ## Reply
 
-Lead with the working link:
+Lead with:
 
-`https://manselldesign.github.io/<repo-name>/`
+`https://manselldesign.github.io/prototype-hub/<slug>/#/`
 
-Say that the first visit can take about a minute while GitHub Pages builds, and that the same prototype is listed on https://manselldesign.github.io/prototype-hub/ after that hub finishes building.
-
-If Pages did not turn on, still give the GitHub repository URL and say that the files are on `main`.
-
-## Secrets
-
-A token needs the `repo` scope so it can create a public repository, push, and enable Pages. The script reads the environment variable whose name is `GH` + `_TOKEN`, or `GITHUB` + `_TOKEN`. On Cloud Agents it also accepts the token from `CLOUD_AGENT_ALL_SECRET_NAMES`, from `gh auth token`, or from a swapped secret whose value is the text `GH` + `_TOKEN`.
-
-If no token is available, stop and tell the user to save a Cursor secret named `GH` + `_TOKEN` whose value is their GitHub personal access token. Do not ask them to paste the token into the chat.
+Say the first visit can take about a minute while GitHub Pages builds, and that the same item is on https://manselldesign.github.io/prototype-hub/.

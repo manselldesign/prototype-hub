@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Publish a folder with index.html to a new public repo on
-# github.com/manselldesign and turn on GitHub Pages from main at /.
+# Standalone-repo publisher. Use only when the user explicitly asks for a
+# new repository. The usual path is publish-to-hub.sh.
 #
 # Usage:
 #   publish-prototype.sh <directory> <repo-name>
@@ -29,6 +29,15 @@ fi
 
 SRC="$1"
 REPO="$2"
+
+# Never overwrite existing standalone prototypes. Default publish is a hub folder.
+PROTECTED="prototype-hub mega-hover rivet-nav-prototype rivet-nav-zoo-header rivet-nav-zoo-source"
+if [[ " $PROTECTED " == *" $REPO "* ]]; then
+  echo "Stopped. manselldesign/${REPO} is a protected existing repo." >&2
+  echo "Do not create or overwrite it. Publish into prototype-hub as a folder instead:" >&2
+  echo "  bash .cursor/skills/git-publish/scripts/publish-to-hub.sh <folder> <slug> \"<title>\" \"<description>\"" >&2
+  exit 1
+fi
 
 TOKEN_FILE="$(mktemp)"
 cleanup_token() { rm -f "$TOKEN_FILE"; }

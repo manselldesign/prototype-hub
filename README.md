@@ -4,97 +4,44 @@ Stakeholders open this page to try a prototype:
 
 **https://manselldesign.github.io/prototype-hub/**
 
-Each prototype is its own public repository under [manselldesign](https://github.com/manselldesign). GitHub Pages serves the `index.html` at the root of that repository. The shareable link is always:
+New prototypes live **in this repository** as a folder plus a card on the homepage. Example: Prototype-Mega-Hover is `mega-hover/index.html`, listed on the homepage, live at:
 
-`https://manselldesign.github.io/<repo-name>/`
+`https://manselldesign.github.io/prototype-hub/mega-hover/#/`
 
-This repository is only the list. Do not put a new prototype’s files in here. Publish the prototype as its own repo, then add one line item to this page.
+Do **not** create a new GitHub repo for each prototype unless someone explicitly asks for a standalone repo.
 
 ## Publish from Cursor
 
-Open the prototype folder in Cursor. That folder needs an `index.html` file at the top. In Agent chat, type `/git-publish` and send it. Add a link name and one sentence in the same message when you know them:
+Open the prototype (it needs `index.html` at the top of that folder). In Agent chat:
 
 ```text
-/git-publish search-drawer — Search opens in a drawer.
+/git-publish Prototype-Mega-Hover — desktop mega menu and mobile header CTAs
 ```
 
-The agent creates the public repository, turns on GitHub Pages, adds the prototype to this page, and replies with the shareable link:
+Stay in that chat. If `gh` is already signed in as **manselldesign**, the agent publishes from here. If not, use **GitHub device login** (`gh auth login`) in the same chat — do not start with “open a new Cloud Agent.”
 
-`https://manselldesign.github.io/search-drawer/`
+The agent copies `index.html` into `prototype-hub/<slug>/`, updates this homepage, pushes `main`, and replies with:
 
-The first time you open that link, wait about a minute for GitHub Pages to finish building.
+`https://manselldesign.github.io/prototype-hub/<slug>/#/`
 
-The skill is stored in this repository at `.cursor/skills/git-publish/`. Cursor’s skill name is lowercase, so the command is `/git-publish`. To use that command from every prototype folder, copy `.cursor/skills/git-publish` to `~/.cursor/skills/git-publish` on your computer once. Then open Cursor Settings, go to Agents, and turn on Sync Skills for Cloud Agents.
+The slug comes from the name (`Prototype-Mega-Hover` → `mega-hover`). The first visit can take about a minute while GitHub Pages builds.
 
-## Publish the next prototype
+The skill is `.cursor/skills/git-publish/`. Cursor’s skill name is lowercase, so the command is `/git-publish`. To use it from every prototype folder, copy that directory to `~/.cursor/skills/git-publish` once, then turn on Sync Skills for Cloud Agents.
 
-You need a GitHub personal access token that can create a public repository, push files, and turn on GitHub Pages. In the terminal, that token must be available as `GH_TOKEN` (or as `GITHUB_TOKEN`). Do not paste the token into a file, and do not commit it.
-
-From a clone of this hub:
+## Publish from a clone of this hub
 
 ```bash
-git clone https://github.com/manselldesign/prototype-hub.git
-cd prototype-hub
-export GH_TOKEN="your personal access token"
-./tools/publish-prototype.sh /path/to/the/prototype-folder repo-name
+./tools/publish-to-hub.sh /path/to/the-prototype-folder slug "Title reviewers see" "One line about what to look at."
 ```
 
-Example, if the prototype folder on your computer is `~/Desktop/search-drawer` and the new repo should be named `search-drawer`:
-
-```bash
-./tools/publish-prototype.sh ~/Desktop/search-drawer search-drawer
-```
-
-The folder must contain `index.html` in its top level. Images and other files can sit beside that file. The command creates the public repo `manselldesign/repo-name`, pushes the `main` branch, turns on Pages from `main` at `/`, and prints the shareable link.
-
-If a repository with that name already has files, the command stops and does not replace them.
-
-The command does not edit this hub. After it prints the link, add the prototype to the list (step 4).
+That command needs `gh` signed in as **manselldesign**. It does not create a new repository.
 
 ## Do it by hand
 
-Use these four steps when you are not using the command above.
+1. Copy the prototype `index.html` into a new folder in this repo, such as `my-slug/index.html`.
+2. Add a list item at the top of `#prototype-list` in this repo’s `index.html`. The link must be `https://manselldesign.github.io/prototype-hub/my-slug/#/`.
+3. Commit and push **main**.
 
-### 1. Create a new public repo under manselldesign
+## Protected standalone repos
 
-Go to [github.com/new](https://github.com/new) while signed in as **manselldesign**.
-
-- Repository name: a short name with hyphens, such as `search-drawer`
-- Visibility: **Public** (a private repo will not give stakeholders a working Pages link on this account)
-- Leave “Add a README” unchecked so the repo starts empty
-
-### 2. Put the prototype `index.html` at the repo root
-
-The file stakeholders open must be named `index.html` and must sit at the top of the repository, not inside a folder. CSS, images, and scripts can sit next to it.
-
-On GitHub, open the empty repo and use **Add file → Upload files**. Upload `index.html` and any files that sit beside it. Commit the upload to the `main` branch.
-
-### 3. Enable Pages from `main` at `/`
-
-In that prototype repo, open **Settings → Pages**.
-
-- Source: **Deploy from a branch**
-- Branch: **main**
-- Folder: **/ (root)**
-
-Save. The shareable link is:
-
-`https://manselldesign.github.io/<repo-name>/`
-
-The first build can take a minute. Refresh until the page loads.
-
-### 4. Add one entry to the hub
-
-Edit **`index.html`** in this repo ([manselldesign/prototype-hub](https://github.com/manselldesign/prototype-hub/blob/main/index.html)).
-
-Find the list whose id is `prototype-list`. Copy one existing `<li>` block (there is also a commented example at the top of that list). Paste the copy at the top of the list and change three things:
-
-- the heading (the name reviewers will see)
-- the one-line description
-- the link, which must be `https://manselldesign.github.io/<repo-name>/`
-
-Commit that change to `main`. This hub’s own Pages site updates from that branch. The new prototype shows up on https://manselldesign.github.io/prototype-hub/ after the hub finishes building, usually within a minute.
-
-## What reviewers see
-
-The hub lists the name of each prototype, one line about what it is, and the live Pages link. When the list has no items, the page says nothing is listed yet and that new prototypes appear after they are published.
+Do not overwrite `manselldesign/rivet-nav-prototype` (A), `rivet-nav-zoo-header` (B), `rivet-nav-zoo-source` (C), or the unrelated `manselldesign/mega-hover`. Those stay as they are. Iterations of Prototype-Mega-Hover go in **this** repo under `mega-hover/`.
