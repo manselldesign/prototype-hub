@@ -981,6 +981,8 @@
     display: flex;
     align-items: center;
     box-sizing: border-box;
+    width: 100%;
+    max-width: 600px;
     height: 40px;
     border: 1px solid #1F2528;
     padding-left: 12px;
@@ -1034,7 +1036,7 @@
     padding-top: 40px;
   }
   #sidenav-nav .sidenav-after-back {
-    padding-top: 24px;
+    padding-top: 20px;
   }
   #sidenav .nav-btn-back {
     display: flex;
@@ -1101,7 +1103,7 @@
     box-sizing: border-box;
     width: 100%;
     height: auto;
-    padding: 12px 16px 12px var(--sidenav-pad-x);
+    padding: 12px var(--chrome-gutter);
     border-bottom: 1px solid #F0E1CC;
     background: #fff;
   }
@@ -1138,6 +1140,33 @@
   #sidenav-open:active {
     background: #000;
     color: #fff;
+  }
+  /* Open state matches mega-click-icon's mobile close: 32×32 outline,
+     transparent fill, 16px Rivet X. */
+  #sidenav-open .sidenav-open-close {
+    display: none;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+  #sidenav-open[aria-expanded="true"] {
+    width: 32px;
+    min-width: 32px;
+    background: transparent;
+    color: #1F2528;
+    border: 1px solid #1F2528;
+  }
+  #sidenav-open[aria-expanded="true"]:hover,
+  #sidenav-open[aria-expanded="true"]:active {
+    background: transparent;
+    color: #000;
+    border-color: #000;
+  }
+  #sidenav-open[aria-expanded="true"] .nav-btn-menu-icon {
+    display: none;
+  }
+  #sidenav-open[aria-expanded="true"] .sidenav-open-close {
+    display: block;
   }
   .nav-btn-menu-icon {
     display: block;
@@ -1181,7 +1210,10 @@
   #sidenav-nav > div > ul > li::after { bottom: 0; }
   #sidenav li ul {
     margin: 0;
-    padding: 16px 0;
+    /* Top is shorter than the bottom: the open label's underline sits
+       inside the line box, so 16px above the first child reads looser
+       than the last child above the hairline. */
+    padding: 11px 0 16px;
   }
   #sidenav ul a.sidenav-item--open {
     padding-bottom: 0;
@@ -1215,23 +1247,42 @@
   }
 
   @media (max-width: 1023.98px) {
+    /* Disclosure under the compact bar: closed takes no space, open
+       grows in the page flow and pushes the content down. The full-width
+       cream rule marks the bottom edge; the bar's own rule hides so the
+       panel does not start with a line. */
     #sidenav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 50;
-      width: 100vw;
-      height: 100dvh;
-      max-width: 100vw;
-      max-height: 100dvh;
-      overflow: hidden;
-      transform: translateX(-100%);
+      display: none;
+      position: static;
+      width: 100%;
+      height: auto;
+      max-height: none;
+      overflow: visible;
+      transform: none;
+      padding: 16px var(--chrome-gutter) 8px;
+      box-shadow: none;
+      border-bottom: 1px solid #F0E1CC;
     }
     #sidenav.is-open {
-      transform: translateX(0);
-    }
-    #sidenav-close {
       display: flex;
+    }
+    rvt-body:has(#sidenav.is-open) .sidenav-mobile-bar {
+      border-bottom: 0;
+    }
+    #sidenav-nav > div > ul > li:last-child::after {
+      content: none;
+    }
+    .sidenav-head,
+    #sidenav-close {
+      display: none;
+    }
+    .sidenav-search {
+      padding-top: 0;
+    }
+    #sidenav-nav {
+      flex: none;
+      min-height: auto;
+      overflow: visible;
     }
   }
 
@@ -2091,6 +2142,7 @@
     <button type="button" id="sidenav-open" aria-expanded="false" aria-controls="sidenav">
       <span class="sr-only">Menu</span>
       <span data-icon="menu-search" class="nav-btn-menu-icon"></span>
+      <span data-icon="close" class="sidenav-open-close"></span>
     </button>
     <div class="sidenav-mobile-ctas">
       <a data-nav href="#/volunteer" class="masthead-cta">
@@ -3252,17 +3304,16 @@
     if (desktopView.matches) return;
     mobileSidenavOpen = true;
     sidenav.classList.add('is-open');
-    document.body.classList.add('overflow-hidden');
     sidenavOpenBtn.setAttribute('aria-expanded', 'true');
-    sidenavCloseBtn.focus();
+    sidenavOpenBtn.querySelector('.sr-only').textContent = 'Close';
   }
 
   function closeMobileSidenav() {
     if (!mobileSidenavOpen) return;
     mobileSidenavOpen = false;
     sidenav.classList.remove('is-open');
-    document.body.classList.remove('overflow-hidden');
     sidenavOpenBtn.setAttribute('aria-expanded', 'false');
+    sidenavOpenBtn.querySelector('.sr-only').textContent = 'Menu';
     if (sidenav.contains(document.activeElement)) sidenavOpenBtn.focus();
   }
 
@@ -3297,13 +3348,16 @@
   }
 
   // Any in-app link closes the drawer and scrolls to top; the hash change does
-  // the actual routing.
+  // the actual routing. A link inside the open mobile menu leaves that menu
+  // open so Back and the new page's list stay on screen, matching the
+  // reference global menu.
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[data-nav]');
     if (!a) return;
+    const inMobileMenu = mobileSidenavOpen && sidenav.contains(a);
     if (drawerOpen) closeDrawer();
     if (searchOpen) closeSearch();
-    if (mobileSidenavOpen) closeMobileSidenav();
+    if (mobileSidenavOpen && !inMobileMenu) closeMobileSidenav();
     closeMega();
     if (a.getAttribute('href') === location.hash) { e.preventDefault(); return; }
     window.scrollTo(0, 0);
