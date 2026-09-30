@@ -974,10 +974,24 @@
   .rvt-footer {
     padding-left: var(--sidenav-pad-x);
   }
+  @media screen(lg) {
+    #content-column .rvt-footer {
+      padding-left: 60px;
+    }
+  }
 
   /* Containing block for the full-height sidenav/content rule. */
   #layout {
     position: relative;
+  }
+  #content-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+  }
+  #content-column > #main-content {
+    flex: 1 0 auto;
   }
 
   .mega,
@@ -1260,12 +1274,21 @@
     }
 
     .has-sidenav #sidenav {
-      position: sticky;
+      position: fixed;
       top: var(--header-h);
-      align-self: flex-start;
+      left: 0;
+      height: calc(100vh - var(--header-h));
       max-height: calc(100vh - var(--header-h));
       overflow-y: auto;
       z-index: 10;
+      background: #fff;
+    }
+    .has-sidenav #content-column {
+      margin-left: var(--sidenav-width);
+      width: calc(100% - var(--sidenav-width));
+    }
+    #content-column {
+      min-height: calc(100vh - var(--header-h));
     }
     /*
       Full-height cream rule at the sidenav's right edge (spec 9: 1px
@@ -1281,14 +1304,7 @@
       this rule is off.
     */
     .has-sidenav #layout::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: calc(var(--sidenav-width) - 1px);
-      width: 1px;
-      background: #F0E1CC;
-      pointer-events: none;
+      content: none;
     }
     /*
       Interior content column only (Home has no .has-sidenav / breadcrumbs).
@@ -1560,7 +1576,7 @@
        single centred column on Home. spec 9, "Grid".
        ===================================================================== -->
   <rvt-main class="flex flex-1 flex-col">
-    <div id="layout" class="flex w-full flex-1 items-stretch">
+    <div id="layout" class="w-full flex-1">
 
       <!--
         REGION 4 — rvt-sidenav (spec 9). Desktop only; below 1024px the drawer
@@ -1597,9 +1613,8 @@
       -->
       <nav id="sidenav" class="hidden shrink-0 border-r border-cream pt-6 lg:block"></nav>
 
+      <div id="content-column">
       <main id="main-content" class="min-w-0 flex-1"></main>
-    </div>
-  </rvt-main>
 
   <!-- =====================================================================
        REGION 8 — FOOTER  (spec 11, `rvt-footer`)
@@ -1632,6 +1647,9 @@
       </div>
     </div>
   </footer>
+      </div>
+    </div>
+  </rvt-main>
 
   <!-- =====================================================================
        REGION 9 — DRAWER MENU  (spec 7 + spec 8)
