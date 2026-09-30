@@ -1524,6 +1524,11 @@
       padding-left: calc(var(--sidenav-pad-x) * 2);
       padding-right: 40px;
     }
+    /* Rail layout: image, text, and footer share a 24px right inset
+       (the sidenav's own right padding) instead of the 40px/80px gaps. */
+    .has-sidenav .rvt-footer {
+      padding-right: var(--sidenav-pad-x);
+    }
     .footer-main {
       flex-direction: row;
       align-items: flex-start;
@@ -1938,7 +1943,27 @@
       /* Search sits under the 76px header. A 20px crumb row needs
          34px above it to share that center. */
       padding-top: 34px;
+      /* Left inset is twice the sidenav's right padding (24px × 2).
+         Right inset matches that sidenav padding so the hero image,
+         page text, and footer share one edge close to the viewport. */
       padding-left: calc(var(--sidenav-pad-x) * 2);
+      padding-right: var(--sidenav-pad-x);
+    }
+    /* Home's hero is a centered 1600px box with 80px side padding.
+       Beside the rail that box is what leaves the wide white gap.
+       Stretch it to the column and use the same insets as the footer. */
+    .has-sidenav .rvt-hero--statement > .max-w-\[1600px\] {
+      max-width: none;
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: calc(var(--sidenav-pad-x) * 2);
+      padding-right: var(--sidenav-pad-x);
+    }
+    .has-sidenav .hero-lede,
+    .has-sidenav .hero-lede-lg,
+    .has-sidenav .rvt-rich-text {
+      max-width: none;
     }
   }
 
