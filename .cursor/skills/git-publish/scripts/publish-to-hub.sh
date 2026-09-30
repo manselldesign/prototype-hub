@@ -100,8 +100,8 @@ block = (
     "        </li>\n"
 )
 pattern = re.compile(
-    r"        <li>\s*<h2>.*?</h2>\s*<p>.*?</p>\s*"
-    r"<a href=\"[^\"]*prototype-hub/" + re.escape(slug) + r"/[^\"]*\">.*?</a>\s*</li>\n?",
+    r"        <li>\s*<h2>(?:(?!</li>).)*?</h2>\s*<p>(?:(?!</li>).)*?</p>\s*"
+    r"<a href=\"[^\"]*prototype-hub/" + re.escape(slug) + r"/[^\"]*\">(?:(?!</li>).)*?</a>\s*</li>\n?",
     re.S,
 )
 if pattern.search(text):
