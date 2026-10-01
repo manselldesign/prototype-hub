@@ -1007,13 +1007,18 @@
     }
   }
 
-  /* Containing block for the full-height sidenav/content rule. */
+  /* Containing block for the full-height sidenav/content rule.
+     Column flex so a short page still stretches the content column and
+     the footer sits on the bottom edge of the viewport. */
   #layout {
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
   #content-column {
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
     min-width: 0;
     width: 100%;
   }
