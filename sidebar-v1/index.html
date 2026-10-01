@@ -1524,10 +1524,9 @@
       padding-left: calc(var(--sidenav-pad-x) * 2);
       padding-right: 40px;
     }
-    /* Rail layout: image, text, and footer share a 24px right inset
-       (the sidenav's own right padding) instead of the 40px/80px gaps. */
+    /* Rail layout: right inset matches the left (twice the sidenav pad). */
     .has-sidenav .rvt-footer {
-      padding-right: var(--sidenav-pad-x);
+      padding-right: calc(var(--sidenav-pad-x) * 2);
     }
     .footer-main {
       flex-direction: row;
@@ -1595,11 +1594,11 @@
   }
   #content-column > #main-content {
     flex: 1 0 auto;
-  }
-  @media screen(lg) {
-    #content-column {
-      min-height: calc(100vh - var(--header-h));
-    }
+    /* Short pages: the white column is at least one viewport tall under
+       the header, so the footer starts at the fold. Long pages grow past
+       this and the footer follows the content. Min-height, not a fixed
+       height — the footer stays in flow either way. */
+    min-height: calc(100vh - var(--header-h));
   }
 
   .mega,
@@ -1943,11 +1942,9 @@
       /* Search sits under the 76px header. A 20px crumb row needs
          34px above it to share that center. */
       padding-top: 34px;
-      /* Left inset is twice the sidenav's right padding (24px × 2).
-         Right inset matches that sidenav padding so the hero image,
-         page text, and footer share one edge close to the viewport. */
+      /* Left and right insets match: twice the sidenav's right padding. */
       padding-left: calc(var(--sidenav-pad-x) * 2);
-      padding-right: var(--sidenav-pad-x);
+      padding-right: calc(var(--sidenav-pad-x) * 2);
     }
     /* Home's hero is a centered 1600px box with 80px side padding.
        Beside the rail that box is what leaves the wide white gap.
@@ -1958,7 +1955,7 @@
       margin-left: 0;
       margin-right: 0;
       padding-left: calc(var(--sidenav-pad-x) * 2);
-      padding-right: var(--sidenav-pad-x);
+      padding-right: calc(var(--sidenav-pad-x) * 2);
     }
     .has-sidenav .hero-lede,
     .has-sidenav .hero-lede-lg,
