@@ -1299,6 +1299,12 @@
       min-height: auto;
       overflow: visible;
     }
+    /* Back sits above the list only on small screens. Restore the cream
+       rule the first row otherwise drops, so it separates from Back.
+       Desktop keeps that row flush with the breadcrumbs. */
+    #sidenav-nav .sidenav-after-back > ul > li:first-child::before {
+      content: "";
+    }
   }
 
   /*
@@ -2162,6 +2168,37 @@
       right: var(--scroll-lock-gutter, 0px);
       width: auto;
     }
+
+    /* Same disclosure as the mobile menu (#sidenav.is-open): in-flow
+       under the bar, display toggle, no added transition. */
+    #search-drawer {
+      position: static;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      left: auto;
+      width: 100%;
+      height: auto;
+      max-height: none;
+      z-index: auto;
+      display: none;
+      transform: none;
+      transition: none;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    #search-drawer.is-open {
+      display: flex;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    rvt-body:has(#search-drawer.is-open) .sidenav-mobile-bar {
+      border-bottom: 0;
+    }
+    /* Shared drawer inset above is 16px. Drop the search field another 16px. */
+    #search-drawer .drawer-body {
+      padding-top: 32px;
+    }
   }
 
   @media screen(lg) {
@@ -2235,6 +2272,72 @@
       <span data-icon="close" class="sidenav-open-close"></span>
     </button>
   </header>
+
+  <!-- Search drawer — field + Go. Close is the header search toggle
+       (glass swaps to the menu's close glyph), not a second X in the panel.
+       Opened from the masthead search icon at every breakpoint. -->
+  <div id="search-drawer" aria-label="Search"
+       class="fixed inset-y-0 right-0 z-50 flex w-full flex-col bg-white lg:w-[533px]">
+    <div class="drawer-body pb-6">
+      <rvt-prototype-search class="block">
+        <search>
+          <form id="site-search-form" action="" class="flex h-12 items-center gap-2 border border-ink pl-3">
+            <label for="site-search" class="sr-only">Search this site</label>
+            <span data-icon="magnifying-glass" class="block size-4 shrink-0 text-ink"></span>
+            <input id="site-search" name="search" type="search" placeholder="Search this site"
+                   class="t11 min-w-0 flex-1 bg-transparent text-ink outline-none">
+            <button type="submit" class="nav-btn-go h-12 shrink-0 bg-ink px-4 t14 text-white">Go</button>
+          </form>
+        </search>
+      </rvt-prototype-search>
+      <!-- Popular searches link hub — Figma 1440:245131. Placed in the
+           existing full-height search drawer; chrome and field are unchanged.
+           64px follows Frame 3 (112 − 48px input). Copy is verbatim.
+           RECONCILED: labels have no matching page titles, so hrefs point
+           at the closest existing routes (member-benefits, field-trips,
+           spring-baby-animal-days, maps-guides, private-events-rentals). -->
+      <nav class="mt-16" aria-labelledby="popular-searches-heading">
+        <h2 id="popular-searches-heading" class="t14 text-ink">Popular searches</h2>
+        <ul class="pt-2">
+          <li class="-mb-px">
+            <a data-nav href="#/member-benefits"
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+              <span class="min-w-0 flex-1">Member Discounts &amp; Perks</span>
+              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
+            </a>
+          </li>
+          <li class="-mb-px">
+            <a data-nav href="#/field-trips"
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+              <span class="min-w-0 flex-1">School Field Trips &amp; Teacher Guides</span>
+              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
+            </a>
+          </li>
+          <li class="-mb-px">
+            <a data-nav href="#/spring-baby-animal-days"
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+              <span class="min-w-0 flex-1">New Zoo Babies</span>
+              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
+            </a>
+          </li>
+          <li class="-mb-px">
+            <a data-nav href="#/maps-guides"
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+              <span class="min-w-0 flex-1">Zoo Map &amp; Daily Hours</span>
+              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
+            </a>
+          </li>
+          <li class="-mb-px">
+            <a data-nav href="#/private-events-rentals"
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+              <span class="min-w-0 flex-1">Private Venue Rentals &amp; Birthday Parties</span>
+              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
 
   <!-- =====================================================================
        REGION 1 — MASTHEAD
@@ -2447,71 +2550,6 @@
     </div>
   </rvt-prototype-header-menu>
 
-  <!-- Search drawer — field + Go. Close is the header search toggle
-       (glass swaps to the menu's close glyph), not a second X in the panel.
-       Opened from the masthead search icon at every breakpoint. -->
-  <div id="search-drawer" aria-label="Search"
-       class="fixed inset-y-0 right-0 z-50 flex w-full flex-col bg-white lg:w-[533px]">
-    <div class="drawer-body pb-6">
-      <rvt-prototype-search class="block">
-        <search>
-          <form id="site-search-form" action="" class="flex h-12 items-center gap-2 border border-ink pl-3">
-            <label for="site-search" class="sr-only">Search this site</label>
-            <span data-icon="magnifying-glass" class="block size-4 shrink-0 text-ink"></span>
-            <input id="site-search" name="search" type="search" placeholder="Search this site"
-                   class="t11 min-w-0 flex-1 bg-transparent text-ink outline-none">
-            <button type="submit" class="nav-btn-go h-12 shrink-0 bg-ink px-4 t14 text-white">Go</button>
-          </form>
-        </search>
-      </rvt-prototype-search>
-      <!-- Popular searches link hub — Figma 1440:245131. Placed in the
-           existing full-height search drawer; chrome and field are unchanged.
-           64px follows Frame 3 (112 − 48px input). Copy is verbatim.
-           RECONCILED: labels have no matching page titles, so hrefs point
-           at the closest existing routes (member-benefits, field-trips,
-           spring-baby-animal-days, maps-guides, private-events-rentals). -->
-      <nav class="mt-16" aria-labelledby="popular-searches-heading">
-        <h2 id="popular-searches-heading" class="t14 text-ink">Popular searches</h2>
-        <ul class="pt-2">
-          <li class="-mb-px">
-            <a data-nav href="#/member-benefits"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
-              <span class="min-w-0 flex-1">Member Discounts &amp; Perks</span>
-              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
-            </a>
-          </li>
-          <li class="-mb-px">
-            <a data-nav href="#/field-trips"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
-              <span class="min-w-0 flex-1">School Field Trips &amp; Teacher Guides</span>
-              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
-            </a>
-          </li>
-          <li class="-mb-px">
-            <a data-nav href="#/spring-baby-animal-days"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
-              <span class="min-w-0 flex-1">New Zoo Babies</span>
-              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
-            </a>
-          </li>
-          <li class="-mb-px">
-            <a data-nav href="#/maps-guides"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
-              <span class="min-w-0 flex-1">Zoo Map &amp; Daily Hours</span>
-              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
-            </a>
-          </li>
-          <li class="-mb-px">
-            <a data-nav href="#/private-events-rentals"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
-              <span class="min-w-0 flex-1">Private Venue Rentals &amp; Birthday Parties</span>
-              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
 
 </rvt-body>
 
@@ -3312,12 +3350,22 @@
     if (mobileSidenavOpen) closeMobileSidenav();
     syncMobileBarHeight();
     searchOpen = true;
-    showScrim();
     const revealSearch = () => {
       searchDrawer.classList.add('is-open');
     };
-    if (desktopView.matches) requestAnimationFrame(revealSearch);
-    else revealSearch();
+    if (desktopView.matches) {
+      showScrim();
+      requestAnimationFrame(revealSearch);
+    } else {
+      /* Match the mobile menu: no scrim and no scroll lock. The panel
+         joins the page flow under the bar. */
+      scrim.hidden = true;
+      scrim.classList.add('opacity-0');
+      scrim.classList.remove('pointer-events-auto');
+      document.body.classList.remove('overflow-hidden');
+      document.documentElement.style.removeProperty('--scroll-lock-gutter');
+      revealSearch();
+    }
     setSearchExpanded(true);
   }
 
