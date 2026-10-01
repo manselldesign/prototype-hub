@@ -4,9 +4,21 @@ Stakeholders open this page to try a prototype:
 
 **https://manselldesign.github.io/prototype-hub/**
 
-New prototypes live **in this repository** as a folder plus a card on the homepage. Example: Prototype-Mega-Hover is `mega-hover/index.html`, listed on the homepage, live at:
+Similar prototypes share a group. Each group is a folder and its own page on the hub:
 
-`https://manselldesign.github.io/prototype-hub/mega-hover/#/`
+| Group | Page |
+| --- | --- |
+| Mega menu | [mega/](https://manselldesign.github.io/prototype-hub/mega/) |
+| Header | [header/](https://manselldesign.github.io/prototype-hub/header/) |
+| Sidebar | [sidebar/](https://manselldesign.github.io/prototype-hub/sidebar/) |
+| Drill-down | [drill-down/](https://manselldesign.github.io/prototype-hub/drill-down/) |
+| Breadcrumbs | [breadcrumbs/](https://manselldesign.github.io/prototype-hub/breadcrumbs/) |
+
+A prototype lives at `<group>/<slug>/index.html`. Example: mega-click-icon-simple is `mega/mega-click-icon-simple/index.html`, live at:
+
+`https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-simple/#/`
+
+Older links such as `https://manselldesign.github.io/prototype-hub/mega-hover/#/` still open. They redirect into the group folder.
 
 Do **not** create a new GitHub repo for each prototype unless someone explicitly asks for a standalone repo.
 
@@ -20,28 +32,28 @@ Open the prototype (it needs `index.html` at the top of that folder). In Agent c
 
 Stay in that chat. If `gh` is already signed in as **manselldesign**, the agent publishes from here. If not, use **GitHub device login** (`gh auth login`) in the same chat — do not start with “open a new Cloud Agent.”
 
-The agent copies `index.html` into `prototype-hub/<slug>/`, updates this homepage, pushes `main`, and replies with:
+The agent copies `index.html` into `prototype-hub/<group>/<slug>/`, adds a card on the homepage and on that group’s page, pushes `main`, and replies with:
 
-`https://manselldesign.github.io/prototype-hub/<slug>/#/`
+`https://manselldesign.github.io/prototype-hub/<group>/<slug>/#/`
 
-The slug comes from the name (`Prototype-Mega-Hover` → `mega-hover`). The first visit can take about a minute while GitHub Pages builds.
+The slug comes from the name (`Prototype-Mega-Hover` → `mega-hover`). A `mega-` slug goes in the mega group, `header-` in header, and `sidebar-` in sidebar. Pass the group name when it cannot be inferred. The first visit can take about a minute while GitHub Pages builds.
 
 The skill is `.cursor/skills/git-publish/`. Cursor’s skill name is lowercase, so the command is `/git-publish`. To use it from every prototype folder, copy that directory to `~/.cursor/skills/git-publish` once, then turn on Sync Skills for Cloud Agents.
 
 ## Publish from a clone of this hub
 
 ```bash
-./tools/publish-to-hub.sh /path/to/the-prototype-folder slug "Title reviewers see" "One line about what to look at."
+./tools/publish-to-hub.sh /path/to/the-prototype-folder slug "Title reviewers see" "One line about what to look at." [group]
 ```
 
 That command needs `gh` signed in as **manselldesign**. It does not create a new repository.
 
 ## Do it by hand
 
-1. Copy the prototype `index.html` into a new folder in this repo, such as `my-slug/index.html`.
-2. Add a list item at the top of `#prototype-list` in this repo’s `index.html`. The link must be `https://manselldesign.github.io/prototype-hub/my-slug/#/`.
+1. Copy the prototype `index.html` into that group’s folder, such as `mega/my-slug/index.html`.
+2. Add the same card at the top of that group’s list on `index.html` and on `mega/index.html` (or whichever group it is). The link must be `https://manselldesign.github.io/prototype-hub/mega/my-slug/#/`.
 3. Commit and push **main**.
 
 ## Protected standalone repos
 
-Do not overwrite `manselldesign/rivet-nav-prototype` (A), `rivet-nav-zoo-header` (B), `rivet-nav-zoo-source` (C), or the unrelated `manselldesign/mega-hover`. Those stay as they are. Iterations of Prototype-Mega-Hover go in **this** repo under `mega-hover/`.
+Do not overwrite `manselldesign/rivet-nav-prototype` (A), `rivet-nav-zoo-header` (B), `rivet-nav-zoo-source` (C), or the unrelated `manselldesign/mega-hover`. Those stay as they are. Iterations of Prototype-Mega-Hover go in **this** repo under `mega/mega-hover/`.
