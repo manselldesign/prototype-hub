@@ -1910,6 +1910,10 @@
     .has-sidenav #content-column {
       margin-left: var(--sidenav-width);
       width: calc(100% - var(--sidenav-width));
+      /* Stop the column, including the footer, at a large desktop measure.
+         Left-aligned against the rail; leftover viewport sits to the right.
+         The 48px insets stay inside this box. */
+      max-width: 1440px;
     }
     /*
       Full-height cream rule at the sidenav's right edge (spec 9: 1px
