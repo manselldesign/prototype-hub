@@ -343,10 +343,15 @@
     text-underline-position: from-font;
     text-decoration-thickness: from-font;
   }
-  .crumbs-trail a.crumb-link:hover,
-  .crumbs-trail a.crumb-link:focus-visible {
+    .crumbs-trail a.crumb-link:focus-visible {
     color: #990000;
     text-decoration-line: underline;
+  }
+@media (min-width: 1024px) {
+  .crumbs-trail a.crumb-link:hover {
+    color: #990000;
+    text-decoration-line: underline;
+  }
   }
   /* Home glyph is #343C42; hover turns the glyph crimson and draws a 1px
      rule under the icon only. The rule sits on the same line as the
@@ -359,12 +364,15 @@
     color: #343C42;
     text-decoration: none;
   }
-  a.crumb-home:hover,
-  a.crumb-home:focus-visible {
+    a.crumb-home:focus-visible {
     color: #990000;
   }
-  a.crumb-home:hover::after,
-  a.crumb-home:focus-visible::after {
+@media (min-width: 1024px) {
+  a.crumb-home:hover {
+    color: #990000;
+  }
+  }
+    a.crumb-home:focus-visible::after {
     content: "";
     position: absolute;
     left: 0;
@@ -372,6 +380,17 @@
     bottom: 3px;
     height: 1px;
     background: #990000;
+  }
+@media (min-width: 1024px) {
+  a.crumb-home:hover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+    height: 1px;
+    background: #990000;
+  }
   }
   .crumb-home-icon {
     display: block;
@@ -509,15 +528,23 @@
   /* Search Go — Rivet header search submit (`.rvt-button--strong:hover`).
      Masthead Menu / Search icon buttons are `.masthead-tool`, not Strong;
      their hover is with the header rules below. */
-  .nav-btn-menu:hover,
-  .nav-btn-menu:active,
-  .nav-btn-go:hover,
+    .nav-btn-menu:active,
   .nav-btn-go:active {
     background-color: #000;
     color: #fff;
     border-color: #000;
     text-decoration: none;
     box-shadow: none;
+  }
+@media (min-width: 1024px) {
+  .nav-btn-menu:hover,
+  .nav-btn-go:hover {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+    text-decoration: none;
+    box-shadow: none;
+  }
   }
 
   /* Back — drawer keeps the outlined Rivet control (32/12 via `h-8 px-3`).
@@ -529,9 +556,7 @@
 
   /* Close X + drawer Back — Rivet default `.rvt-button:hover` (Normal /
      outline). Fill stays transparent; text + border → inverse-strong `#000`. */
-  .nav-btn-close:hover,
-  .nav-btn-close:active,
-  .nav-btn-back:hover,
+    .nav-btn-close:active,
   .nav-btn-back:active {
     background-color: transparent;
     color: #000;
@@ -539,27 +564,53 @@
     text-decoration: none;
     box-shadow: none;
   }
+@media (min-width: 1024px) {
+  .nav-btn-close:hover,
+  .nav-btn-back:hover {
+    background-color: transparent;
+    color: #000;
+    border-color: #000;
+    text-decoration: none;
+    box-shadow: none;
+  }
+  }
 
   /* Drawer Volunteer / Become a member — Rivet `.rvt-button--cta:hover`
      (outline accent). Fill stays transparent; text + border →
      accent-strong `#6D0808`. No underline. */
-  .nav-btn-cta:hover,
-  .nav-btn-cta:active {
+    .nav-btn-cta:active {
     background-color: transparent;
     color: #6D0808;
     border-color: #6D0808;
     text-decoration: none;
     box-shadow: none;
   }
+@media (min-width: 1024px) {
+  .nav-btn-cta:hover {
+    background-color: transparent;
+    color: #6D0808;
+    border-color: #6D0808;
+    text-decoration: none;
+    box-shadow: none;
+  }
+  }
 
   /* Home hero CTA — Rivet `.rvt-button--cta.rvt-button--strong:hover`. */
-  .nav-btn-hero:hover,
-  .nav-btn-hero:active {
+    .nav-btn-hero:active {
     background-color: #6D0808;
     color: #fff;
     border-color: #6D0808;
     text-decoration: none;
     box-shadow: none;
+  }
+@media (min-width: 1024px) {
+  .nav-btn-hero:hover {
+    background-color: #6D0808;
+    color: #fff;
+    border-color: #6D0808;
+    text-decoration: none;
+    box-shadow: none;
+  }
   }
 
   /* Rivet `:focus-visible` — buttons / button-styled controls only. */
@@ -721,18 +772,29 @@
   #menu-toggle {
     margin-left: 8px;
   }
-  .masthead-tool:hover,
-  .masthead-tool:active {
+    .masthead-tool:active {
     color: #000;
     background-color: transparent;
     text-decoration: none;
     box-shadow: none;
   }
-  .masthead-search-btn:hover,
-  .masthead-search-btn:active,
-  #menu-toggle:hover,
+@media (min-width: 1024px) {
+  .masthead-tool:hover {
+    color: #000;
+    background-color: transparent;
+    text-decoration: none;
+    box-shadow: none;
+  }
+  }
+    .masthead-search-btn:active,
   #menu-toggle:active {
     border-color: #000;
+  }
+@media (min-width: 1024px) {
+  .masthead-search-btn:hover,
+  #menu-toggle:hover {
+    border-color: #000;
+  }
   }
 
   /* Header CTAs — Rivet `.rvt-button.rvt-button--medium.rvt-button--cta`
@@ -764,13 +826,21 @@
     border: 1px solid #900;
     text-decoration: none;
   }
-  .masthead-cta:hover,
-  .masthead-cta:active {
+    .masthead-cta:active {
     background-color: transparent;
     color: #6D0808;
     border-color: #6D0808;
     text-decoration: none;
     box-shadow: none;
+  }
+@media (min-width: 1024px) {
+  .masthead-cta:hover {
+    background-color: transparent;
+    color: #6D0808;
+    border-color: #6D0808;
+    text-decoration: none;
+    box-shadow: none;
+  }
   }
 
   /* Search field — Rivet `.rvt-header__search-bar input`: no hover rule.
@@ -846,17 +916,23 @@
        .is-mega-open / .is-current must not leave this at wght 600. */
     font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
   }
-  .masthead-nav-link:hover,
-  .masthead-nav-link:active,
-  .masthead-nav-link:hover .masthead-nav-label,
+    .masthead-nav-link:active,
   .masthead-nav-link:active .masthead-nav-label {
     color: #1F2528;
     background-color: transparent;
     text-decoration: underline;
     text-underline-offset: 3px;
   }
-  .masthead-nav-item.is-current .masthead-nav-link,
-  .masthead-nav-item.is-current .masthead-nav-link:hover,
+@media (min-width: 1024px) {
+  .masthead-nav-link:hover,
+  .masthead-nav-link:hover .masthead-nav-label {
+    color: #1F2528;
+    background-color: transparent;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  }
+    .masthead-nav-item.is-current .masthead-nav-link,
   .masthead-nav-item.is-current .masthead-nav-link:active {
     color: #1F2528;
     background-color: transparent;
@@ -864,22 +940,42 @@
     font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
     text-decoration: none;
   }
+@media (min-width: 1024px) {
+  .masthead-nav-item.is-current .masthead-nav-link:hover {
+    color: #1F2528;
+    background-color: transparent;
+    font-weight: 350;
+    font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
+    text-decoration: none;
+  }
+  }
   .masthead-nav-item.is-current .masthead-nav-sizer {
     font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
   }
-  .masthead-nav-item.is-current .masthead-nav-label,
-  .masthead-nav-item.is-current .masthead-nav-link:hover .masthead-nav-label,
+    .masthead-nav-item.is-current .masthead-nav-label,
   .masthead-nav-item.is-current .masthead-nav-link:active .masthead-nav-label {
     font-variation-settings: 'wght' 600, 'wdth' var(--masthead-sel-wdth), 'opsz' 14;
     transform: scaleX(var(--masthead-label-scale));
     text-decoration: none;
   }
+@media (min-width: 1024px) {
+  .masthead-nav-item.is-current .masthead-nav-link:hover .masthead-nav-label {
+    font-variation-settings: 'wght' 600, 'wdth' var(--masthead-sel-wdth), 'opsz' 14;
+    transform: scaleX(var(--masthead-label-scale));
+    text-decoration: none;
+  }
+  }
   /* An open menu bolds nothing by itself. The current page stays selected. */
-  .masthead-nav-item.is-mega-open:not(.is-current) .masthead-nav-label,
-  .masthead-nav-item.is-mega-open:not(.is-current) .masthead-nav-link:hover .masthead-nav-label,
+    .masthead-nav-item.is-mega-open:not(.is-current) .masthead-nav-label,
   .masthead-nav-item.is-mega-open:not(.is-current) .masthead-nav-link:active .masthead-nav-label {
     font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
     transform: none;
+  }
+@media (min-width: 1024px) {
+  .masthead-nav-item.is-mega-open:not(.is-current) .masthead-nav-link:hover .masthead-nav-label {
+    font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
+    transform: none;
+  }
   }
   .masthead-nav-disclosure {
     display: inline-flex;
@@ -895,13 +991,18 @@
     color: #1F2528;
     cursor: pointer;
   }
-  .masthead-nav-disclosure:hover,
-  .masthead-nav-disclosure:active,
+    .masthead-nav-disclosure:active,
   .masthead-nav-item.is-mega-open .masthead-nav-disclosure,
-  .masthead-nav-item.is-mega-open .masthead-nav-disclosure:hover,
   .masthead-nav-item.is-mega-open .masthead-nav-disclosure:active {
     background-color: #FAF6EF;
     color: #1F2528;
+  }
+@media (min-width: 1024px) {
+  .masthead-nav-disclosure:hover,
+  .masthead-nav-item.is-mega-open .masthead-nav-disclosure:hover {
+    background-color: #FAF6EF;
+    color: #1F2528;
+  }
   }
   .masthead-nav-chevron {
     display: block;
@@ -942,14 +1043,22 @@
     padding-bottom: 12px;
     text-decoration: none;
   }
-  #sidenav a.sidenav-title:hover,
-  #sidenav a.sidenav-title:focus {
+    #sidenav a.sidenav-title:focus {
     text-decoration: none;
   }
-  #sidenav a.sidenav-title:hover .sidenav-title-label,
-  #sidenav a.sidenav-title:focus .sidenav-title-label,
+@media (min-width: 1024px) {
+  #sidenav a.sidenav-title:hover {
+    text-decoration: none;
+  }
+  }
+    #sidenav a.sidenav-title:focus .sidenav-title-label,
   #sidenav a.sidenav-title[aria-current="page"] .sidenav-title-label {
     text-decoration: underline;
+  }
+@media (min-width: 1024px) {
+  #sidenav a.sidenav-title:hover .sidenav-title-label {
+    text-decoration: underline;
+  }
   }
 
   /*
@@ -972,27 +1081,42 @@
   /* Child rows only. Underline stays on the label; the chevron is never
      decorated. Hover, active, and keyboard focus turn both crimson.
      Current rows already use crimson + underline and have no chevron. */
-  #sidenav ul a.sidenav-item:hover,
-  #sidenav ul a.sidenav-item:active,
+    #sidenav ul a.sidenav-item:active,
   #sidenav ul a.sidenav-item:focus-visible {
     color: #990000;
     text-decoration: none;
   }
-  #sidenav ul a.sidenav-item:hover .sidenav-item-label,
-  #sidenav ul a.sidenav-item:active .sidenav-item-label,
+@media (min-width: 1024px) {
+  #sidenav ul a.sidenav-item:hover {
+    color: #990000;
+    text-decoration: none;
+  }
+  }
+    #sidenav ul a.sidenav-item:active .sidenav-item-label,
   #sidenav ul a.sidenav-item:focus-visible .sidenav-item-label {
     color: #990000;
     text-decoration: underline;
+  }
+@media (min-width: 1024px) {
+  #sidenav ul a.sidenav-item:hover .sidenav-item-label {
+    color: #990000;
+    text-decoration: underline;
+  }
   }
   #sidenav ul a.sidenav-item .sidenav-chevron,
   #sidenav ul a.sidenav-item .sidenav-chevron svg {
     text-decoration: none;
   }
-  #sidenav ul a.sidenav-item:hover .sidenav-chevron,
-  #sidenav ul a.sidenav-item:active .sidenav-chevron,
+    #sidenav ul a.sidenav-item:active .sidenav-chevron,
   #sidenav ul a.sidenav-item:focus-visible .sidenav-chevron {
     color: #990000;
     text-decoration: none;
+  }
+@media (min-width: 1024px) {
+  #sidenav ul a.sidenav-item:hover .sidenav-chevron {
+    color: #990000;
+    text-decoration: none;
+  }
   }
 
   /* Full-bleed crimson; only the inner row (trident + legal) insets.
@@ -1419,14 +1543,22 @@
     padding-bottom: 16px; /* 20px minus 4 more under the drilled title */
     text-decoration: none;
   }
-  #drawer-nav a.drawer-title:hover,
-  #drawer-nav a.drawer-title:focus {
+    #drawer-nav a.drawer-title:focus {
     text-decoration: none;
   }
-  #drawer-nav a.drawer-title:hover .drawer-title-label,
-  #drawer-nav a.drawer-title:focus .drawer-title-label,
+@media (min-width: 1024px) {
+  #drawer-nav a.drawer-title:hover {
+    text-decoration: none;
+  }
+  }
+    #drawer-nav a.drawer-title:focus .drawer-title-label,
   #drawer-nav a.drawer-title[aria-current="page"] .drawer-title-label {
     text-decoration: underline;
+  }
+@media (min-width: 1024px) {
+  #drawer-nav a.drawer-title:hover .drawer-title-label {
+    text-decoration: underline;
+  }
   }
 
   @media (max-width: 1023.98px) {
@@ -1666,12 +1798,12 @@
       <div class="rvt-footer-legal">
         <h2 class="sr-only">Legal</h2>
         <ul class="flex flex-wrap items-center gap-4 t17 text-white">
-          <li><a class="hover:underline" href="https://accessibility.iu.edu/assistance/">Accessibility</a></li>
-          <li><a class="hover:underline" href="https://www.iu.edu/college-scorecard.html">College Scorecard</a></li>
-          <li><a class="hover:underline" href="https://www.iu.edu/open-to-all.html">Open to All</a></li>
-          <li><a data-nav class="hover:underline" href="#/privacy">Privacy Notice</a></li>
+          <li><a class="lg:hover:underline" href="https://accessibility.iu.edu/assistance/">Accessibility</a></li>
+          <li><a class="lg:hover:underline" href="https://www.iu.edu/college-scorecard.html">College Scorecard</a></li>
+          <li><a class="lg:hover:underline" href="https://www.iu.edu/open-to-all.html">Open to All</a></li>
+          <li><a data-nav class="lg:hover:underline" href="#/privacy">Privacy Notice</a></li>
           <!-- One <li> mixing text and two links, verbatim including the literal U+00A9. -->
-          <li><a class="hover:underline" href="https://iu.edu/copyright/">Copyright</a> © 2026 The Trustees of <a class="hover:underline" href="https://www.iu.edu">Indiana University</a></li>
+          <li><a class="lg:hover:underline" href="https://iu.edu/copyright/">Copyright</a> © 2026 The Trustees of <a class="lg:hover:underline" href="https://www.iu.edu">Indiana University</a></li>
         </ul>
       </div>
     </div>
@@ -1778,35 +1910,35 @@
         <ul class="pt-2">
           <li class="-mb-px">
             <a data-nav href="#/about"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Question types</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
           <li class="-mb-px">
             <a data-nav href="#/how-to-videos"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">How-to Videos</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
           <li class="-mb-px">
             <a data-nav href="#/user-guide"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">User Guide</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
           <li class="-mb-px">
             <a data-nav href="#/user-guide"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Grade passback</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
           <li class="-mb-px">
             <a data-nav href="#/contact"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Request a Demo</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
@@ -2462,7 +2594,7 @@
             `<span data-icon="chevron-right" class="block size-4"></span></span>`
           : '';
         const rowClass =
-          `flex w-full items-center gap-2 border-0 bg-transparent px-0 text-left hover:underline ${itemClass} ${labelClass}`;
+          `flex w-full items-center gap-2 border-0 bg-transparent px-0 text-left lg:hover:underline ${itemClass} ${labelClass}`;
         const inner = `<span class="flex-1">${esc(r.label)}</span>${chev}`;
         const control = r.chevron
           ? `<button type="button" data-drawer-down="${esc(r.slug)}" class="${rowClass}">${inner}</button>`
