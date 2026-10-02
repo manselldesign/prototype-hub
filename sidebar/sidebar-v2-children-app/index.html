@@ -359,10 +359,15 @@
     text-underline-position: from-font;
     text-decoration-thickness: from-font;
   }
-  .crumbs-trail a.crumb-link:hover,
-  .crumbs-trail a.crumb-link:focus-visible {
+    .crumbs-trail a.crumb-link:focus-visible {
     color: #990000;
     text-decoration-line: underline;
+  }
+@media (min-width: 1024px) {
+  .crumbs-trail a.crumb-link:hover {
+    color: #990000;
+    text-decoration-line: underline;
+  }
   }
   /* Home glyph is #343C42; hover turns the glyph crimson and draws a 1px
      rule under the icon only. The rule sits on the same line as the
@@ -375,12 +380,15 @@
     color: #343C42;
     text-decoration: none;
   }
-  a.crumb-home:hover,
-  a.crumb-home:focus-visible {
+    a.crumb-home:focus-visible {
     color: #990000;
   }
-  a.crumb-home:hover::after,
-  a.crumb-home:focus-visible::after {
+@media (min-width: 1024px) {
+  a.crumb-home:hover {
+    color: #990000;
+  }
+  }
+    a.crumb-home:focus-visible::after {
     content: "";
     position: absolute;
     left: 0;
@@ -388,6 +396,17 @@
     bottom: 3px;
     height: 1px;
     background: #990000;
+  }
+@media (min-width: 1024px) {
+  a.crumb-home:hover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+    height: 1px;
+    background: #990000;
+  }
   }
   .crumb-home-icon {
     display: block;
@@ -525,15 +544,23 @@
   /* Search Go — Rivet header search submit (`.rvt-button--strong:hover`).
      Masthead Menu / Search icon buttons are `.masthead-tool`, not Strong;
      their hover is with the header rules below. */
-  .nav-btn-menu:hover,
-  .nav-btn-menu:active,
-  .nav-btn-go:hover,
+    .nav-btn-menu:active,
   .nav-btn-go:active {
     background-color: #000;
     color: #fff;
     border-color: #000;
     text-decoration: none;
     box-shadow: none;
+  }
+@media (min-width: 1024px) {
+  .nav-btn-menu:hover,
+  .nav-btn-go:hover {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+    text-decoration: none;
+    box-shadow: none;
+  }
   }
 
   /* Back — drawer keeps the outlined Rivet control (32/12 via `h-8 px-3`).
@@ -545,9 +572,7 @@
 
   /* Close X + drawer Back — Rivet default `.rvt-button:hover` (Normal /
      outline). Fill stays transparent; text + border → inverse-strong `#000`. */
-  .nav-btn-close:hover,
-  .nav-btn-close:active,
-  .nav-btn-back:hover,
+    .nav-btn-close:active,
   .nav-btn-back:active {
     background-color: transparent;
     color: #000;
@@ -555,27 +580,53 @@
     text-decoration: none;
     box-shadow: none;
   }
+@media (min-width: 1024px) {
+  .nav-btn-close:hover,
+  .nav-btn-back:hover {
+    background-color: transparent;
+    color: #000;
+    border-color: #000;
+    text-decoration: none;
+    box-shadow: none;
+  }
+  }
 
   /* Drawer Volunteer / Become a member — Rivet `.rvt-button--cta:hover`
      (outline accent). Fill stays transparent; text + border →
      accent-strong `#6D0808`. No underline. */
-  .nav-btn-cta:hover,
-  .nav-btn-cta:active {
+    .nav-btn-cta:active {
     background-color: transparent;
     color: #6D0808;
     border-color: #6D0808;
     text-decoration: none;
     box-shadow: none;
   }
+@media (min-width: 1024px) {
+  .nav-btn-cta:hover {
+    background-color: transparent;
+    color: #6D0808;
+    border-color: #6D0808;
+    text-decoration: none;
+    box-shadow: none;
+  }
+  }
 
   /* Home hero CTA — Rivet `.rvt-button--cta.rvt-button--strong:hover`. */
-  .nav-btn-hero:hover,
-  .nav-btn-hero:active {
+    .nav-btn-hero:active {
     background-color: #6D0808;
     color: #fff;
     border-color: #6D0808;
     text-decoration: none;
     box-shadow: none;
+  }
+@media (min-width: 1024px) {
+  .nav-btn-hero:hover {
+    background-color: #6D0808;
+    color: #fff;
+    border-color: #6D0808;
+    text-decoration: none;
+    box-shadow: none;
+  }
   }
 
   /* Rivet `:focus-visible` — buttons / button-styled controls only. */
@@ -745,18 +796,29 @@
   #menu-toggle {
     margin-left: 8px;
   }
-  .masthead-tool:hover,
-  .masthead-tool:active {
+    .masthead-tool:active {
     color: #000;
     background-color: transparent;
     text-decoration: none;
     box-shadow: none;
   }
-  .masthead-search-btn:hover,
-  .masthead-search-btn:active,
-  #menu-toggle:hover,
+@media (min-width: 1024px) {
+  .masthead-tool:hover {
+    color: #000;
+    background-color: transparent;
+    text-decoration: none;
+    box-shadow: none;
+  }
+  }
+    .masthead-search-btn:active,
   #menu-toggle:active {
     border-color: #000;
+  }
+@media (min-width: 1024px) {
+  .masthead-search-btn:hover,
+  #menu-toggle:hover {
+    border-color: #000;
+  }
   }
   /* Same swap as #sidenav-open: the glass stays until aria-expanded,
      then the 16px close glyph the menu uses takes its place. Both
@@ -812,13 +874,21 @@
     border: 0;
     text-decoration: none;
   }
-  .masthead-cta:hover,
-  .masthead-cta:active {
+    .masthead-cta:active {
     background-color: #000;
     color: #fff;
     border-color: transparent;
     text-decoration: none;
     box-shadow: none;
+  }
+@media (min-width: 1024px) {
+  .masthead-cta:hover {
+    background-color: #000;
+    color: #fff;
+    border-color: transparent;
+    text-decoration: none;
+    box-shadow: none;
+  }
   }
 
   /* Search field — Rivet `.rvt-header__search-bar input`: no hover rule.
@@ -884,8 +954,7 @@
        .is-mega-open / .is-current must not leave this at wght 600. */
     font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
   }
-  .masthead-nav-link:hover,
-  .masthead-nav-link:active {
+    .masthead-nav-link:active {
     color: #1F2528;
     background-color: transparent;
     border: 0;
@@ -893,14 +962,21 @@
     font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
     text-decoration: underline;
   }
-  .masthead-nav-link.is-current,
-  .masthead-nav-link.is-current:hover,
+@media (min-width: 1024px) {
+  .masthead-nav-link:hover {
+    color: #1F2528;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
+    text-decoration: underline;
+  }
+  }
+    .masthead-nav-link.is-current,
   .masthead-nav-link.is-current:active,
   .masthead-nav-link.is-mega-open,
-  .masthead-nav-link.is-mega-open:hover,
   .masthead-nav-link.is-mega-open:active,
   .masthead-nav-link[aria-current="page"],
-  .masthead-nav-link[aria-current="page"]:hover,
   .masthead-nav-link[aria-current="page"]:active {
     color: #1F2528;
     background-color: transparent;
@@ -910,22 +986,40 @@
     font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
     text-decoration: none;
   }
+@media (min-width: 1024px) {
+  .masthead-nav-link.is-current:hover,
+  .masthead-nav-link.is-mega-open:hover,
+  .masthead-nav-link[aria-current="page"]:hover {
+    color: #1F2528;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    font-weight: 350;
+    font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
+    text-decoration: none;
+  }
+  }
   .masthead-nav-link.is-current .masthead-nav-sizer,
   .masthead-nav-link.is-mega-open .masthead-nav-sizer,
   .masthead-nav-link[aria-current="page"] .masthead-nav-sizer {
     font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
   }
-  .masthead-nav-link.is-current .masthead-nav-label,
-  .masthead-nav-link.is-current:hover .masthead-nav-label,
+    .masthead-nav-link.is-current .masthead-nav-label,
   .masthead-nav-link.is-current:active .masthead-nav-label,
   .masthead-nav-link.is-mega-open .masthead-nav-label,
-  .masthead-nav-link.is-mega-open:hover .masthead-nav-label,
   .masthead-nav-link.is-mega-open:active .masthead-nav-label,
   .masthead-nav-link[aria-current="page"] .masthead-nav-label,
-  .masthead-nav-link[aria-current="page"]:hover .masthead-nav-label,
   .masthead-nav-link[aria-current="page"]:active .masthead-nav-label {
     font-variation-settings: 'wght' 600, 'wdth' var(--masthead-sel-wdth), 'opsz' 14;
     transform: scaleX(var(--masthead-label-scale));
+  }
+@media (min-width: 1024px) {
+  .masthead-nav-link.is-current:hover .masthead-nav-label,
+  .masthead-nav-link.is-mega-open:hover .masthead-nav-label,
+  .masthead-nav-link[aria-current="page"]:hover .masthead-nav-label {
+    font-variation-settings: 'wght' 600, 'wdth' var(--masthead-sel-wdth), 'opsz' 14;
+    transform: scaleX(var(--masthead-label-scale));
+  }
   }
   /* One bold label while a menu is open: the open item. The section
      you are in returns to 600 when that menu closes. */
@@ -968,10 +1062,12 @@
   .sidenav-lockup {
     flex: 1 0 auto;
   }
-  .sidenav-lockup:hover,
+  @media (min-width: 1024px) {
+.sidenav-lockup:hover,
   .sidenav-mobile-lockup:hover {
     color: #900;
     text-decoration: none;
+  }
   }
   .sidenav-lockup:focus-visible,
   .sidenav-mobile-lockup:focus-visible,
@@ -1005,12 +1101,19 @@
     color: #1F2528;
     cursor: pointer;
   }
-  #sidenav-close:hover,
-  #sidenav-close:active {
+    #sidenav-close:active {
     background: transparent;
     color: #000;
     border-color: #000;
     text-decoration: none;
+  }
+@media (min-width: 1024px) {
+  #sidenav-close:hover {
+    background: transparent;
+    color: #000;
+    border-color: #000;
+    text-decoration: none;
+  }
   }
 
   .sidenav-search {
@@ -1159,11 +1262,17 @@
     font-variation-settings: 'wght' 600, 'wdth' 100;
     cursor: pointer;
   }
-  .sidenav-search-go:hover,
-  .sidenav-search-go:active {
+    .sidenav-search-go:active {
     background-color: #000;
     color: #fff;
     text-decoration: none;
+  }
+@media (min-width: 1024px) {
+  .sidenav-search-go:hover {
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+  }
   }
 
   #sidenav-nav {
@@ -1190,13 +1299,19 @@
     text-decoration: none;
   }
   /* Same interaction as .mega-close: darker text, transparent fill, no underline. */
-  #sidenav .nav-btn-back:hover,
-  #sidenav .nav-btn-back:active,
+    #sidenav .nav-btn-back:active,
   #sidenav .nav-btn-back:focus,
   #sidenav .nav-btn-back:focus-visible {
     color: #000;
     background-color: transparent;
     text-decoration: none;
+  }
+@media (min-width: 1024px) {
+  #sidenav .nav-btn-back:hover {
+    color: #000;
+    background-color: transparent;
+    text-decoration: none;
+  }
   }
   .t-sidenav-parent {
     font-size: 14px;
@@ -1231,12 +1346,19 @@
     border: 1px solid #990000;
     text-decoration: none;
   }
-  .sidenav-cta:hover,
-  .sidenav-cta:active {
+    .sidenav-cta:active {
     background-color: transparent;
     color: #6D0808;
     border-color: #6D0808;
     text-decoration: none;
+  }
+@media (min-width: 1024px) {
+  .sidenav-cta:hover {
+    background-color: transparent;
+    color: #6D0808;
+    border-color: #6D0808;
+    text-decoration: none;
+  }
   }
 
   /* Below lg, match header-v1: lockup row is Search then Menu
@@ -1304,11 +1426,17 @@
     grid-row: 1;
     margin-left: 0;
   }
-  #sidenav-open:hover,
-  #sidenav-open:active {
+    #sidenav-open:active {
     background: transparent;
     color: #000;
     border-color: #000;
+  }
+@media (min-width: 1024px) {
+  #sidenav-open:hover {
+    background: transparent;
+    color: #000;
+    border-color: #000;
+  }
   }
   #sidenav-open .sidenav-open-close {
     display: none;
@@ -1374,11 +1502,16 @@
   #sidenav li ul li:last-child > a.sidenav-child {
     padding-bottom: 0;
   }
-  #sidenav ul a.sidenav-child:hover,
-  #sidenav ul a.sidenav-child:active,
+    #sidenav ul a.sidenav-child:active,
   #sidenav ul a.sidenav-child:focus-visible {
     color: #990000;
     text-decoration: underline;
+  }
+@media (min-width: 1024px) {
+  #sidenav ul a.sidenav-child:hover {
+    color: #990000;
+    text-decoration: underline;
+  }
   }
 
   @media (max-width: 1023.98px) {
@@ -1476,11 +1609,16 @@
     color: #990000;
     text-decoration: none;
   }
-  #sidenav a.sidenav-title:hover,
-  #sidenav a.sidenav-title:focus,
+    #sidenav a.sidenav-title:focus,
   #sidenav a.sidenav-title:focus-visible {
     color: #990000;
     text-decoration: none;
+  }
+@media (min-width: 1024px) {
+  #sidenav a.sidenav-title:hover {
+    color: #990000;
+    text-decoration: none;
+  }
   }
   #sidenav a.sidenav-title .sidenav-title-label {
     text-decoration: underline;
@@ -1490,29 +1628,25 @@
      Crimson and underline appear only when that page is current.
      Desktop rail title stays crimson. */
   @media (max-width: 1023.98px) {
-    #sidenav a.sidenav-title,
-    #sidenav a.sidenav-title:hover,
+        #sidenav a.sidenav-title,
     #sidenav a.sidenav-title:active,
     #sidenav a.sidenav-title:focus,
     #sidenav a.sidenav-title:focus-visible {
       color: #1F2528;
     }
-    #sidenav a.sidenav-title .sidenav-title-label,
-    #sidenav a.sidenav-title:hover .sidenav-title-label,
+        #sidenav a.sidenav-title .sidenav-title-label,
     #sidenav a.sidenav-title:active .sidenav-title-label,
     #sidenav a.sidenav-title:focus .sidenav-title-label,
     #sidenav a.sidenav-title:focus-visible .sidenav-title-label {
       text-decoration: none;
     }
-    #sidenav a.sidenav-title[aria-current="page"],
-    #sidenav a.sidenav-title[aria-current="page"]:hover,
+        #sidenav a.sidenav-title[aria-current="page"],
     #sidenav a.sidenav-title[aria-current="page"]:active,
     #sidenav a.sidenav-title[aria-current="page"]:focus,
     #sidenav a.sidenav-title[aria-current="page"]:focus-visible {
       color: #990000;
     }
-    #sidenav a.sidenav-title[aria-current="page"] .sidenav-title-label,
-    #sidenav a.sidenav-title[aria-current="page"]:hover .sidenav-title-label,
+        #sidenav a.sidenav-title[aria-current="page"] .sidenav-title-label,
     #sidenav a.sidenav-title[aria-current="page"]:active .sidenav-title-label,
     #sidenav a.sidenav-title[aria-current="page"]:focus .sidenav-title-label,
     #sidenav a.sidenav-title[aria-current="page"]:focus-visible .sidenav-title-label {
@@ -1560,30 +1694,45 @@
   /* Underline stays on the label; the chevron is never decorated.
      Hover, active, and keyboard focus turn both crimson.
      Current rows already use crimson + underline and have no chevron. */
-  #sidenav ul a.sidenav-item:hover,
-  #sidenav ul a.sidenav-item:active,
+    #sidenav ul a.sidenav-item:active,
   #sidenav ul a.sidenav-item:focus-visible,
-  #sidenav ul button.sidenav-item:hover,
   #sidenav ul button.sidenav-item:active,
   #sidenav ul button.sidenav-item:focus-visible {
     color: #990000;
     text-decoration: none;
   }
-  #sidenav ul .sidenav-item:hover .sidenav-item-label,
-  #sidenav ul .sidenav-item:active .sidenav-item-label,
+@media (min-width: 1024px) {
+  #sidenav ul a.sidenav-item:hover,
+  #sidenav ul button.sidenav-item:hover {
+    color: #990000;
+    text-decoration: none;
+  }
+  }
+    #sidenav ul .sidenav-item:active .sidenav-item-label,
   #sidenav ul .sidenav-item:focus-visible .sidenav-item-label {
     color: #990000;
     text-decoration: underline;
+  }
+@media (min-width: 1024px) {
+  #sidenav ul .sidenav-item:hover .sidenav-item-label {
+    color: #990000;
+    text-decoration: underline;
+  }
   }
   #sidenav ul .sidenav-item .sidenav-chevron,
   #sidenav ul .sidenav-item .sidenav-chevron svg {
     text-decoration: none;
   }
-  #sidenav ul .sidenav-item:hover .sidenav-chevron,
-  #sidenav ul .sidenav-item:active .sidenav-chevron,
+    #sidenav ul .sidenav-item:active .sidenav-chevron,
   #sidenav ul .sidenav-item:focus-visible .sidenav-chevron {
     color: #990000;
     text-decoration: none;
+  }
+@media (min-width: 1024px) {
+  #sidenav ul .sidenav-item:hover .sidenav-chevron {
+    color: #990000;
+    text-decoration: none;
+  }
   }
 
   /*
@@ -1664,11 +1813,17 @@
     font-variation-settings: 'wght' 600, 'wdth' 100;
     text-decoration: none;
   }
-  .footer-col-title:hover,
-  .footer-col-title:active {
+    .footer-col-title:active {
     color: #FDFAF7;
     text-decoration: underline;
     text-underline-offset: 2px;
+  }
+@media (min-width: 1024px) {
+  .footer-col-title:hover {
+    color: #FDFAF7;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
   }
   .footer-disclosure {
     display: flex;
@@ -1714,19 +1869,31 @@
     line-height: 20px;
     font-variation-settings: 'wght' 350, 'wdth' 100;
   }
-  .footer-col ul a:hover,
-  .footer-col ul a:active {
+    .footer-col ul a:active {
     color: #fff;
     text-decoration: underline;
     text-underline-offset: 2px;
   }
-  .footer-address a:hover,
-  .footer-address a:active,
-  .rvt-footer-legal a:hover,
+@media (min-width: 1024px) {
+  .footer-col ul a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  }
+    .footer-address a:active,
   .rvt-footer-legal a:active {
     color: #FAF6EF;
     text-decoration: underline;
     text-underline-position: from-font;
+  }
+@media (min-width: 1024px) {
+  .footer-address a:hover,
+  .rvt-footer-legal a:hover {
+    color: #FAF6EF;
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
   }
   .footer-legal {
     display: flex;
@@ -2272,14 +2439,22 @@
     padding-bottom: 16px; /* 20px minus 4 more under the drilled title */
     text-decoration: none;
   }
-  #drawer-nav a.drawer-title:hover,
-  #drawer-nav a.drawer-title:focus {
+    #drawer-nav a.drawer-title:focus {
     text-decoration: none;
   }
-  #drawer-nav a.drawer-title:hover .drawer-title-label,
-  #drawer-nav a.drawer-title:focus .drawer-title-label,
+@media (min-width: 1024px) {
+  #drawer-nav a.drawer-title:hover {
+    text-decoration: none;
+  }
+  }
+    #drawer-nav a.drawer-title:focus .drawer-title-label,
   #drawer-nav a.drawer-title[aria-current="page"] .drawer-title-label {
     text-decoration: underline;
+  }
+@media (min-width: 1024px) {
+  #drawer-nav a.drawer-title:hover .drawer-title-label {
+    text-decoration: underline;
+  }
   }
 
   @media (max-width: 1023.98px) {
@@ -2517,35 +2692,35 @@
         <ul class="pt-2">
           <li class="-mb-px">
             <a data-nav href="#/favorites"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">My favorites</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
           <li class="-mb-px">
             <a data-nav href="#/categories"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Categories</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
           <li class="-mb-px">
             <a data-nav href="#/preferences"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Preferences</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
           <li class="-mb-px">
             <a data-nav href="#/campus-roles"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Campus &amp; roles</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
           <li class="-mb-px">
             <a data-nav href="#/announcements"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink hover:underline">
+               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Announcements</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
@@ -3493,7 +3668,7 @@
             `<span data-icon="chevron-right" class="block size-4"></span></span>`
           : '';
         const rowClass =
-          `flex w-full items-center gap-2 border-0 bg-transparent px-0 text-left hover:underline ${itemClass} ${labelClass}`;
+          `flex w-full items-center gap-2 border-0 bg-transparent px-0 text-left lg:hover:underline ${itemClass} ${labelClass}`;
         const inner = `<span class="flex-1">${esc(r.label)}</span>${chev}`;
         const control = r.chevron
           ? `<button type="button" data-drawer-down="${esc(r.slug)}" class="${rowClass}">${inner}</button>`
