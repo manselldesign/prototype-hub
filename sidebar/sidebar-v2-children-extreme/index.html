@@ -3165,7 +3165,14 @@
     const model = navModel(slug);
     const items = model.items.map((s) => sidenavRow(s, model.current, model.top, false)).join('');
     const back = sidenavBack(model.back, false);
-    return back + `<div class="${model.back ? 'sidenav-after-back' : ''}"><ul>${items}</ul></div>`;
+    const section = !model.top && PAGES[slug] ? (hasKids(slug) ? slug : PAGES[slug].p) : null;
+    const onSection = !!(section && slug === section);
+    const title = section
+      ? `<a data-nav href="${href(section)}" class="sidenav-title t-section-heading flex w-full items-center ${onSection ? 'text-crimson' : 'text-ink'}"` +
+        `${onSection ? ' aria-current="page"' : ''}>` +
+        `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(PAGES[section].l)}</span></a>`
+      : '';
+    return back + `<div class="${model.back ? 'sidenav-after-back' : ''}">${title}<ul>${items}</ul></div>`;
   }
 
   function renderMobileSidenav(slug) {
