@@ -1341,6 +1341,35 @@
     }
     /* The parent title draws the cream rule. Do not add the first
        child's top hairline too, or the rule doubles. */
+    /* Mobile back matches header-v1's menu: outlined 32px control.
+       Desktop rail back stays the plain 24px link. */
+    #sidenav .sidenav-mobile-tools {
+      display: flex;
+      align-items: center;
+      padding-bottom: 8px;
+    }
+    #sidenav .sidenav-mobile-tools .nav-btn-back {
+      height: 32px;
+      border: 1px solid #1F2528;
+      padding: 0 12px;
+    }
+    #sidenav .sidenav-main-menu {
+      margin-left: auto;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: #1F2528;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 20px;
+      font-variation-settings: 'wght' 600, 'wdth' 100;
+    }
+    #sidenav .sidenav-main-menu:hover,
+    #sidenav .sidenav-main-menu:active,
+    #sidenav .sidenav-main-menu:focus-visible {
+      color: #000;
+    }
   }
 
   /*
@@ -3179,15 +3208,26 @@
       return `<div><ul>${items}</ul></div>`;
     }
     const section = mobileStack[mobileStack.length - 1];
-    const parent = mobileStack.length === 1 ? HOME : mobileStack[mobileStack.length - 2];
-    const back = sidenavBack({ slug: parent, label: PAGES[parent].l }, true);
+    /* header-v1 mobile menu: one level down, Back says "Main menu" and
+       returns to the root list. Deeper, Back names the parent and a
+       Main menu control jumps to the root. Parents with children stay
+       data-sidenav-down buttons, so the click drills and does not navigate. */
+    const backLabel = mobileStack.length === 1 ? 'Main menu' : PAGES[mobileStack[mobileStack.length - 2]].l;
+    const back =
+      `<button type="button" data-sidenav-up class="nav-btn-back">` +
+      `<span data-icon="arrow-left" class="block size-3 shrink-0"></span>` +
+      `<span class="t16">${esc(backLabel)}</span></button>`;
+    const mainMenu = mobileStack.length >= 2
+      ? `<button type="button" data-sidenav-root class="sidenav-main-menu">Main menu</button>`
+      : '';
     const onSection = current === section;
     const title =
       `<a data-nav href="${href(section)}" class="sidenav-title t-section-heading flex w-full items-center border-b border-cream text-crimson"` +
       `${onSection ? ' aria-current="page"' : ''}>` +
       `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(PAGES[section].l)}</span></a>`;
     const items = (PAGES[section].c || []).map((s) => sidenavRow(s, current, false, true)).join('');
-    return back + `<div class="sidenav-after-back">${title}<ul>${items}</ul></div>`;
+    return `<div class="sidenav-mobile-tools">${back}${mainMenu}</div>` +
+      `<div class="sidenav-after-back">${title}<ul>${items}</ul></div>`;
   }
 
   /* =========================================================================
@@ -3658,6 +3698,14 @@
       sidenavNav.innerHTML = renderSidenav(currentSlug());
       paintIcons(sidenavNav);
       document.body.classList.toggle('has-sidenav-back', mobileStack.length > 0);
+      fitMobileSidenav(true);
+      return;
+    }
+    if (e.target.closest('[data-sidenav-root]')) {
+      mobileStack = [];
+      sidenavNav.innerHTML = renderSidenav(currentSlug());
+      paintIcons(sidenavNav);
+      document.body.classList.remove('has-sidenav-back');
       fitMobileSidenav(true);
     }
   });
