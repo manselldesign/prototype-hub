@@ -132,30 +132,30 @@
   /* T7 / T8 — drawer title, desktop / mobile. */
   .t-drawer-title { font-size:23px; line-height:28px; font-variation-settings:'wght' 700,'wdth' 100; }
   /* T9 — Body/medium/regular (home lede). */
-  .t9  { font-size:20px; line-height:28px; font-variation-settings:'wght' 350,'wdth' 110; }
+  .t9  { font-size:20px; line-height:28px; font-variation-settings:'wght' 350,'wdth' 100; }
   /* T10 — Body/base/regular (interior lede). */
-  .t10 { font-size:16px; line-height:24px; font-variation-settings:'wght' 350,'wdth' 110; }
+  .t10 { font-size:16px; line-height:24px; font-variation-settings:'wght' 350,'wdth' 100; }
   /* T11 / T12 — Body/small/regular, and the search-drawer placeholder. */
-  .t11 { font-size:16px; line-height:24px; font-variation-settings:'wght' 350,'wdth' 110; }
+  .t11 { font-size:16px; line-height:24px; font-variation-settings:'wght' 350,'wdth' 100; }
   /* T13 — Action/extra-large/strong: drawer level-1 nav item. */
-  .t13 { font-size:20px; line-height:24px; font-variation-settings:'wght' 600,'wdth' 115; }
+  .t13 { font-size:20px; line-height:24px; font-variation-settings:'wght' 600,'wdth' 100; }
   /* T14 — Action/large/strong: button labels, section headings, current L2+ item. */
-  .t14 { font-size:16px; line-height:24px; font-variation-settings:'wght' 600,'wdth' 115; }
+  .t14 { font-size:16px; line-height:24px; font-variation-settings:'wght' 600,'wdth' 100; }
   /* T15 — Action/large/regular. */
-  .t15 { font-size:16px; line-height:24px; font-variation-settings:'wght' 350,'wdth' 115; }
+  .t15 { font-size:16px; line-height:24px; font-variation-settings:'wght' 350,'wdth' 100; }
   /* T16 — Action/small/strong: drawer Back (and Main menu escape). */
-  .t16 { font-size:14px; line-height:20px; font-variation-settings:'wght' 600,'wdth' 115; }
+  .t16 { font-size:14px; line-height:20px; font-variation-settings:'wght' 600,'wdth' 100; }
   /* Sidenav Back label only — T16: 14/20, wght 600, wdth 115. Drawer stays T16. */
-  .t-sidenav-back { font-size:14px; line-height:20px; font-variation-settings:'wght' 600,'wdth' 115; }
+  .t-sidenav-back { font-size:14px; line-height:20px; font-variation-settings:'wght' 600,'wdth' 100; }
   /* T17 — Action/small/regular: footer legal links. */
-  .t17 { font-size:14px; line-height:20px; font-variation-settings:'wght' 350,'wdth' 115; }
+  .t17 { font-size:14px; line-height:20px; font-variation-settings:'wght' 350,'wdth' 100; }
   /* T18 — action/medium/regular: sidenav items. Breadcrumbs use .t-crumb. */
-  .t18 { font-size:14px; line-height:20px; font-variation-settings:'wght' 350,'wdth' 112.5; }
+  .t18 { font-size:14px; line-height:20px; font-variation-settings:'wght' 350,'wdth' 100; }
 
   /* Sidenav section heading — 14/16 at T14's 600/115 axes (same weight as
      the old 16/20 heading, sized down to the item type size). Only ever
      visible at >=lg (the column is `hidden` below that). */
-  .t-section-heading { font-size:14px; line-height:16px; font-variation-settings:'wght' 600,'wdth' 115; }
+  .t-section-heading { font-size:14px; line-height:16px; font-variation-settings:'wght' 600,'wdth' 100; }
 
   /* -------------------------------------------------------------------------
      DRAWER DRILL-DOWN TYPE (level 2+) — measured, not read off the spec table.
@@ -185,8 +185,8 @@
      one step down from the previous 23/28). Desktop drawer keeps 23/28.
      ------------------------------------------------------------------------- */
   .t-drawer-heading      { font-size:20px; line-height:24px; font-variation-settings:'wght' 700,'wdth' 100; }
-  .t-drawer-item         { font-size:16px; line-height:24px; font-variation-settings:'wght' 350,'wdth' 115; }
-  .t-drawer-item-current { font-size:16px; line-height:24px; font-variation-settings:'wght' 600,'wdth' 115; }
+  .t-drawer-item         { font-size:16px; line-height:24px; font-variation-settings:'wght' 350,'wdth' 100; }
+  .t-drawer-item-current { font-size:16px; line-height:24px; font-variation-settings:'wght' 600,'wdth' 100; }
 
   @media screen(lg) {
     .t4  { font-size:54px; line-height:56px; }
@@ -267,7 +267,7 @@
      extremes). Matching them would mean widening the global font request, which
      would re-serve the font the navigation renders in, so it is left alone. */
   .hero-title {
-    font-weight:750; font-stretch:87.5%;
+    font-weight:750; font-stretch:normal;
     font-size:clamp(29px, 1.114rem + 3.4926vw, 48px);
     line-height:clamp(32px, 1.2647rem + 3.6765vw, 52px);
     text-wrap:balance;
@@ -276,7 +276,7 @@
   /* Interior lede — live `.rvt-hero__teaser`. RECONCILED: Figma's T10 is
      wdth 110; live is `font-stretch: semi-expanded` (= 112.5%). Live wins. */
   .hero-lede {
-    font-weight:350; font-stretch:112.5%;
+    font-weight:350; font-stretch:normal;
     font-size:clamp(16px, .9265rem + .3676vw, 18px);
     line-height:clamp(24px, 1.3529rem + .7353vw, 28px);
     text-wrap:pretty; max-width:54rem;
@@ -286,7 +286,7 @@
      up the scale (18→20 rather than 16→18). Figma's T9 pinned 20px at every
      width; live drops to 18px on mobile. */
   .hero-lede-lg {
-    font-weight:350; font-stretch:112.5%;
+    font-weight:350; font-stretch:normal;
     font-size:clamp(18px, 1.0515rem + .3676vw, 20px);
     line-height:clamp(24px, 1.3529rem + .7353vw, 28px);
     text-wrap:pretty; max-width:54rem;
@@ -344,12 +344,12 @@
   .t-crumb {
     font-size: 14px;
     line-height: 20px;
-    font-variation-settings: 'wght' 350, 'wdth' 115;
+    font-variation-settings: 'wght' 350, 'wdth' 100;
   }
   .t-crumb-current {
     font-size: 14px;
     line-height: 20px;
-    font-variation-settings: 'wght' 600, 'wdth' 115;
+    font-variation-settings: 'wght' 600, 'wdth' 100;
     color: #1F2528;
     text-decoration: none;
   }
@@ -861,7 +861,7 @@
     line-height: 20px;
     font-weight: 350;
     font-optical-sizing: none;
-    font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
+    font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
     color: #1F2528;
     background-color: transparent;
     text-decoration: none;
@@ -876,13 +876,13 @@
     visibility: hidden;
     pointer-events: none;
     user-select: none;
-    font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
+    font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
   }
   .masthead-nav-label {
     transform-origin: left center;
     /* Specified on the label, not inherited from the link. A leftover
        .is-mega-open / .is-current must not leave this at wght 600. */
-    font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
+    font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
   }
   .masthead-nav-link:hover,
   .masthead-nav-link:active {
@@ -890,7 +890,7 @@
     background-color: transparent;
     border: 0;
     box-shadow: none;
-    font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
+    font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
     text-decoration: underline;
   }
   .masthead-nav-link.is-current,
@@ -907,13 +907,13 @@
     border: 0;
     box-shadow: none;
     font-weight: 350;
-    font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
+    font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
     text-decoration: none;
   }
   .masthead-nav-link.is-current .masthead-nav-sizer,
   .masthead-nav-link.is-mega-open .masthead-nav-sizer,
   .masthead-nav-link[aria-current="page"] .masthead-nav-sizer {
-    font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
+    font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
   }
   .masthead-nav-link.is-current .masthead-nav-label,
   .masthead-nav-link.is-current:hover .masthead-nav-label,
@@ -930,7 +930,7 @@
   /* One bold label while a menu is open: the open item. The section
      you are in returns to 600 when that menu closes. */
   #masthead-nav:has(.is-mega-open) .masthead-nav-link:not(.is-mega-open) .masthead-nav-label {
-    font-variation-settings: 'wght' 350, 'wdth' 115, 'opsz' 14;
+    font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
     transform: none;
   }
 
@@ -1047,16 +1047,16 @@
   .app-home {
     padding: 52px 16px 64px;
   }
-  /* Default Site Builder hero title: 29–48 / 32–52, black, semi-condensed, crimson. */
+  /* Home hero title: 29–48 / 32–52, black, normal width, crimson. */
   .app-home-title {
     margin: 0;
     text-align: center;
     color: #990000;
     font-weight: 800;
-    font-stretch: 87.5%;
+    font-stretch: normal;
     font-size: clamp(29px, 1.114rem + 3.4926vw, 48px);
     line-height: clamp(32px, 1.2647rem + 3.6765vw, 52px);
-    font-variation-settings: 'wght' 800, 'wdth' 87.5;
+    font-variation-settings: 'wght' 800, 'wdth' 100;
     text-transform: none;
     text-wrap: balance;
   }
@@ -1068,7 +1068,7 @@
     color: #1F2528;
     font-size: 20px;
     line-height: 28px;
-    font-variation-settings: 'wght' 600, 'wdth' 115;
+    font-variation-settings: 'wght' 600, 'wdth' 100;
   }
   /* Home app card: 16px pad, 16px title, 14px description, subtle shadow. */
   .app-list {
@@ -1103,7 +1103,7 @@
     max-width: 750px;
     font-size: 16px;
     line-height: 24px;
-    font-variation-settings: 'wght' 600, 'wdth' 115;
+    font-variation-settings: 'wght' 600, 'wdth' 100;
   }
   .app-card-arrow {
     margin-top: 4px;
@@ -1117,7 +1117,7 @@
     margin: 0;
     font-size: 14px;
     line-height: 20px;
-    font-variation-settings: 'wght' 350, 'wdth' 110;
+    font-variation-settings: 'wght' 350, 'wdth' 100;
   }
   @media screen(lg) {
     .has-sidenav .app-home {
@@ -1133,7 +1133,7 @@
     background: transparent;
     font-size: 14px;
     line-height: 20px;
-    font-variation-settings: 'wght' 350, 'wdth' 110;
+    font-variation-settings: 'wght' 350, 'wdth' 100;
     color: #343C42;
   }
   .sidenav-search-input:focus {
@@ -1156,7 +1156,7 @@
     color: #fff;
     font-size: 16px;
     line-height: 24px;
-    font-variation-settings: 'wght' 600, 'wdth' 115;
+    font-variation-settings: 'wght' 600, 'wdth' 100;
     cursor: pointer;
   }
   .sidenav-search-go:hover,
@@ -1201,14 +1201,14 @@
   .t-sidenav-parent {
     font-size: 14px;
     line-height: 20px;
-    font-variation-settings: 'wght' 600, 'wdth' 115;
+    font-variation-settings: 'wght' 600, 'wdth' 100;
   }
   /* Back label only. 14px on a 20px line box; parent items stay 14/20.
      The control itself stays 24px tall so the first menu row does not move. */
   #sidenav .t-sidenav-back {
     font-size: 14px;
     line-height: 20px;
-    font-variation-settings: 'wght' 600, 'wdth' 115;
+    font-variation-settings: 'wght' 600, 'wdth' 100;
   }
 
   .sidenav-ctas {
@@ -1442,35 +1442,30 @@
       padding: calc(16px + 28px) var(--chrome-gutter) 8px;
       border-bottom: 1px solid transparent;
     }
-    /* Back sits above the list only on small screens. Restore the cream
-       rule the first row otherwise drops, so it separates from Back.
-       Desktop keeps that row flush with the breadcrumbs. */
-    #sidenav-nav .sidenav-after-back > ul > li:first-child::before {
-      content: "";
-    }
+    /* The parent title draws the cream rule. Do not add the first
+       child's top hairline too, or the rule doubles. */
   }
 
   /*
-    Persistent parent/overview title. No arrow on desktop (the drawer
-    title keeps its Rivet arrow-right). Selected (crimson + simple
-    underline) only on the section landing — aria-current="page" when
-    the current slug IS the section. On a leaf sibling the title stays
-    ink, no underline at rest; hover/focus is a simple underline on
-    the label with no crimson shift. Type is .t-section-heading
-    14/16 600. Padding below the label is 12px so the cream hairline
-    sits under the text. Not a sidenav-item.
+    Persistent parent title. Always crimson, underlined, with 12px under
+    the label and a 1px #F0E1CC rule — the header-v1 parent row. That
+    treatment stays on a child page. aria-current="page" only when this
+    landing is the current page. The current child is marked separately.
+    Not a sidenav-item.
    */
   #sidenav a.sidenav-title {
     padding-bottom: 12px;
+    border-bottom: 1px solid #F0E1CC;
+    color: #990000;
     text-decoration: none;
   }
   #sidenav a.sidenav-title:hover,
-  #sidenav a.sidenav-title:focus {
+  #sidenav a.sidenav-title:focus,
+  #sidenav a.sidenav-title:focus-visible {
+    color: #990000;
     text-decoration: none;
   }
-  #sidenav a.sidenav-title:hover .sidenav-title-label,
-  #sidenav a.sidenav-title:focus .sidenav-title-label,
-  #sidenav a.sidenav-title[aria-current="page"] .sidenav-title-label {
+  #sidenav a.sidenav-title .sidenav-title-label {
     text-decoration: underline;
   }
 
@@ -1587,7 +1582,7 @@
     color: #fff;
     font-size: 16px;
     line-height: 28px;
-    font-variation-settings: 'wght' 350, 'wdth' 115;
+    font-variation-settings: 'wght' 350, 'wdth' 100;
     text-decoration: none;
   }
   .footer-nav {
@@ -1613,7 +1608,7 @@
     color: #FDFAF7;
     font-size: 16px;
     line-height: 24px;
-    font-variation-settings: 'wght' 600, 'wdth' 115;
+    font-variation-settings: 'wght' 600, 'wdth' 100;
     text-decoration: none;
   }
   .footer-col-title:hover,
@@ -1664,7 +1659,7 @@
   .footer-col ul a {
     font-size: 14px;
     line-height: 20px;
-    font-variation-settings: 'wght' 350, 'wdth' 115;
+    font-variation-settings: 'wght' 350, 'wdth' 100;
   }
   .footer-col ul a:hover,
   .footer-col ul a:active {
@@ -1991,7 +1986,7 @@
       font-size: 14px;
       line-height: 20px;
       font-weight: 600;
-      font-variation-settings: 'wght' 600, 'wdth' 115, 'opsz' 14;
+      font-variation-settings: 'wght' 600, 'wdth' 100, 'opsz' 14;
       color: #1F2528;
       text-decoration: none;
     }
@@ -2872,7 +2867,7 @@
    */
   const sectionOf = (slug) => (hasKids(slug) ? slug : PAGES[slug].p);
 
-  const MASTHEAD_REST_VAR = "'wght' 350, 'wdth' 115, 'opsz' 14";
+  const MASTHEAD_REST_VAR = "'wght' 350, 'wdth' 100, 'opsz' 14";
   /* Per-label `wdth` / scaleX so selected wght 600 matches rest range width.
      Always applied — selected never drops back to wght 350. */
   let mastheadSelectedFit = null;
@@ -2898,7 +2893,7 @@
       probe.style.fontVariationSettings = MASTHEAD_REST_VAR;
       const restW = mastheadRangeWidth(probe);
       let lo = 80;
-      let hi = 115;
+      let hi = 100;
       let bestWdth = 93;
       let bestDelta = Infinity;
       let bestW = restW;
@@ -2915,7 +2910,7 @@
         if (delta > 0) hi = mid;
         else lo = mid;
       }
-      const scale = restW > 0 && Math.abs(bestDelta) > 0.15 ? restW / bestW : 1;
+      const scale = restW > 0 && bestW > restW && Math.abs(bestDelta) > 0.15 ? restW / bestW : 1;
       map[label] = {
         wdth: Math.round(bestWdth * 100) / 100,
         scale: Math.round(scale * 10000) / 10000,
@@ -3318,10 +3313,10 @@
     return `<a data-nav href="${href(back.slug)}" class="nav-btn-back">${inner}</a>`;
   }
 
-  /** Section landing title. Crimson and underlined only when that landing is current. */
+  /** Section title. Always crimson and underlined. aria-current only on that landing. */
   function sidenavTitle(section, onSection) {
     return (
-      `<a data-nav href="${href(section)}" class="sidenav-title t-section-heading flex w-full items-center ${onSection ? 'text-crimson' : 'text-ink'}"` +
+      `<a data-nav href="${href(section)}" class="sidenav-title t-section-heading flex w-full items-center border-b border-cream text-crimson"` +
       `${onSection ? ' aria-current="page"' : ''}>` +
       `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(PAGES[section].l)}</span></a>`
     );
