@@ -1418,6 +1418,59 @@
     text-decoration: none;
   }
 
+  /* Below 1024 a tap leaves :hover, :active, or :focus on the row.
+     That was painting unselected parents, siblings, and expanded rows
+     crimson. On mobile only the current page stays crimson. Desktop
+     hover is unchanged. */
+  @media (max-width: 1023.98px) {
+    #sidenav ul a.sidenav-item:hover,
+    #sidenav ul a.sidenav-item:active,
+    #sidenav ul a.sidenav-item:focus,
+    #sidenav ul a.sidenav-item:focus-visible,
+    #sidenav ul a.sidenav-item:hover .sidenav-item-label,
+    #sidenav ul a.sidenav-item:active .sidenav-item-label,
+    #sidenav ul a.sidenav-item:focus .sidenav-item-label,
+    #sidenav ul a.sidenav-item:focus-visible .sidenav-item-label,
+    #sidenav ul a.sidenav-item:hover .sidenav-chevron,
+    #sidenav ul a.sidenav-item:active .sidenav-chevron,
+    #sidenav ul a.sidenav-item:focus .sidenav-chevron,
+    #sidenav ul a.sidenav-item:focus-visible .sidenav-chevron,
+    #sidenav ul a.sidenav-child:hover,
+    #sidenav ul a.sidenav-child:active,
+    #sidenav ul a.sidenav-child:focus,
+    #sidenav ul a.sidenav-child:focus-visible {
+      color: #1F2528;
+      text-decoration: none;
+    }
+    #sidenav ul a.sidenav-item.text-crimson,
+    #sidenav ul a.sidenav-item.text-crimson:hover,
+    #sidenav ul a.sidenav-item.text-crimson:active,
+    #sidenav ul a.sidenav-item.text-crimson:focus,
+    #sidenav ul a.sidenav-item.text-crimson:focus-visible,
+    #sidenav ul a.sidenav-item.text-crimson .t-sidenav-parent,
+    #sidenav ul a.sidenav-item.text-crimson:hover .t-sidenav-parent,
+    #sidenav ul a.sidenav-item.text-crimson:hover .sidenav-item-label,
+    #sidenav ul a.sidenav-item.text-crimson:active .sidenav-item-label,
+    #sidenav ul a.sidenav-item.text-crimson:focus .sidenav-item-label,
+    #sidenav ul a.sidenav-item.text-crimson:focus-visible .sidenav-item-label,
+    #sidenav ul a.sidenav-item.text-crimson .sidenav-chevron,
+    #sidenav ul a.sidenav-item.text-crimson:hover .sidenav-chevron,
+    #sidenav ul a.sidenav-item.text-crimson:active .sidenav-chevron,
+    #sidenav ul a.sidenav-item.text-crimson:focus .sidenav-chevron,
+    #sidenav ul a.sidenav-item.text-crimson:focus-visible .sidenav-chevron {
+      color: #990000;
+    }
+    #sidenav ul a.sidenav-item .t-sidenav-parent.is-current,
+    #sidenav ul a.sidenav-item:hover .t-sidenav-parent.is-current,
+    #sidenav ul a.sidenav-item:active .t-sidenav-parent.is-current,
+    #sidenav ul a.sidenav-item:focus .t-sidenav-parent.is-current,
+    #sidenav ul a.sidenav-item:focus-visible .t-sidenav-parent.is-current {
+      color: #990000;
+      text-decoration: underline;
+      text-underline-position: from-font;
+    }
+  }
+
   /*
     Crimson footer (Figma rvt-footer 1539:11977).
     Desktop: 48px above the columns, 32px below them. The identity name
