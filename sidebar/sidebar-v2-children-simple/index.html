@@ -1339,35 +1339,30 @@
       padding: calc(16px + 28px) var(--chrome-gutter) 8px;
       border-bottom: 1px solid transparent;
     }
-    /* Back sits above the list only on small screens. Restore the cream
-       rule the first row otherwise drops, so it separates from Back.
-       Desktop keeps that row flush with the breadcrumbs. */
-    #sidenav-nav .sidenav-after-back > ul > li:first-child::before {
-      content: "";
-    }
+    /* The parent title draws the cream rule. Do not add the first
+       child's top hairline too, or the rule doubles. */
   }
 
   /*
-    Persistent parent/overview title. No arrow on desktop (the drawer
-    title keeps its Rivet arrow-right). Selected (crimson + simple
-    underline) only on the section landing — aria-current="page" when
-    the current slug IS the section. On a leaf sibling the title stays
-    ink, no underline at rest; hover/focus is a simple underline on
-    the label with no crimson shift. Type is .t-section-heading
-    14/16 600. Padding below the label is 12px so the cream hairline
-    sits under the text. Not a sidenav-item.
+    Persistent parent title. Always crimson, underlined, with 12px under
+    the label and a 1px #F0E1CC rule — the header-v1 parent row. That
+    treatment stays on a child page. aria-current="page" only when this
+    landing is the current page. The current child is marked separately.
+    Not a sidenav-item.
    */
   #sidenav a.sidenav-title {
     padding-bottom: 12px;
+    border-bottom: 1px solid #F0E1CC;
+    color: #990000;
     text-decoration: none;
   }
   #sidenav a.sidenav-title:hover,
-  #sidenav a.sidenav-title:focus {
+  #sidenav a.sidenav-title:focus,
+  #sidenav a.sidenav-title:focus-visible {
+    color: #990000;
     text-decoration: none;
   }
-  #sidenav a.sidenav-title:hover .sidenav-title-label,
-  #sidenav a.sidenav-title:focus .sidenav-title-label,
-  #sidenav a.sidenav-title[aria-current="page"] .sidenav-title-label {
+  #sidenav a.sidenav-title .sidenav-title-label {
     text-decoration: underline;
   }
 
@@ -3161,7 +3156,7 @@
     const section = !model.top && PAGES[slug] ? (hasKids(slug) ? slug : PAGES[slug].p) : null;
     const onSection = !!(section && slug === section);
     const title = section
-      ? `<a data-nav href="${href(section)}" class="sidenav-title t-section-heading flex w-full items-center ${onSection ? 'text-crimson' : 'text-ink'}"` +
+      ? `<a data-nav href="${href(section)}" class="sidenav-title t-section-heading flex w-full items-center border-b border-cream text-crimson"` +
         `${onSection ? ' aria-current="page"' : ''}>` +
         `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(PAGES[section].l)}</span></a>`
       : '';
@@ -3179,7 +3174,7 @@
     const back = sidenavBack({ slug: parent, label: PAGES[parent].l }, true);
     const onSection = current === section;
     const title =
-      `<a data-nav href="${href(section)}" class="sidenav-title t-section-heading flex w-full items-center ${onSection ? 'text-crimson' : 'text-ink'}"` +
+      `<a data-nav href="${href(section)}" class="sidenav-title t-section-heading flex w-full items-center border-b border-cream text-crimson"` +
       `${onSection ? ' aria-current="page"' : ''}>` +
       `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(PAGES[section].l)}</span></a>`;
     const items = (PAGES[section].c || []).map((s) => sidenavRow(s, current, false, true)).join('');
