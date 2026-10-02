@@ -324,6 +324,20 @@
     flex-shrink: 0;
     white-space: nowrap;
   }
+  /* Mobile: the trail wraps inside the column instead of scrolling.
+     Each crumb stays on one line; the row breaks between crumbs.
+     Desktop keeps the single scrolling row. */
+  @media (max-width: 1023.98px) {
+    .crumbs-trail {
+      overflow: visible;
+    }
+    .crumbs-trail ol {
+      width: auto;
+      max-width: 100%;
+      flex-wrap: wrap;
+      row-gap: 4px;
+    }
+  }
   /* rvt-breadcrumbs item type (Figma 1629:23547). Row stays 20px.
      Visited: Action/small/regular 14/20, wght 350, wdth 115, #343C42.
      Current: Action/small/strong 14/20, wght 600, wdth 115, #1F2528.
@@ -932,6 +946,9 @@
     padding: var(--sidenav-pad-y) var(--sidenav-pad-x);
     background: #fff;
   }
+  .sidenav-clip {
+    display: contents;
+  }
 
   .sidenav-lockup,
   .sidenav-mobile-lockup {
@@ -1263,24 +1280,43 @@
   }
 
   @media (max-width: 1023.98px) {
-    /* Disclosure under the compact bar: closed takes no space, open
-       grows in the page flow and pushes the content down. The full-width
-       cream rule marks the bottom edge; the bar's own rule hides so the
+    /* Disclosure under the compact bar. max-height is set from the
+       list's scroll height in JS so the panel stays in flow and the
+       page moves with it. 400ms, the same ease as search. No cream rule on
+       the bottom edge — a 1px transparent border on the list keeps
+       that gap. The open panel carries a Figma drop shadow
+       (x 0, y 2, blur 6, spread 0). The bar's own rule hides so the
        panel does not start with a line. */
     #sidenav {
-      display: none;
-      position: static;
+      display: block;
+      position: relative;
+      z-index: 2;
       width: 100%;
       height: auto;
-      max-height: none;
-      overflow: visible;
+      min-height: 0;
+      max-height: 0;
+      overflow: hidden;
       transform: none;
-      padding: 16px var(--chrome-gutter) 8px;
+      padding: 0;
+      border-bottom: 0;
       box-shadow: none;
-      border-bottom: 1px solid #F0E1CC;
+      visibility: hidden;
+      pointer-events: none;
+      /* One transition for open and close. Swapping this shorthand
+         when .is-open toggles cancels the max-height ease. */
+      transition:
+        max-height 400ms cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     #sidenav.is-open {
-      display: flex;
+      visibility: visible;
+      pointer-events: auto;
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #sidenav {
+        transition: none;
+      }
     }
     rvt-body:has(#sidenav.is-open) .sidenav-mobile-bar {
       border-bottom: 0;
@@ -1299,6 +1335,10 @@
       flex: none;
       min-height: auto;
       overflow: visible;
+      /* The rail's 16px top and 8px bottom move here so they collapse
+         with the list. 28px is the existing list pad, kept as-is. */
+      padding: calc(16px + 28px) var(--chrome-gutter) 8px;
+      border-bottom: 1px solid transparent;
     }
     /* Back sits above the list only on small screens. Restore the cream
        rule the first row otherwise drops, so it separates from Back.
@@ -2181,8 +2221,11 @@
       width: auto;
     }
 
-    /* Same disclosure as the mobile menu (#sidenav.is-open): in-flow
-       under the bar, display toggle, no added transition. */
+    /* Same disclosure as the mobile menu, a little slower and softer
+       so the page push reads clearly: 400ms, ease in and out.
+       max-height comes from the panel's scroll height. No cream rule
+       on the bottom edge — the last row keeps a 1px transparent border.
+       Open panel uses the menu's drop shadow. */
     #search-drawer {
       position: static;
       top: auto;
@@ -2191,25 +2234,43 @@
       left: auto;
       width: 100%;
       height: auto;
-      max-height: none;
-      z-index: auto;
-      display: none;
+      min-height: 0;
+      max-height: 0;
+      z-index: 2;
+      display: flex;
+      overflow: hidden;
       transform: none;
-      transition: none;
+      box-shadow: none;
       visibility: hidden;
       pointer-events: none;
+      /* Same transition while open and closed so the collapse eases. */
+      transition:
+        max-height 400ms cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     #search-drawer.is-open {
-      display: flex;
       visibility: visible;
       pointer-events: auto;
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
+    }
+    #search-drawer nav li:last-child > a {
+      border-bottom-color: transparent;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #search-drawer {
+        transition: none;
+      }
     }
     rvt-body:has(#search-drawer.is-open) .sidenav-mobile-bar {
       border-bottom: 0;
     }
-    /* Shared drawer inset above is 16px. Drop the search field another 16px. */
+    /* Shared drawer inset above is 16px. Drop the search field another 16px.
+       Bottom matches the menu's 8px under the last row. The last search
+       row's -1px margin needs 9px of padding to land on that same gap.
+       The body's pb-6 (24px) stays on desktop. */
     #search-drawer .drawer-body {
       padding-top: 32px;
+      padding-bottom: 9px;
     }
   }
 
@@ -2304,11 +2365,11 @@
       </rvt-prototype-search>
       <!-- Popular searches link hub — Figma 1440:245131. Placed in the
            existing full-height search drawer; chrome and field are unchanged.
-           64px follows Frame 3 (112 − 48px input). Copy is verbatim.
+           56px is Frame 3's 64px, raised 8px. Copy is verbatim.
            RECONCILED: labels have no matching page titles, so hrefs point
            at the closest existing routes (member-benefits, field-trips,
            spring-baby-animal-days, maps-guides, private-events-rentals). -->
-      <nav class="mt-16" aria-labelledby="popular-searches-heading">
+      <nav class="mt-14" aria-labelledby="popular-searches-heading">
         <h2 id="popular-searches-heading" class="t14 text-ink">Popular searches</h2>
         <ul class="pt-2">
           <li class="-mb-px">
@@ -2449,6 +2510,7 @@
         height of the main row even when the sticky nav list is short.
       -->
       <nav id="sidenav" class="shrink-0" aria-label="Menu">
+        <div class="sidenav-clip">
         <div class="sidenav-head">
           <a class="sidenav-lockup" data-nav href="#/">
             <span data-icon="trident-tab" class="lockup-mark"></span>
@@ -2460,6 +2522,7 @@
           </button>
         </div>
         <div id="sidenav-nav"></div>
+        </div>
       </nav>
 
       <div id="content-column">
@@ -3367,6 +3430,65 @@
     document.documentElement.style.setProperty('--mobile-bar-h', bar.offsetHeight + 'px');
   }
 
+  function syncMobileSearchHidden() {
+    const hide = !desktopView.matches && !searchOpen;
+    if (desktopView.matches) searchDrawer.style.maxHeight = '';
+    searchDrawer.toggleAttribute('inert', hide);
+    if (hide) searchDrawer.setAttribute('aria-hidden', 'true');
+    else searchDrawer.removeAttribute('aria-hidden');
+  }
+
+  const panelEaseMs = 400;
+  const searchEaseMs = 400;
+  function holdVisibleWhileClosing(el, token, tokenNow, stillOpen, ms) {
+    el.style.visibility = 'visible';
+    window.setTimeout(() => {
+      if (token !== tokenNow() || stillOpen()) return;
+      el.style.visibility = '';
+    }, ms || panelEaseMs);
+  }
+
+  let searchFitToken = 0;
+  function fitMobileSearch(open) {
+    const token = ++searchFitToken;
+    if (desktopView.matches) {
+      searchDrawer.style.maxHeight = '';
+      searchDrawer.style.visibility = '';
+      return;
+    }
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!open) {
+      if (reduce) {
+        searchDrawer.style.visibility = '';
+        searchDrawer.style.maxHeight = '0px';
+        return;
+      }
+      /* Next frame, after .is-open is gone, so max-height eases to 0
+         instead of snapping. Visibility stays until that ease ends. */
+      holdVisibleWhileClosing(searchDrawer, token, () => searchFitToken, () => searchOpen, searchEaseMs);
+      requestAnimationFrame(() => {
+        if (token !== searchFitToken || searchOpen) return;
+        searchDrawer.style.maxHeight = '0px';
+      });
+      return;
+    }
+    searchDrawer.style.visibility = 'visible';
+    const apply = () => {
+      if (token !== searchFitToken || !searchOpen) return;
+      searchDrawer.style.maxHeight = searchDrawer.scrollHeight + 'px';
+    };
+    if (reduce) {
+      apply();
+      return;
+    }
+    if (searchDrawer.style.maxHeight === '' || searchDrawer.style.maxHeight === '0px') {
+      searchDrawer.style.maxHeight = '0px';
+      requestAnimationFrame(apply);
+      return;
+    }
+    apply();
+  }
+
   function openSearch() {
     closeDrawer({ keepScrim: true });
     if (mobileSidenavOpen) closeMobileSidenav();
@@ -3376,19 +3498,22 @@
       searchDrawer.classList.add('is-open');
     };
     if (desktopView.matches) {
+      searchDrawer.style.maxHeight = '';
       showScrim();
       requestAnimationFrame(revealSearch);
     } else {
       /* Match the mobile menu: no scrim and no scroll lock. The panel
-         joins the page flow under the bar. */
+         joins the page flow under the bar and eases open. */
       scrim.hidden = true;
       scrim.classList.add('opacity-0');
       scrim.classList.remove('pointer-events-auto');
       document.body.classList.remove('overflow-hidden');
       document.documentElement.style.removeProperty('--scroll-lock-gutter');
       revealSearch();
+      fitMobileSearch(true);
     }
     setSearchExpanded(true);
+    syncMobileSearchHidden();
   }
 
   function closeSearch(opts) {
@@ -3398,6 +3523,8 @@
     setSearchExpanded(false);
     if (!opts || !opts.keepScrim) hideScrimIfIdle();
     if (searchDrawer.contains(document.activeElement)) searchToggleForFocus().focus();
+    fitMobileSearch(false);
+    syncMobileSearchHidden();
   }
 
   toggle.addEventListener('click', () => (drawerOpen ? closeDrawer() : openDrawer()));
@@ -3455,18 +3582,67 @@
   const main = document.getElementById('main-content');
   let mobileSidenavOpen = false;
 
+  function syncMobileSidenavHidden() {
+    const hide = !desktopView.matches && !mobileSidenavOpen;
+    if (desktopView.matches) sidenav.style.maxHeight = '';
+    sidenav.toggleAttribute('inert', hide);
+    if (hide) sidenav.setAttribute('aria-hidden', 'true');
+    else sidenav.removeAttribute('aria-hidden');
+  }
+
+  let sidenavFitToken = 0;
+  function fitMobileSidenav(open) {
+    const token = ++sidenavFitToken;
+    if (desktopView.matches) {
+      sidenav.style.maxHeight = '';
+      sidenav.style.visibility = '';
+      return;
+    }
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!open) {
+      if (reduce) {
+        sidenav.style.visibility = '';
+        sidenav.style.maxHeight = '0px';
+        return;
+      }
+      holdVisibleWhileClosing(sidenav, token, () => sidenavFitToken, () => mobileSidenavOpen);
+      requestAnimationFrame(() => {
+        if (token !== sidenavFitToken || mobileSidenavOpen) return;
+        sidenav.style.maxHeight = '0px';
+      });
+      return;
+    }
+    sidenav.style.visibility = 'visible';
+    const apply = () => {
+      if (token !== sidenavFitToken || !mobileSidenavOpen) return;
+      sidenav.style.maxHeight = sidenav.scrollHeight + 'px';
+    };
+    if (reduce) {
+      apply();
+      return;
+    }
+    if (sidenav.style.maxHeight === '' || sidenav.style.maxHeight === '0px') {
+      sidenav.style.maxHeight = '0px';
+      requestAnimationFrame(apply);
+      return;
+    }
+    apply();
+  }
+
   function openMobileSidenav() {
     if (desktopView.matches) return;
     if (searchOpen) closeSearch();
     mobileSidenavOpen = true;
     mobileStack = stackForCurrentPage();
-    sidenav.classList.add('is-open');
-    sidenavOpenBtn.setAttribute('aria-expanded', 'true');
-    sidenavOpenBtn.querySelector('.sr-only').textContent = 'Close';
     const slug = currentSlug();
     sidenavNav.innerHTML = renderSidenav(slug);
     paintIcons(sidenavNav);
     document.body.classList.toggle('has-sidenav-back', mobileStack.length > 0);
+    sidenav.classList.add('is-open');
+    sidenavOpenBtn.setAttribute('aria-expanded', 'true');
+    sidenavOpenBtn.querySelector('.sr-only').textContent = 'Close';
+    syncMobileSidenavHidden();
+    fitMobileSidenav(true);
   }
 
   function closeMobileSidenav() {
@@ -3475,6 +3651,8 @@
     sidenav.classList.remove('is-open');
     sidenavOpenBtn.setAttribute('aria-expanded', 'false');
     sidenavOpenBtn.querySelector('.sr-only').textContent = 'Menu';
+    syncMobileSidenavHidden();
+    fitMobileSidenav(false);
     if (sidenav.contains(document.activeElement)) sidenavOpenBtn.focus();
   }
 
@@ -3489,6 +3667,7 @@
       sidenavNav.innerHTML = renderSidenav(currentSlug());
       paintIcons(sidenavNav);
       document.body.classList.add('has-sidenav-back');
+      fitMobileSidenav(true);
       return;
     }
     if (e.target.closest('[data-sidenav-up]')) {
@@ -3496,10 +3675,13 @@
       sidenavNav.innerHTML = renderSidenav(currentSlug());
       paintIcons(sidenavNav);
       document.body.classList.toggle('has-sidenav-back', mobileStack.length > 0);
+      fitMobileSidenav(true);
     }
   });
   desktopView.addEventListener('change', (e) => {
     if (e.matches) closeMobileSidenav();
+    syncMobileSidenavHidden();
+    syncMobileSearchHidden();
     const slug = currentSlug();
     sidenavNav.innerHTML = renderSidenav(slug);
     paintIcons(sidenavNav);
@@ -3508,6 +3690,8 @@
   });
   window.addEventListener('resize', syncMobileBarHeight);
   syncMobileBarHeight();
+  syncMobileSidenavHidden();
+  syncMobileSearchHidden();
 
   function render() {
     const slug = currentSlug();
