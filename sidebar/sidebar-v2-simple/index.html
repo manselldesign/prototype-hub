@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- pages-cache 2026-10-02T19:10Z -->
+<!-- pages-cache 2026-10-02T20:10Z -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -302,40 +302,47 @@
   rvt-body, rvt-header, rvt-main, rvt-breadcrumbs,
   rvt-prototype-header-menu, rvt-prototype-search, rvt-prototype-nav { display:block; }
 
-  /* Breadcrumb trail — never wrap, never truncate. Overflow scrolls
-     horizontally inside the content column (tablet/mobile first; desktop
-     if the trail is wider than the remaining column). Scrollbar chrome
-     is hidden so the 20px crumb row still bottom-aligns with the sidenav title. */
+  /* Breadcrumb trail. Under 1024px a long trail wraps onto a second
+     line inside the column. At 1024px and up it stays one row and scrolls
+     if it is wider than the column. Scrollbar chrome stays hidden so the
+     20px row still bottom-aligns with the sidenav title. */
   rvt-breadcrumbs {
     min-width: 0;
     max-width: 100%;
   }
   .crumbs-trail {
-    overflow-x: auto;
-    overflow-y: hidden;
     max-width: 100%;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
   }
-  .crumbs-trail::-webkit-scrollbar { display: none; }
-  .crumbs-trail ol { width: max-content; }
-  .crumbs-trail li {
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-  /* Mobile: the trail wraps inside the column instead of scrolling.
-     Each crumb stays on one line; the row breaks between crumbs.
-     Desktop keeps the single scrolling row. */
   @media (max-width: 1023.98px) {
     .crumbs-trail {
       overflow: visible;
     }
     .crumbs-trail ol {
-      width: auto;
+      width: 100%;
       max-width: 100%;
+      min-width: 0;
       flex-wrap: wrap;
       row-gap: 4px;
+    }
+    .crumbs-trail li {
+      height: auto;
+      max-width: 100%;
+      white-space: normal;
+    }
+  }
+  @media (min-width: 1024px) {
+    .crumbs-trail {
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .crumbs-trail::-webkit-scrollbar { display: none; }
+    .crumbs-trail ol { width: max-content; }
+    .crumbs-trail li {
+      flex-shrink: 0;
+      white-space: nowrap;
     }
   }
   /* rvt-breadcrumbs item type (Figma 1629:23547). Row stays 20px.
@@ -3163,8 +3170,8 @@
      BREADCRUMBS  (`rvt-breadcrumbs`, Figma 1629:23547)
      First crumb is a house glyph whose only content is sr-only "Home"; the last
      crumb is a plain <li aria-current="page"> with no <a>. The full source trail
-     stays on screen — no ellipsis chip. The list never wraps; overflow scrolls
-     inside `.crumbs-trail`.
+     stays on screen — no ellipsis chip. Under 1024px the list wraps onto a second line. At 1024px and up
+     it stays one row and scrolls inside `.crumbs-trail`.
 
      Component (Light / Default), row height 20px, 4px gaps:
        home         12×12 glyph #343C42, nudged up 1px; chevron has no nudge
@@ -3197,7 +3204,7 @@
     });
 
     return `<rvt-breadcrumbs><nav aria-label="Breadcrumbs" class="crumbs-trail pb-3">` +
-           `<ol class="flex flex-nowrap items-center gap-x-1">${out}</ol></nav></rvt-breadcrumbs>`;
+           `<ol class="flex flex-wrap items-center gap-x-1 lg:flex-nowrap">${out}</ol></nav></rvt-breadcrumbs>`;
   }
 
   /* =========================================================================
