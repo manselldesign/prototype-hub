@@ -138,6 +138,39 @@
       header .wrap { padding: 1.35rem 0 1.2rem; }
     }
 
+    .notes {
+      margin: 0 0 0.9rem;
+      padding-left: 1.2rem;
+      color: var(--body);
+    }
+
+    .notes li { margin: 0 0 0.2rem; }
+
+    .earlier {
+      margin: 2.5rem 0 0;
+      border-top: 1px solid var(--line);
+      padding-top: 1.25rem;
+    }
+
+    .earlier > summary {
+      cursor: pointer;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .earlier > summary:focus-visible {
+      outline: 2px solid var(--crimson);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .earlier[open] > summary { margin-bottom: 1rem; }
+
+    .earlier .group-title { font-size: 1.1rem; }
+
+    .earlier .prototype-list li { background: transparent; }
+
   </style>
 </head>
 <body>
@@ -149,44 +182,54 @@
   </header>
   <main>
     <div class="wrap">
-      <p class="lede">Indiana Zooniversity top navigation. These open a large menu on hover, by clicking the section, or by clicking the icon.</p>
+      <p class="lede">The current header plus a drop-down that shows three levels of a section at once.</p>
+      <ul class="notes">
+        <li>Split controls: the section name goes to its landing page, and a separate icon opens the menu.</li>
+        <li>Click to open: menus open on a click or tap, not on hover, so they don’t open by accident and work with a keyboard and screen reader.</li>
+      </ul>
       <p class="empty" id="empty-state">Nothing is listed yet. New prototypes appear here after they are published.</p>
       <section class="group" id="group-mega">
         <ul class="prototype-list">
           <li>
-            <h2>mega-click-icon-extreme-2deep</h2>
-            <p>School of Social Work. The menu is one column of that section’s direct children, 8px apart.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-extreme-2deep/#/">https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-extreme-2deep/#/</a>
-          </li>
-          <li>
-            <h2>mega-click-icon-extreme</h2>
-            <p>School of Social Work in this header. Twelve items wrap onto a second line. The label goes to the page, and a chevron opens the menu.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-extreme/#/">https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-extreme/#/</a>
-          </li>
-          <li>
-            <h2>mega-click-icon-simple</h2>
-            <p>Quick Check in this header. The label goes to the page. Only Resources has a chevron, and it opens How-to Videos and User Guide. The footer stays at the bottom of the page.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-simple/#/">https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-simple/#/</a>
-          </li>
-          <li>
-            <h2>Prototype-Mega-Click-Icon</h2>
-            <p>Indiana Zooniversity top navigation. The label is a page link and the icon opens the menu. The current page stays bold while its menu is open.</p>
+            <h2>Zoo site</h2>
+            <p>Indiana Zooniversity, a large sample site.</p>
             <a href="https://manselldesign.github.io/prototype-hub/mega/mega-click-icon/#/">https://manselldesign.github.io/prototype-hub/mega/mega-click-icon/#/</a>
           </li>
           <li>
-            <h2>Prototype-Mega-Click</h2>
-            <p>Indiana Zooniversity top navigation. Desktop sections open on click, with an Overview link back to that section.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/mega/mega-click/#/">https://manselldesign.github.io/prototype-hub/mega/mega-click/#/</a>
+            <h2>Simple site</h2>
+            <p>Quick Check, a small site with few pages. Only Resources has a menu.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-simple/#/">https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-simple/#/</a>
           </li>
           <li>
-            <h2>Prototype-Mega-Hover</h2>
-            <p>Indiana Zooniversity top navigation. Desktop sections open a mega menu on hover. On a narrow screen, the same sections open in a tap drawer.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/mega/mega-hover/#/">https://manselldesign.github.io/prototype-hub/mega/mega-hover/#/</a>
+            <h2>Extreme site</h2>
+            <p>School of Social Work, a site with many sections. Twelve sections wrap onto a second line.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-extreme/#/">https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-extreme/#/</a>
           </li>
         </ul>
       </section>
 
-      <p class="later">New prototypes appear here after they are published.</p>
+      <details class="earlier">
+        <summary>Earlier versions (3)</summary>
+        <section class="group">
+          <ul class="prototype-list">
+            <li>
+              <h2>Mega menu, Extreme, 2 levels</h2>
+              <p>School of Social Work. The menu is one column of that section’s direct children.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-extreme-2deep/#/">https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-extreme-2deep/#/</a>
+            </li>
+            <li>
+              <h2>Mega menu, click</h2>
+              <p>Indiana Zooniversity. The whole section name opens the menu, with an Overview link back to that section.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/mega/mega-click/#/">https://manselldesign.github.io/prototype-hub/mega/mega-click/#/</a>
+            </li>
+            <li>
+              <h2>Mega menu, hover</h2>
+              <p>Indiana Zooniversity. Sections open a mega menu on hover. On a narrow screen they open in a tap drawer.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/mega/mega-hover/#/">https://manselldesign.github.io/prototype-hub/mega/mega-hover/#/</a>
+            </li>
+          </ul>
+        </section>
+      </details>
     </div>
   </main>
   <script>

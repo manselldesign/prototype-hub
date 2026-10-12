@@ -4,21 +4,35 @@ Stakeholders open this page to try a prototype:
 
 **https://manselldesign.github.io/prototype-hub/**
 
+The homepage shows the current round of each navigation option first. Older drafts sit under **Earlier prototypes**, collapsed at the bottom.
+
 Similar prototypes share a group. Each group is a folder and its own page on the hub:
 
-| Group | Page |
-| --- | --- |
-| Mega menu | [mega/](https://manselldesign.github.io/prototype-hub/mega/) |
-| Header | [header/](https://manselldesign.github.io/prototype-hub/header/) |
-| Sidebar | [sidebar/](https://manselldesign.github.io/prototype-hub/sidebar/) |
-| Drill-down | [drill-down/](https://manselldesign.github.io/prototype-hub/drill-down/) |
-| Breadcrumbs | [breadcrumbs/](https://manselldesign.github.io/prototype-hub/breadcrumbs/) |
+| Group | Page | Current round |
+| --- | --- | --- |
+| Header | [header/](https://manselldesign.github.io/prototype-hub/header/) | Visible header (Option D): `header-v1`, `-simple`, `-extreme` |
+| Mega menu | [mega/](https://manselldesign.github.io/prototype-hub/mega/) | `mega-click-icon`, `-simple`, `-extreme` |
+| Sidebar | [sidebar/](https://manselldesign.github.io/prototype-hub/sidebar/) | Options A/B: `sidebar-v2` and `sidebar-v2-children`, each with `-simple` and `-extreme`, plus `sidebar-v2-children-app` |
+| Drill-down | [drill-down/](https://manselldesign.github.io/prototype-hub/drill-down/) | Earlier work only (links to standalone repos) |
+
+Each current prototype comes in three sites: Indiana Zooniversity (no suffix), Quick Check (`-simple`), and School of Social Work (`-extreme`).
+
+## Layout
+
+```text
+index.html            Homepage: current round, then Earlier prototypes
+404.html              Forwards old top-level links (mega-hover/, sidebar-v1/, …)
+<group>/index.html    Group page
+<group>/<slug>/       One prototype, a single index.html
+.cursor/skills/       The /git-publish skill and its scripts
+tools/                Shortcut to the publish script for a clone of this hub
+```
 
 A prototype lives at `<group>/<slug>/index.html`. Example: mega-click-icon-simple is `mega/mega-click-icon-simple/index.html`, live at:
 
 `https://manselldesign.github.io/prototype-hub/mega/mega-click-icon-simple/#/`
 
-Older links such as `https://manselldesign.github.io/prototype-hub/mega-hover/#/` still open. They redirect into the group folder.
+Older links such as `https://manselldesign.github.io/prototype-hub/mega-hover/#/` still open. `404.html` forwards them into the group folder. Breadcrumbs is not a navigation prototype and lives in its own repo, [manselldesign/breadcrumbs](https://github.com/manselldesign/breadcrumbs).
 
 Do **not** create a new GitHub repo for each prototype unless someone explicitly asks for a standalone repo.
 

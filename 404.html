@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found</title>
+<script>
+  // Old top-level links from before prototypes moved into group folders.
+  // GitHub Pages serves this page for any missing path, so it forwards them.
+  (function () {
+    var moved = {
+      "header-v1": "header/header-v1/",
+      "mega-click": "mega/mega-click/",
+      "mega-click-icon": "mega/mega-click-icon/",
+      "mega-hover": "mega/mega-hover/",
+      "sidebar-v1": "sidebar/sidebar-v1/",
+      "breadcrumbs": "https://manselldesign.github.io/breadcrumbs/"
+    };
+    var match = location.pathname.match(/\/prototype-hub\/([^/]+)\/?(?:index\.html)?$/);
+    var target = match && moved[match[1]];
+    if (!target) return;
+    if (!/^https?:/.test(target)) target = "/prototype-hub/" + target + location.hash;
+    location.replace(target);
+  })();
+</script>
+<style>
+  body {
+    margin: 0;
+    background: #f4efe6;
+    color: #241f1c;
+    font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  main { width: min(40rem, calc(100% - 2rem)); margin: 3rem auto; }
+  a { color: #990000; font-weight: 500; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Page not found</h1>
+  <p>This link may be to a prototype that moved. <a href="/prototype-hub/">Open the prototype review hub</a> to find it.</p>
+</main>
+</body>
+</html>

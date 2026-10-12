@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Header</title>
+  <title>Visible header (Option D)</title>
   <meta name="description" content="Shareable HTML prototypes for stakeholder review.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,45 +138,88 @@
       header .wrap { padding: 1.35rem 0 1.2rem; }
     }
 
+    .notes {
+      margin: 0 0 0.9rem;
+      padding-left: 1.2rem;
+      color: var(--body);
+    }
+
+    .notes li { margin: 0 0 0.2rem; }
+
+    .earlier {
+      margin: 2.5rem 0 0;
+      border-top: 1px solid var(--line);
+      padding-top: 1.25rem;
+    }
+
+    .earlier > summary {
+      cursor: pointer;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .earlier > summary:focus-visible {
+      outline: 2px solid var(--crimson);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .earlier[open] > summary { margin-bottom: 1rem; }
+
+    .earlier .group-title { font-size: 1.1rem; }
+
+    .earlier .prototype-list li { background: transparent; }
+
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
       <p class="eyebrow"><a href="../">Prototype review</a></p>
-      <h1>Header</h1>
+      <h1>Visible header (Option D)</h1>
     </div>
   </header>
   <main>
     <div class="wrap">
-      <p class="lede">Top navigation that goes straight to a page, without a mega menu.</p>
+      <p class="lede">Main sections sit in the header and go straight to their page, with no drop-down.</p>
+      <ul class="notes">
+        <li>Small style updates so every prototype looks alike and review stays on the navigation.</li>
+        <li>Calls to action now show on mobile.</li>
+      </ul>
       <p class="empty" id="empty-state">Nothing is listed yet. New prototypes appear here after they are published.</p>
       <section class="group" id="group-header">
         <ul class="prototype-list">
           <li>
-            <h2>header-v1-extreme</h2>
-            <p>Header-v1 layout with the School of Social Work site. Section links wrap to a second line. Request Information opens the request form.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/header/header-v1-extreme/#/">https://manselldesign.github.io/prototype-hub/header/header-v1-extreme/#/</a>
-          </li>
-          <li>
-            <h2>header-v1-simple</h2>
-            <p>Header-v1 layout with the Quick Check site. Section links sit in the header. Request a Demo opens Contact.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/header/header-v1-simple/#/">https://manselldesign.github.io/prototype-hub/header/header-v1-simple/#/</a>
-          </li>
-          <li>
-            <h2>Prototype-Header-V1</h2>
-            <p>Indiana Zooniversity top navigation. Main nav items go directly to the page, with no dropdown.</p>
+            <h2>Zoo site</h2>
+            <p>Indiana Zooniversity, a large sample site.</p>
             <a href="https://manselldesign.github.io/prototype-hub/header/header-v1/#/">https://manselldesign.github.io/prototype-hub/header/header-v1/#/</a>
           </li>
           <li>
-            <h2>Zooniversity header</h2>
-            <p>Indiana Zooniversity header from the Figma spec, with separate Menu and Search controls.</p>
-            <a href="https://manselldesign.github.io/rivet-nav-zoo-header/">https://manselldesign.github.io/rivet-nav-zoo-header/</a>
+            <h2>Simple site</h2>
+            <p>Quick Check, a small site with few pages.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/header/header-v1-simple/#/">https://manselldesign.github.io/prototype-hub/header/header-v1-simple/#/</a>
+          </li>
+          <li>
+            <h2>Extreme site</h2>
+            <p>School of Social Work, a site with many sections. Section links wrap to a second line.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/header/header-v1-extreme/#/">https://manselldesign.github.io/prototype-hub/header/header-v1-extreme/#/</a>
           </li>
         </ul>
       </section>
 
-      <p class="later">New prototypes appear here after they are published.</p>
+      <details class="earlier">
+        <summary>Earlier versions (1)</summary>
+        <section class="group">
+          <ul class="prototype-list">
+            <li>
+              <h2>Zooniversity header</h2>
+              <p>Indiana Zooniversity header from the Figma spec, with separate Menu and Search controls.</p>
+              <a href="https://manselldesign.github.io/rivet-nav-zoo-header/">https://manselldesign.github.io/rivet-nav-zoo-header/</a>
+            </li>
+          </ul>
+        </section>
+      </details>
     </div>
   </main>
   <script>

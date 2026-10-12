@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sidebar</title>
+  <title>Sidebar (Options A/B)</title>
   <meta name="description" content="Shareable HTML prototypes for stakeholder review.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,70 +138,114 @@
       header .wrap { padding: 1.35rem 0 1.2rem; }
     }
 
+    .notes {
+      margin: 0 0 0.9rem;
+      padding-left: 1.2rem;
+      color: var(--body);
+    }
+
+    .notes li { margin: 0 0 0.2rem; }
+
+    .earlier {
+      margin: 2.5rem 0 0;
+      border-top: 1px solid var(--line);
+      padding-top: 1.25rem;
+    }
+
+    .earlier > summary {
+      cursor: pointer;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .earlier > summary:focus-visible {
+      outline: 2px solid var(--crimson);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .earlier[open] > summary { margin-bottom: 1rem; }
+
+    .earlier .group-title { font-size: 1.1rem; }
+
+    .earlier .prototype-list li { background: transparent; }
+
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
       <p class="eyebrow"><a href="../">Prototype review</a></p>
-      <h1>Sidebar</h1>
+      <h1>Sidebar (Options A/B)</h1>
     </div>
   </header>
   <main>
     <div class="wrap">
-      <p class="lede">Left-rail navigation for the current section.</p>
+      <p class="lede">A left rail for the current section, under a top bar that holds the lockup, search, and calls to action.</p>
+      <ul class="notes">
+        <li>Two versions: the rail lists a page’s siblings, or only its children.</li>
+        <li>Search sits in the top bar, so sites without calls to action still use that space.</li>
+        <li>Calls to action now show on mobile, and the footer shows two levels of links.</li>
+      </ul>
       <p class="empty" id="empty-state">Nothing is listed yet. New prototypes appear here after they are published.</p>
       <section class="group" id="group-sidebar">
         <ul class="prototype-list">
           <li>
-            <h2>sidebar-v2-children-app</h2>
-            <p>Sidebar-v2-children layout with the One.IU app. A section lists its children. The selected parent stays marked.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-app/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-app/#/</a>
-          </li>
-          <li>
-            <h2>sidebar-v2-children-extreme</h2>
-            <p>Sidebar-v2-children layout with the School of Social Work site. A section lists its children. Request Information opens the request form.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-extreme/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-extreme/#/</a>
-          </li>
-          <li>
-            <h2>sidebar-v2-children-simple</h2>
-            <p>Sidebar-v2-children layout with the Quick Check site. A section lists its children. Request a Demo opens Contact.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-simple/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-simple/#/</a>
-          </li>
-          <li>
-            <h2>sidebar-v2-extreme</h2>
-            <p>Sidebar-v2 layout with the School of Social Work site. Section links sit in the left rail. Request Information opens the request form.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-extreme/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-extreme/#/</a>
-          </li>
-          <li>
-            <h2>sidebar-v2-simple</h2>
-            <p>Sidebar-v2 layout with the Quick Check site. Section links sit in the left rail. Request a Demo opens Contact.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-simple/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-simple/#/</a>
-          </li>
-          <li>
-            <h2>sidebar-v2-children</h2>
-            <p>Same 280px rail. A section lists its children, like the mega-click-icon sidenav. Mobile still slides down, and Back stays.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children/#/</a>
-          </li>
-          <li>
-            <h2>sidebar-v2</h2>
-            <p>Sticky left rail. Search sits beside the CTAs. The field is 16px under the header.</p>
+            <h2>Siblings · Zoo site</h2>
+            <p>Indiana Zooniversity, a large sample site.</p>
             <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2/#/</a>
           </li>
           <li>
-            <h2>sidebar-v1</h2>
-            <p>Sticky left rail. Below 1024 the menu opens under the bar and pushes the page down.</p>
-            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v1/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v1/#/</a>
+            <h2>Siblings · Simple site</h2>
+            <p>Quick Check, a small site with few pages.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-simple/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-simple/#/</a>
           </li>
           <li>
-            <h2>Zooniversity sidenav (Prototype D)</h2>
-            <p>Source-behavior sidenav for Indiana Zooniversity: a current-section sibling list. This is the sidenav, not the hover mega menu.</p>
-            <a href="https://manselldesign.github.io/rivet-nav-zoo-d/">https://manselldesign.github.io/rivet-nav-zoo-d/</a>
+            <h2>Siblings · Extreme site</h2>
+            <p>School of Social Work, a site with many sections.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-extreme/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-extreme/#/</a>
+          </li>
+          <li>
+            <h2>Children · Zoo site</h2>
+            <p>Indiana Zooniversity, a large sample site.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children/#/</a>
+          </li>
+          <li>
+            <h2>Children · Simple site</h2>
+            <p>Quick Check, a small site with few pages.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-simple/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-simple/#/</a>
+          </li>
+          <li>
+            <h2>Children · Extreme site</h2>
+            <p>School of Social Work, a site with many sections.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-extreme/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-extreme/#/</a>
+          </li>
+          <li>
+            <h2>Children · App example</h2>
+            <p>One.IU, an app with a login button in the top bar.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-app/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v2-children-app/#/</a>
           </li>
         </ul>
       </section>
 
-      <p class="later">New prototypes appear here after they are published.</p>
+      <details class="earlier">
+        <summary>Earlier versions (2)</summary>
+        <section class="group">
+          <ul class="prototype-list">
+            <li>
+              <h2>Sidebar v1</h2>
+              <p>Sticky left rail. Below 1024px the menu opens under the bar and pushes the page down.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v1/#/">https://manselldesign.github.io/prototype-hub/sidebar/sidebar-v1/#/</a>
+            </li>
+            <li>
+              <h2>Zooniversity sidenav</h2>
+              <p>Source-behavior sidenav for Indiana Zooniversity: a list of the current section’s siblings.</p>
+              <a href="https://manselldesign.github.io/rivet-nav-zoo-d/">https://manselldesign.github.io/rivet-nav-zoo-d/</a>
+            </li>
+          </ul>
+        </section>
+      </details>
     </div>
   </main>
   <script>

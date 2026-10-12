@@ -13,7 +13,7 @@ Put the open prototype on **manselldesign/prototype-hub** and reply with:
 
 `https://manselldesign.github.io/prototype-hub/<group>/<slug>/#/`
 
-That is a **folder** in a group (`<group>/<slug>/index.html`) plus a card on the hub homepage and on that group’s page (`<group>/index.html`). Groups are `mega`, `header`, `sidebar`, `drill-down`, and `breadcrumbs`. Do **not** create a new GitHub repo unless the user clearly asks for a **standalone repo**.
+That is a **folder** in a group (`<group>/<slug>/index.html`) plus a card on the hub homepage and on that group’s page (`<group>/index.html`). Groups are `mega`, `header`, `sidebar`, and `drill-down`. Do **not** create a new GitHub repo unless the user clearly asks for a **standalone repo**.
 
 Never push to, overwrite, or recreate these existing standalone repos: `rivet-nav-prototype` (Prototype A), `rivet-nav-zoo-header` (B), `rivet-nav-zoo-source` (C), or the unrelated `manselldesign/mega-hover`. Prototype-Mega-Hover lives at **`prototype-hub/mega/mega-hover/`**, not in `manselldesign/mega-hover`.
 
@@ -36,13 +36,13 @@ Use what she already typed. Ask only for what is missing.
 | --- | --- |
 | Folder | Directory that contains `index.html`. |
 | Slug | From the prototype name: drop a leading `Prototype-`, lowercase, hyphens only. Example: `Prototype-Mega-Hover` → `mega-hover`. |
-| Group | `mega` for `mega-*`, `header` for `header-*`, `sidebar` for `sidebar-*`, `breadcrumbs` for `breadcrumb*`, `drill-down` for `drill-*`. Pass it as the fifth argument when the slug does not say. |
+| Group | `mega` for `mega-*`, `header` for `header-*`, `sidebar` for `sidebar-*`, `drill-down` for `drill-*`. Pass it as the fifth argument when the slug does not say. |
 | Title | Name on the hub card. |
 | Description | One line about what a reviewer should look at. |
 
 `/git-publish Prototype-Mega-Hover — desktop mega menu and mobile header CTAs` → slug `mega-hover`, title `Prototype-Mega-Hover`.
 
-Refuse slugs `tools`, `index`, `.cursor`, `mega`, `header`, `sidebar`, `drill-down`, or `breadcrumbs`.
+Refuse slugs `tools`, `index`, `.cursor`, `mega`, `header`, `sidebar`, or `drill-down`.
 
 ## Publish (this is the usual path)
 

@@ -5,9 +5,9 @@
 # Usage:
 #   publish-to-hub.sh <folder-with-index.html> <slug> <title> <description> [group]
 #
-# Group is mega, header, sidebar, drill-down, or breadcrumbs.
+# Group is mega, header, sidebar, or drill-down.
 # If omitted, it is inferred from the slug (mega-*, header-*, sidebar-*,
-# breadcrumb*, drill-*).
+# drill-*).
 #
 # Does not create a new GitHub repository.
 
@@ -42,12 +42,11 @@ if [[ -z "$GROUP" ]]; then
     mega-*) GROUP="mega" ;;
     header-*) GROUP="header" ;;
     sidebar-*) GROUP="sidebar" ;;
-    breadcrumb*) GROUP="breadcrumbs" ;;
     drill-*) GROUP="drill-down" ;;
   esac
 fi
 
-RESERVED="tools index .cursor mega header sidebar drill-down breadcrumbs"
+RESERVED="tools index .cursor mega header sidebar drill-down"
 if [[ " $RESERVED " == *" $SLUG "* ]]; then
   echo "Stopped. \"$SLUG\" is reserved on the hub. Pick another slug." >&2
   exit 1
@@ -55,14 +54,14 @@ fi
 
 if [[ -z "$GROUP" ]]; then
   echo "Could not tell which group \"$SLUG\" belongs in." >&2
-  echo "Pass one of: mega, header, sidebar, drill-down, breadcrumbs." >&2
+  echo "Pass one of: mega, header, sidebar, drill-down." >&2
   exit 1
 fi
 
 case "$GROUP" in
-  mega|header|sidebar|drill-down|breadcrumbs) ;;
+  mega|header|sidebar|drill-down) ;;
   *)
-    echo "Unknown group \"$GROUP\". Use mega, header, sidebar, drill-down, or breadcrumbs." >&2
+    echo "Unknown group \"$GROUP\". Use mega, header, sidebar, or drill-down." >&2
     exit 1
     ;;
 esac
