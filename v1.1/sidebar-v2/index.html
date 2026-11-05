@@ -1354,9 +1354,10 @@
     display: block;
   }
   /* Hairlines wrap each parent row, including its expanded children. */
+  /* v1.1: rows sit on a 44px pitch. Each row draws only its bottom
+     hairline, so no overlap is needed. */
   #sidenav-nav > div > ul > li {
     position: relative;
-    margin-bottom: -1px;
   }
   #sidenav-nav > div > ul > li::before,
   #sidenav-nav > div > ul > li::after {
@@ -1372,13 +1373,13 @@
   #sidenav-nav > div > ul > li::after { bottom: 0; }
   /* The first row has no rule above it, so the label can sit on the
      breadcrumb row without a line between them and the header. */
-  #sidenav-nav > div > ul > li:first-child::before { content: none; }
+  #sidenav-nav > div > ul > li::before { content: none; }
   #sidenav li ul {
     margin: 0;
     /* Top is shorter than the bottom: the open label's underline sits
        inside the line box, so 16px above the first child reads looser
        than the last child above the hairline. */
-    padding: 11px 0 16px;
+    padding: 12px 0 16px;
   }
   #sidenav ul a.sidenav-item--open {
     padding-bottom: 0;
@@ -1829,7 +1830,7 @@
     .footer-nav {
       flex: 1 1 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       align-items: start;
       gap: 48px;
       width: auto;
@@ -2234,14 +2235,15 @@
        With Back, the first menu item — not Back — stays on that center:
        8px gap + 24px Back + 20px after-back + 12px row pad + 10px = 74px,
        matching the 64px content pad plus half the 20px crumb row. */
+    /* v1.1: Back sits 12px under the header (was 8px). */
     #sidenav:has(.nav-btn-back) {
-      padding-top: 8px;
+      padding-top: 12px;
     }
     #sidenav-nav:has(> .nav-btn-back) {
       padding-top: 0;
     }
     #sidenav-nav .sidenav-after-back {
-      padding-top: 20px;
+      padding-top: 16px;
     }
     .has-sidenav .interior-content {
       /* First sidenav label and the 20px crumb row share a center,
@@ -3380,7 +3382,7 @@
           kind === 'down'
             ? `<span data-icon="chevron-down" class="block size-4 shrink-0" aria-hidden="true"></span>`
             : kind === 'right'
-              ? `<span data-icon="chevron-right" class="block size-4 shrink-0" aria-hidden="true"></span>`
+              ? `<span class="sidenav-chevron block size-3 shrink-0" aria-hidden="true">${SIDENAV_CHEVRON}</span>`
               : '';
         const kids = expanded
           ? `<ul>` +

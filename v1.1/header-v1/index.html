@@ -1060,11 +1060,53 @@
     padding-top: 12px;
     padding-bottom: 12px;
     min-height: 0;
-    line-height: 16px;
+    line-height: 20px;
     text-decoration: none;
   }
   #sidenav ul a.sidenav-item .t18 {
-    line-height: 16px;
+    line-height: 20px;
+  }
+  /*
+    v1.1: Back button, same as the Sidebar (C) menu. Desktop rail:
+    12px top + 24px Back + 28px = section title at 64px under the header.
+    The title uses a 20px line so its center (74) matches the crumb row.
+  */
+  #sidenav .nav-btn-back {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    gap: 8px;
+    height: 24px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #1F2528;
+    text-decoration: none;
+  }
+  #sidenav .nav-btn-back:active,
+  #sidenav .nav-btn-back:focus-visible {
+    color: #000;
+    text-decoration: none;
+  }
+  @media (min-width: 1024px) {
+    #sidenav .nav-btn-back:hover {
+      color: #000;
+      text-decoration: none;
+    }
+    .has-sidenav #sidenav {
+      padding-top: 12px;
+    }
+  }
+  #sidenav .t-sidenav-back {
+    font-size: 14px;
+    line-height: 20px;
+    font-variation-settings: 'wght' 600, 'wdth' 115;
+  }
+  #sidenav .sidenav-after-back {
+    padding-top: 28px;
+  }
+  #sidenav a.sidenav-title .sidenav-title-label {
+    line-height: 20px;
   }
   /* Child rows only. Underline stays on the label; the chevron is never
      decorated. Hover, active, and keyboard focus turn both crimson.
@@ -1107,16 +1149,272 @@
   }
   }
 
-  /* Full-bleed crimson; only the inner row (trident + legal) insets.
-     Left pad matches the lockup / sidenav text so the trident does not
-     sit at the viewport edge, and does not jump on Home (no rail). */
+  /*
+    Crimson footer (Figma rvt-footer 1539:11977).
+    Desktop: 48px above the columns, 32px below them. The identity name
+    uses the same 24px line box as the section titles so the two rows
+    share a center. Section columns are at least 200px and wrap, so a
+    row holds five at most and never shrinks to squeeze in a sixth.
+    Section titles are 16/24 wght 600; children are 14/20 wght 350,
+    8px apart, 16px under the title. A section title underlines on
+    hover and does not change color.
+    Below 1024px each section is a disclosure: the title still links, and
+    the chevron opens that section's pages. Legal sits under a #6D0808
+    rule. Social pills are omitted: this site has no social destinations.
+  */
   .rvt-footer {
-    padding-left: var(--sidenav-pad-x);
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-right: 16px;
+    color: #fff;
+  }
+  .footer-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    padding-top: 24px;
+  }
+  .footer-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  .footer-identity .t1 {
+    margin: 0;
+    color: #fff;
+    line-height: 24px;
+  }
+  .footer-address {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 8px;
+  }
+  .footer-address p,
+  .footer-address a {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+    line-height: 28px;
+    font-variation-settings: 'wght' 350, 'wdth' 115;
+    text-decoration: none;
+  }
+  .footer-nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .footer-col {
+    border-bottom: 1px solid #6D0808;
+  }
+  /* Legal already draws the rule under the last section. */
+  .footer-col:last-child {
+    border-bottom: 0;
+  }
+  .footer-col-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+  }
+  .footer-col-title {
+    color: #FDFAF7;
+    font-size: 16px;
+    line-height: 24px;
+    font-variation-settings: 'wght' 600, 'wdth' 115;
+    text-decoration: none;
+  }
+    .footer-col-title:active {
+    color: #FDFAF7;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+@media (min-width: 1024px) {
+  .footer-col-title:hover {
+    color: #FDFAF7;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  }
+  .footer-disclosure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .footer-chevron {
+    display: block;
+    width: 16px;
+    height: 16px;
+    transform: rotate(0deg);
+    transition: transform 150ms ease;
+  }
+  .footer-col.is-open .footer-chevron {
+    transform: rotate(180deg);
+  }
+  .footer-col ul {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0 0 16px;
+    list-style: none;
+  }
+  .footer-col.is-open ul {
+    display: flex;
+  }
+  .footer-col ul a,
+  .rvt-footer-legal a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .footer-col ul a {
+    font-size: 14px;
+    line-height: 20px;
+    font-variation-settings: 'wght' 350, 'wdth' 115;
+  }
+    .footer-col ul a:active {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+@media (min-width: 1024px) {
+  .footer-col ul a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  }
+    .footer-address a:active,
+  .rvt-footer-legal a:active {
+    color: #FAF6EF;
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+@media (min-width: 1024px) {
+  .footer-address a:hover,
+  .rvt-footer-legal a:hover {
+    color: #FAF6EF;
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+  }
+  .footer-legal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 16px 0;
+    border-top: 1px solid #6D0808;
+    text-align: center;
+  }
+  .footer-legal ul {
+    justify-content: center;
+  }
+  @media screen(lg) {
+    .rvt-footer {
+      /* Same left edge as the content column: twice the sidenav's right inset. */
+      padding-left: calc(var(--sidenav-pad-x) * 2);
+      padding-right: 40px;
+    }
+    /* Rail layout: right inset matches the left (twice the sidenav pad). */
+    .has-sidenav .rvt-footer {
+      padding-right: calc(var(--sidenav-pad-x) * 2);
+    }
+    .footer-main {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 48px;
+      padding-top: 48px;
+      padding-bottom: 32px;
+    }
+    .footer-identity {
+      width: max-content;
+      max-width: 220px;
+      flex: 0 0 auto;
+      gap: 16px;
+    }
+    .footer-address {
+      padding-top: 0;
+    }
+    .footer-nav {
+      flex: 1 1 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      align-items: start;
+      gap: 48px;
+      width: auto;
+      min-width: 0;
+    }
+    .footer-col {
+      width: auto;
+      min-width: 0;
+      border-bottom: 0;
+    }
+    .footer-col-head {
+      min-height: 0;
+      margin-bottom: 16px;
+    }
+    .footer-disclosure {
+      display: none;
+    }
+    .footer-col ul,
+    .footer-col.is-open ul {
+      display: flex;
+      padding: 0;
+    }
+    .footer-legal {
+      flex-direction: row;
+      align-items: center;
+      gap: 24px;
+      margin-top: 0;
+      text-align: left;
+    }
+    .footer-legal ul {
+      justify-content: flex-start;
+    }
+  }
+
+  /*
+    v1.1 (Options A and B): the footer sits inside the content column, so
+    on interior pages it starts to the right of the rail and shares the
+    content's 60px inset. Home has no rail, so the footer spans the full
+    width and lines up with the header lockup.
+  */
+  @media screen(lg) {
+    .rvt-footer {
+      padding-left: var(--chrome-gutter);
+      padding-right: var(--chrome-gutter);
+    }
+    .has-sidenav .rvt-footer {
+      padding-left: 60px;
+      padding-right: 60px;
+    }
   }
 
   /* Containing block for the full-height sidenav/content rule. */
   #layout {
     position: relative;
+  }
+  #content-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  #content-column > #main-content {
+    flex: 1 0 auto;
   }
 
   .mega,
@@ -1436,7 +1734,7 @@
       get this block — their padding-left is the same 60px via lg:pl-[60px].
     */
     .has-sidenav .interior-content {
-      padding-top: 62px; /* crumb center 72 = title text center 72 */
+      padding-top: 64px; /* 20px crumb row centers at 74 = sidenav title center */
       padding-left: 60px; /* = header-bottom → crumb-row top */
     }
   }
@@ -1739,41 +2037,40 @@
       -->
       <nav id="sidenav" class="hidden shrink-0 border-r border-cream pt-6 lg:block"></nav>
 
+      <div id="content-column">
       <main id="main-content" class="min-w-0 flex-1"></main>
+  <footer class="rvt-footer shrink-0 bg-crimson">
+    <div class="footer-main">
+      <div class="footer-identity">
+        <p class="t1">Indiana Zooniversity</p>
+        <div class="footer-address">
+          <p>107 S. Indiana Avenue</p>
+          <p>Bloomington, IN 47405-7000</p>
+          <p><a href="tel:+18128554848">(812) 855-4848</a></p>
+        </div>
+      </div>
+      <nav id="footer-nav" class="footer-nav" aria-label="Footer"></nav>
     </div>
-  </rvt-main>
-
-  <!-- =====================================================================
-       REGION 8 — FOOTER  (spec 11, `rvt-footer`)
-       Crimson band, full-bleed. Inner left pad is `--sidenav-pad-x` so the
-       trident lines up with the header lockup and sidenav item text (24px);
-       that same inset holds on Home (no rail) so the mark does not jump.
-
-       GAP: spec 11 specifies a first footer row of six social pills (24x24,
-       rounded-full, 1px black border). The source site has NO social links,
-       no footer nav, no address and no newsletter signup — the legal list is
-       the entire footer (content-ia.md, Appendix A5). Rendering that row would
-       require inventing six destinations and six accessible names, so it is
-       omitted. Its `border-t` divider is omitted with it, since the row it
-       separated does not exist.
-       ===================================================================== -->
-  <footer class="rvt-footer shrink-0 bg-crimson pr-4 lg:pr-20">
-    <div class="flex flex-wrap items-center gap-6 py-4">
+    <div class="footer-legal">
       <span data-icon="trident" class="block h-7 w-[22px] shrink-0 text-white"></span>
       <div class="rvt-footer-legal">
         <h2 class="sr-only">Legal</h2>
         <ul class="flex flex-wrap items-center gap-4 t17 text-white">
-          <li><a class="lg:hover:underline" href="https://accessibility.iu.edu/assistance/">Accessibility</a></li>
-          <li><a class="lg:hover:underline" href="https://www.iu.edu/college-scorecard.html">College Scorecard</a></li>
-          <li><a class="lg:hover:underline" href="https://www.iu.edu/open-to-all.html">Open to All</a></li>
-          <li><a class="lg:hover:underline" href="https://iu.edu/privacy/">Privacy Notice</a></li>
-          <li><a class="lg:hover:underline" href="https://indianapolis.iu.edu/required-disclosures/">Required Disclosures</a></li>
-          <!-- One <li> mixing text and two links, verbatim including the literal U+00A9. -->
-          <li><a class="lg:hover:underline" href="https://iu.edu/copyright/">Copyright</a> © 2026 The Trustees of <a class="lg:hover:underline" href="https://www.iu.edu">Indiana University</a></li>
+          <li><a href="https://accessibility.iu.edu/assistance/">Accessibility</a></li>
+          <li><a href="https://www.iu.edu/college-scorecard.html">College Scorecard</a></li>
+          <li><a href="https://www.iu.edu/open-to-all.html">Open to All</a></li>
+          <li><a href="https://iu.edu/privacy/">Privacy Notice</a></li>
+          <li><a href="https://indianapolis.iu.edu/required-disclosures/">Required Disclosures</a></li>
+          <li><a href="https://iu.edu/copyright/">Copyright</a> © 2026 The Trustees of <a href="https://www.iu.edu">Indiana University</a></li>
         </ul>
       </div>
     </div>
   </footer>
+      </div>
+    </div>
+  </rvt-main>
+
+
 
   <!-- =====================================================================
        REGION 9 — DRAWER MENU  (spec 7 + spec 8)
@@ -1985,6 +2282,7 @@
     'chevron-right': 'M6.263 15.146 12.31 8 6.263.854 4.737 2.146 9.69 8l-4.953 5.854 1.526 1.292Z',
     'chevron-left': 'M9.737.854 3.69 8l6.047 7.146 1.526-1.292L6.31 8l4.953-5.854L9.737.854Z',
     close: 'm3.5 2.086 4.5 4.5 4.5-4.5L13.914 3.5 9.414 8l4.5 4.5-1.414 1.414-4.5-4.5-4.5 4.5L2.086 12.5l4.5-4.5-4.5-4.5L3.5 2.086Z',
+    'chevron-down': 'M15.146 6.263 8 12.31.854 6.263 2.146 4.737 8 9.69l5.854-4.953 1.292 1.526Z',
     'arrow-right': 'M1 7h10.844L7.737 2.146 9.263.854 15.31 8l-6.047 7.146-1.526-1.292L11.844 9H1V7Z',
     'arrow-left': 'M15 7H4.156l4.107-4.854L6.737.854.69 8l6.047 7.146 1.526-1.292L4.156 9H15V7Z',
     'magnifying-glass': 'M7 2a5 5 0 1 0 0 10A5 5 0 0 0 7 2ZM0 7a7 7 0 1 1 12.606 4.192l3.101 3.1-1.414 1.415-3.1-3.1A7 7 0 0 1 0 7Z',
@@ -2454,7 +2752,13 @@
       `${onSection ? ' aria-current="page"' : ''}>` +
       `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(sec.l)}</span></a>`;
 
-    return `<div class="pt-10">${title}<ul>${items}</ul></div>`;
+    const parent = PAGES[slug].p;
+    const back = parent && PAGES[parent]
+      ? `<a data-nav href="${href(parent)}" class="nav-btn-back">` +
+        `<span data-icon="arrow-left" class="block size-3.5 shrink-0"></span>` +
+        `<span class="t-sidenav-back">${esc(PAGES[parent].l)}</span></a>`
+      : '';
+    return `${back}<div class="sidenav-after-back">${title}<ul>${items}</ul></div>`;
   }
 
   /* =========================================================================
@@ -2779,7 +3083,38 @@
 
   window.addEventListener('hashchange', render);
 
+  function renderFooterNav() {
+    const nav = document.getElementById('footer-nav');
+    if (!nav) return;
+    nav.innerHTML = HEADER_NAV.map(([slug, label]) => {
+      const id = 'footer-' + slug;
+      const kids = (PAGES[slug].c || [])
+        .filter((c) => PAGES[c])
+        .map((c) => `<li><a data-nav href="${href(c)}">${esc(PAGES[c].l)}</a></li>`)
+        .join('');
+      const toggle = kids
+        ? `<button type="button" class="footer-disclosure" aria-expanded="false" aria-controls="${id}" aria-label="${esc(label)} links">` +
+          `<span data-icon="chevron-down" class="footer-chevron"></span></button>`
+        : '';
+      const list = kids ? `<ul id="${id}">${kids}</ul>` : '';
+      return (
+        `<div class="footer-col">` +
+        `<div class="footer-col-head">` +
+        `<a data-nav class="footer-col-title" href="${href(slug)}">${esc(label)}</a>` +
+        `${toggle}</div>${list}</div>`
+      );
+    }).join('');
+    paintIcons(nav);
+    nav.querySelectorAll('.footer-disclosure').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const col = btn.closest('.footer-col');
+        const open = col.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+  }
   paintIcons(document);
+  renderFooterNav();
   render();
   const afterMastheadFonts = () => {
     calibrateMastheadSelectedWeight();
