@@ -1125,13 +1125,8 @@
 
   @media screen(lg) {
     :root {
-      --header-h: 125px;     /* one line of section links; script grows this when they wrap */
+      --header-h: 121px;     /* one line of section links (44px lockup); script grows this when they wrap */
       --chrome-gutter: var(--sidenav-pad-x); /* 24px; equal L/R, matches sidenav text */
-    }
-
-    .rvt-lockup__title {
-      font-size: 16px;
-      line-height: 16px;
     }
 
     .masthead-inner {
@@ -1667,8 +1662,8 @@
     <header class="masthead w-full border-b border-cream bg-white">
       <div class="masthead-inner">
         <div class="masthead-top">
-          <a class="flex h-11 items-center gap-1.5 lg:h-12" href="#/">
-            <span data-icon="trident-tab" class="block h-11 w-[37px] shrink-0 lg:h-12 lg:w-[41px]"></span>
+          <a class="flex h-11 items-center gap-1.5" href="#/">
+            <span data-icon="trident-tab" class="block h-11 w-[37px] shrink-0"></span>
             <span class="rvt-lockup__title t1">School of Social Work</span>
           </a>
 
@@ -1810,7 +1805,7 @@
              visible. Rendered as a link, not a heading: the source's
              outline is h1 + h2 only (content-ia.md A5). -->
         <a data-nav href="#/" aria-label="School of Social Work" class="shrink-0">
-          <span data-icon="trident-tab" class="block h-11 w-[37px] text-crimson lg:h-12 lg:w-[41px]"></span>
+          <span data-icon="trident-tab" class="block h-11 w-[37px] text-crimson"></span>
         </a>
         <button id="drawer-close" type="button"
                 class="nav-btn nav-btn-close border border-ink text-ink">
@@ -1846,7 +1841,7 @@
        class="fixed inset-y-0 right-0 z-50 flex w-full flex-col bg-white lg:w-[533px]">
     <div class="drawer-header">
       <a data-nav href="#/" aria-label="School of Social Work" class="shrink-0">
-        <span data-icon="trident-tab" class="block h-11 w-[37px] text-crimson lg:h-12 lg:w-[41px]"></span>
+        <span data-icon="trident-tab" class="block h-11 w-[37px] text-crimson"></span>
       </a>
       <button id="search-drawer-close" type="button"
               class="nav-btn nav-btn-close border border-ink text-ink">
