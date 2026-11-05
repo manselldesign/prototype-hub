@@ -3390,34 +3390,34 @@
      ------------------------------------------------------------------------- */
   const TB_COPY = {
     'plan-your-visit': {
-      h3: 'Before you set out',
-      p: 'Give yourself a little more time than you think you need for {label}. Gates, parking and the first habitats are busiest in the hour after opening, and the crowds thin again by early afternoon.',
-      items: ['Check today’s hours and any weather notices', 'Buy or reserve tickets before you arrive', 'Pick up a printed map at the entrance plaza'],
-      close: 'Questions about {label}? Guest Services at the main gate can help, or call (812) 855-4848 during open hours.',
+      h3: 'Getting around the zoo',
+      p: 'Give yourself a little more time than you think you need. Gates, parking and the first habitats are busiest in the hour after opening, and the crowds thin again by early afternoon.',
+      p2: 'Parking is free and close to the entrance, and the paths from the gate to the first habitats are flat and shaded. Maps and daily schedules are posted at the entrance plaza so you can plan your route once you arrive.',
+      close: 'Guest Services at the main gate can help with any questions during open hours.',
     },
     'animals-habitats': {
       h3: 'What you will see',
-      p: 'Habitats in {label} are built around the animals’ daily rhythms, so what you see depends on the hour. Early mornings and the last hour before closing are usually the most active times.',
-      items: ['Keeper talks run twice a day at posted times', 'Viewing areas are open from gate to gate', 'Quiet hours keep some habitats calm at midday'],
-      close: 'Every habitat in {label} supports a conservation program in the field. Signs along the path explain how.',
+      p: 'Habitats here are built around the animals’ daily rhythms, so what you see depends on the hour. Early mornings and the last hour before closing are usually the most active times.',
+      p2: 'Paths through the habitats loop back toward the main plaza, so you can see everything at an easy pace without doubling back. Keepers are on hand through the day to answer questions.',
+      close: 'Every habitat here supports a conservation program in the field. Signs along the path explain how.',
     },
     'kids-schools': {
       h3: 'Made for young explorers',
-      p: '{label} pairs hands-on activities with the habitats themselves, so children meet an idea and then meet the animal. Programs are led by zoo educators and scaled to each age group.',
-      items: ['Programs run year-round, rain or shine', 'Group rates apply to ten or more', 'Chaperones are free with every school booking'],
-      close: 'Teachers can reserve {label} programs up to a year ahead. Spring dates fill first.',
+      p: 'Our programs pair hands-on activities with the habitats themselves, so children meet an idea and then meet the animal. Programs are led by zoo educators and scaled to each age group.',
+      p2: 'Every program ends with time in the habitats, so children can connect what they learned with the animals in front of them. Educators adjust each visit to the group\u2019s age and interests.',
+      close: 'Teachers can reserve programs up to a year ahead. Spring dates fill first.',
     },
     'events-activities': {
       h3: 'Plan around the calendar',
-      p: 'Most of what happens in {label} is included with admission, and a few special evenings are ticketed separately. Dates and times are posted at the start of each season.',
-      items: ['Daily activities are listed at the entrance', 'Seasonal events add extended evening hours', 'Members get early access to ticketed events'],
-      close: 'The {label} calendar changes with the weather. Check the day-of schedule before you plan your route.',
+      p: 'Most of what happens here is included with admission, and a few special evenings are ticketed separately. Dates and times are posted at the start of each season.',
+      p2: 'Most activities happen on the main plaza and along the central path, so they are easy to find from anywhere in the zoo. Times are posted at the entrance each morning.',
+      close: 'The calendar changes with the weather. Check the day-of schedule before you plan your route.',
     },
     'support-the-zoo': {
       h3: 'Where your support goes',
-      p: 'Gifts made through {label} fund animal care, habitat improvements and the conservation partners we work with in the field. Every level of giving makes a measurable difference.',
-      items: ['Memberships pay for themselves in two visits', 'Donations are tax-deductible to the extent allowed', 'Volunteers contribute more than 20,000 hours a year'],
-      close: 'Thank you for being part of {label}. Your support keeps the zoo open to everyone.',
+      p: 'Gifts fund animal care, habitat improvements and the conservation partners we work with in the field. Every level of giving makes a measurable difference.',
+      p2: 'Support comes in many forms, from a yearly membership to a one-time gift or a few hours volunteering. Each one helps the animals in our care and the wild places they come from.',
+      close: 'Thank you for supporting the zoo. Your support keeps the zoo open to everyone.',
     },
   };
   function topSectionOf(slug) {
@@ -3429,20 +3429,17 @@
     const sec = topSectionOf(slug);
     const t = (sec && TB_COPY[sec]) || TB_COPY['plan-your-visit'];
     const fill = (str) => esc(str.replace(/\{label\}/g, p.l));
-    const kids = (p.c || []).filter((c) => PAGES[c]).slice(0, 4);
-    const list = kids.length
-      ? `<h3 class="tb-h3">Explore ${esc(p.l)}</h3>` +
-        `<ul class="tb-list">${kids.map((c) => `<li>${esc(PAGES[c].l)}</li>`).join('')}</ul>`
-      : `<h3 class="tb-h3">${fill(t.h3)}</h3>` +
-        `<p class="tb-p">${fill(t.p)}</p>` +
-        `<ul class="tb-list">${t.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`;
     const h2 = p.s ? `<h2 class="tb-h2">${esc(p.s)}</h2>` : '';
     const paras = (p.b || []).map((b) => `<p class="tb-p">${esc(b)}</p>`).join('');
-    const lead = kids.length
-      ? `<p class="tb-p">${fill(t.p)}</p>`
-      : '';
-    return `<div class="rvt-text-block">${h2}${paras}${lead}${list}<p class="tb-p">${fill(t.close)}</p></div>`;
+    // Plain prose only: no lists or page links that would pull a tester's
+    // attention away from the navigation.
+    return `<div class="rvt-text-block">${h2}${paras}` +
+      `<p class="tb-p">${fill(t.p)}</p>` +
+      `<h3 class="tb-h3">${fill(t.h3)}</h3>` +
+      `<p class="tb-p">${fill(t.p2)}</p>` +
+      `<p class="tb-p">${fill(t.close)}</p></div>`;
   }
+
 
   function renderInterior(slug, p) {
     // Depth 0-1 (home + the five top-level sections) carry the slanted
