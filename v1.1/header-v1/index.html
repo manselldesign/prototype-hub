@@ -2717,64 +2717,209 @@
 
   /** Interior hero + body — spec 9, "Interior hero (rvt-hero-feature)". */
 
+
   /* -------------------------------------------------------------------------
-     v1.1 — body copy as a Rivet text block. The source pages hold one h2 and
-     one paragraph; the rest is filler written from the page's own name,
-     its section and its child pages, so the footer sits further down
-     without making pages long. No images.
+     v1.1 — body copy as a Rivet text block. Each section and sub-section
+     page has its own details about that subject; deeper pages use the
+     details of the nearest page above them. Plain prose only, no lists,
+     links or images, so testers stay focused on the navigation.
      ------------------------------------------------------------------------- */
   const TB_COPY = {
-    'plan-your-visit': {
-      h3: 'Getting around the zoo',
-      p: 'Give yourself a little more time than you think you need. Gates, parking and the first habitats are busiest in the hour after opening, and the crowds thin again by early afternoon.',
-      p2: 'Parking is free and close to the entrance, and the paths from the gate to the first habitats are flat and shaded. Maps and daily schedules are posted at the entrance plaza so you can plan your route once you arrive.',
-      close: 'Guest Services at the main gate can help with any questions during open hours.',
+    "plan-your-visit": {
+      "p": "The zoo covers 120 acres, and most visitors see it comfortably in three to four hours. The main loop runs clockwise from the entrance plaza past the African savanna, through the Asian forests, and back along the lakeshore to the gate.",
+      "h3": "A typical day at the zoo",
+      "p2": "Mornings are the quietest time on the paths and the most active time for the animals. By early afternoon the plaza cafés and the playground fill up, and the last hour before closing is calm again. Strollers, wheelchairs and lockers are available at the entrance."
     },
-    'animals-habitats': {
-      h3: 'What you will see',
-      p: 'Habitats here are built around the animals’ daily rhythms, so what you see depends on the hour. Early mornings and the last hour before closing are usually the most active times.',
-      p2: 'Paths through the habitats loop back toward the main plaza, so you can see everything at an easy pace without doubling back. Keepers are on hand through the day to answer questions.',
-      close: 'Every habitat here supports a conservation program in the field. Signs along the path explain how.',
+    "hours-admission": {
+      "p": "Summer hours run 9 a.m. to 6 p.m. daily, and winter hours are 10 a.m. to 4 p.m. The zoo is open every day of the year except Thanksgiving and Christmas Day. Habitat buildings close thirty minutes before the grounds do.",
+      "h3": "Tickets and prices",
+      "p2": "General admission is $18 for adults, $14 for children ages 3 to 12, and free for children under 3. Seniors, students, active military and Indiana residents receive a discount at the gate. Members enter free and can bring guests at a reduced rate."
     },
-    'kids-schools': {
-      h3: 'Made for young explorers',
-      p: 'Our programs pair hands-on activities with the habitats themselves, so children meet an idea and then meet the animal. Programs are led by zoo educators and scaled to each age group.',
-      p2: 'Every program ends with time in the habitats, so children can connect what they learned with the animals in front of them. Educators adjust each visit to the group\u2019s age and interests.',
-      close: 'Teachers can reserve programs up to a year ahead. Spring dates fill first.',
+    "getting-here": {
+      "p": "The zoo sits on the east edge of Bloomington, about ten minutes from downtown and twenty minutes from the Indianapolis interstate exit. Two gates serve the grounds: the Main Gate on Zoo Parkway and the Lakeside Gate on the north side, which opens on weekends and event days.",
+      "h3": "Driving, transit and bikes",
+      "p2": "The main lot holds 1,800 cars and fills by late morning on summer weekends, when the overflow lot opens with a free shuttle. City bus Route 6 stops at the Main Gate every twenty minutes, and a covered bike rack sits just inside the entrance."
     },
-    'events-activities': {
-      h3: 'Plan around the calendar',
-      p: 'Most of what happens here is included with admission, and a few special evenings are ticketed separately. Dates and times are posted at the start of each season.',
-      p2: 'Most activities happen on the main plaza and along the central path, so they are easy to find from anywhere in the zoo. Times are posted at the entrance each morning.',
-      close: 'The calendar changes with the weather. Check the day-of schedule before you plan your route.',
+    "maps-guides": {
+      "p": "The zoo map divides the grounds into five regions, each marked with its own color on the pathway signs. Blue arrows on the pavement follow the main loop, and every intersection has a post showing the nearest restrooms, food and first-aid station.",
+      "h3": "Suggested routes",
+      "p2": "The two-hour highlights route covers the savanna, the tiger ridge and the penguin coast. The full-day route adds the aviary, the barnyard and the rainforest trail. Families with small children often start at the playground while it is still shaded."
     },
-    'support-the-zoo': {
-      h3: 'Where your support goes',
-      p: 'Gifts fund animal care, habitat improvements and the conservation partners we work with in the field. Every level of giving makes a measurable difference.',
-      p2: 'Support comes in many forms, from a yearly membership to a one-time gift or a few hours volunteering. Each one helps the animals in our care and the wild places they come from.',
-      close: 'Thank you for supporting the zoo. Your support keeps the zoo open to everyone.',
+    "accessibility": {
+      "p": "Every path on the main loop is paved and graded for wheelchairs, and all habitat buildings have step-free entrances. Standard and bariatric wheelchairs, along with electric scooters, can be reserved at Guest Services or borrowed on a first-come basis.",
+      "h3": "Quiet spaces and sensory support",
+      "p2": "Sensory-friendly mornings open the zoo an hour early with sound and lighting turned down in the indoor habitats. Quiet rooms are located near the aviary and the Asian forest, and sensory kits with noise-reducing headphones are free to borrow at the gate."
     },
+    "dining-shopping": {
+      "p": "Four restaurants and six snack carts are spread around the main loop. The Savanna Grill near the entrance serves the largest menu, the Lakeside Café has the best view, and the Rainforest Canopy stand is the only spot with shade at midday.",
+      "h3": "Gift shops and souvenirs",
+      "p2": "The main gift shop at the entrance is open thirty minutes past closing so you can shop on the way out. Smaller shops at the penguin coast and the barnyard carry habitat-themed items, and every purchase supports the zoo's conservation fund."
+    },
+    "zoo-rules-policies": {
+      "p": "A few rules keep the animals and visitors safe. Feeding animals is not permitted except at the designated feeding stations, and balloons, glass and straws are not allowed on the grounds because they can harm wildlife.",
+      "h3": "Weather and closures",
+      "p2": "The zoo stays open in light rain, and most habitat buildings offer cover. In severe weather the grounds may close for the day, and tickets for that date can be used any time in the following year. Closures are posted on the website and at the gate by 8 a.m."
+    },
+    "animals-habitats": {
+      "p": "More than 1,400 animals from 230 species live across five regions laid out by geography. Each region groups animals that share a climate, so the habitats, the plants and the buildings all change as you move from one to the next.",
+      "h3": "How the regions are arranged",
+      "p2": "Africa and the Asian forests sit along the main loop, with the Arctic and ocean habitats indoors beside the lake. South America and the island species are tucked along the quieter rainforest trail on the far side of the grounds."
+    },
+    "africa": {
+      "p": "The Africa region is the largest at the zoo, with 22 acres of open savanna, a rainforest walk and a dry-lands trail. Giraffes, zebras and ostriches share the main plain, while the lion pride looks out over it from a rocky kopje at the eastern end.",
+      "h3": "Animals on the savanna",
+      "p2": "Alongside the lions and giraffes you will find African elephants, white rhinos, warthogs, meerkats and a colony of African penguins at the coastal end. The rainforest walk is home to western lowland gorillas, mandrills and okapi."
+    },
+    "asia": {
+      "p": "The Asian region moves through three climates in a single walk: a misty bamboo forest, a rocky tiger ridge and a lowland wetland. Red pandas, sloth bears and Asian small-clawed otters live in the forest, and the ridge is home to two Amur tigers.",
+      "h3": "Life in the wetlands",
+      "p2": "The wetland boardwalk crosses a shallow lake where Indian rhinos wade in the mornings and a flock of painted storks nests on the islands. Keepers hold a daily talk at the otter habitat, where the otters are fed in front of the viewing window."
+    },
+    "arctic-oceans": {
+      "p": "The Arctic and ocean habitats are indoors beside the lake, kept cold year-round. An underwater gallery runs beneath the polar shore so you can watch the polar bears and sea lions swim overhead, and a separate wing holds the penguin coast.",
+      "h3": "Below the waterline",
+      "p2": "The tide pool gallery holds sea stars, anemones and horseshoe crabs in shallow touch tanks, with keepers on hand to explain how to handle each one. The penguin coast houses king and gentoo penguins, with feedings twice a day."
+    },
+    "south-america": {
+      "p": "South America follows the water from the flooded Amazon forest to the high Andes. Capybaras, giant anteaters and tapirs share the riverbank, while a troop of squirrel monkeys and a pair of jaguars live in the forest canopy above.",
+      "h3": "The Andes and the aviary",
+      "p2": "Beyond the river the trail climbs to a rocky highland where Andean bears, vicuñas and a pair of Andean condors live. A walk-through tropical aviary at the end holds toucans, scarlet macaws and dozens of smaller birds flying free."
+    },
+    "australia-islands": {
+      "p": "Island species evolved apart from the rest of the world, and this region shows what that isolation produced. Red kangaroos and emus roam an open walkabout, koalas rest in the eucalyptus grove, and Komodo dragons live in a heated house nearby.",
+      "h3": "Lorikeet Landing",
+      "p2": "The region ends at a walk-in aviary where hundreds of rainbow lorikeets land on visitors' hands to drink nectar. Cups of nectar are sold at the door, and the aviary is busiest in the morning when the birds are hungriest."
+    },
+    "animals-az": {
+      "p": "The index lists every species at the zoo alphabetically, with its region, habitat and conservation status. Each entry notes where the animal lives on the grounds, the best time of day to see it, and whether it is part of a species survival program.",
+      "h3": "Reading an entry",
+      "p2": "A green marker means the species is stable in the wild, yellow means vulnerable and red means endangered or critically endangered. About a third of the animals at the zoo fall into the red category, and most of those are part of a managed breeding program."
+    },
+    "animal-care-habitat-design": {
+      "p": "Caring for 1,400 animals takes a staff of 80 keepers, four veterinarians and a commissary that prepares 2,000 pounds of food each day. Every habitat is designed around the animal first, with climbing, digging, swimming and resting spaces that match how it lives in the wild.",
+      "h3": "A day in animal care",
+      "p2": "Keepers arrive at 6 a.m. to check on each animal, clean habitats and prepare the day's diets. Training sessions through the morning let animals take part in their own medical care, and enrichment items are rotated every afternoon to keep them active and curious."
+    },
+    "kids-schools": {
+      "p": "Each year 60,000 students visit the zoo with their schools, and thousands more come for camps, classes and birthday parties. Programs are led by a team of twelve educators and are written to match Indiana science standards for each grade.",
+      "h3": "Learning in the habitats",
+      "p2": "Every program ends in the habitats, so a lesson on adaptation finishes in front of the animals that show it. Younger children spend time at the barnyard and the discovery playground, while older students meet keepers and see the veterinary hospital."
+    },
+    "field-trips": {
+      "p": "Field trips are available for preschool through high school, on weekdays from September through May. Groups of ten or more receive a reduced rate, and one chaperone is free for every five students.",
+      "h3": "Guided and self-guided options",
+      "p2": "Guided programs run 45 minutes with an educator and are written for a single grade band. Self-guided visits come with a printed activity sheet and a map, and teachers can book a lunch space in the picnic grove when they reserve."
+    },
+    "classroom-resources": {
+      "p": "Teachers can bring the zoo into the classroom with lesson plans, video tours and live question-and-answer sessions with keepers. All materials are free, align with state standards and are organized by grade and subject.",
+      "h3": "Virtual field trips",
+      "p2": "Virtual trips are 30-minute live sessions streamed from a habitat, with a keeper answering student questions as they come in. Sessions are offered on the savanna, the penguin coast and the veterinary hospital, and can be booked for a single class or a whole grade."
+    },
+    "camps-classes": {
+      "p": "Zoo camps run for ages 4 to 14 during summer and school breaks, with each week built around a theme such as animal babies, zoo careers or rainforest life. Campers spend most of the day outdoors and in the habitats with their counselors.",
+      "h3": "What a camp day looks like",
+      "p2": "A typical day starts with a morning keeper visit, moves through a hands-on science activity and a habitat walk, and ends with free play at the discovery playground. Before-care and after-care are available, and lunch is included for full-day camps."
+    },
+    "teen-programs": {
+      "p": "Teen programs give students aged 13 to 17 a real role at the zoo. Members of the Teen Volunteer Corps lead activity carts, help at the barnyard and assist educators with summer camp, logging more than 8,000 volunteer hours a year.",
+      "h3": "Exploring zoo careers",
+      "p2": "The career exploration series meets monthly during the school year, with sessions led by keepers, veterinarians, nutritionists and conservation staff. Teens who complete the series can apply for a summer internship in the department of their choice."
+    },
+    "play-discovery-zones": {
+      "p": "Two play areas sit on the main loop: the Discovery Playground beside the entrance plaza and the Children's Barnyard near the lakeshore. Both are designed for children under 10 and are fenced with a single entrance so families can keep an eye on everyone.",
+      "h3": "At the barnyard",
+      "p2": "The barnyard is home to goats, sheep, miniature donkeys and a flock of chickens that children can brush and feed. A hand-washing station sits at the exit, and keepers hold a short talk about farm animals every afternoon."
+    },
+    "birthday-parties": {
+      "p": "Birthday parties are held in a private room beside the Children's Barnyard, with a dedicated host, two hours of room time and zoo admission for every guest. An animal visit with a keeper can be added to any package.",
+      "h3": "Choosing a package",
+      "p2": "The basic package covers up to 15 children and includes decorations, drinks and a gift for the birthday child. Larger packages add pizza, a cake, a guided habitat walk and a visit from an education animal such as a tortoise, a snake or an owl."
+    },
+    "events-activities": {
+      "p": "Something is happening at the zoo every day, from keeper talks and feedings to seasonal festivals and evening concerts. Most daily activities are included with admission, and the larger seasonal events are ticketed separately.",
+      "h3": "Finding what's on",
+      "p2": "The day's schedule is posted at the entrance plaza and on the pathway signs at each region. Keeper talks and feedings happen at set times through the day, so it helps to plan your route around the two or three you most want to see."
+    },
+    "daily-activities": {
+      "p": "Each day the zoo runs about a dozen scheduled activities, including keeper talks, feeding demonstrations and animal training sessions. They are spread across the regions and timed so you can catch several on a single walk around the loop.",
+      "h3": "Keeper talks and feedings",
+      "p2": "Keeper talks last 15 minutes and happen at the lion kopje, the penguin coast, the otter habitat and the elephant barn. The giraffe feeding at 11 a.m. and the sea lion feeding at 2 p.m. draw the biggest crowds, so arrive ten minutes early for a spot at the rail."
+    },
+    "animal-encounters": {
+      "p": "Animal encounters bring you closer than the public paths allow. Options range from feeding a giraffe a piece of lettuce at the savanna deck to a behind-the-scenes tour of the elephant barn or the veterinary hospital with a keeper.",
+      "h3": "Booking an encounter",
+      "p2": "Giraffe feeding is offered daily and needs no reservation. Behind-the-scenes tours run on weekends for groups of up to eight and should be booked a week ahead. Private VIP experiences include a keeper for the day and can be built around any animal you choose."
+    },
+    "seasonal-events": {
+      "p": "Four signature events mark the year: Baby Animal Days in spring, the Zoo Nights concert series in summer, Boo at the Zoo in fall and Wild Lights in winter. Each one changes the hours, the paths and the atmosphere of the zoo for a few weeks.",
+      "h3": "What to expect at each",
+      "p2": "Baby Animal Days and Boo at the Zoo are daytime events included with admission. Zoo Nights and Wild Lights run after dark with separate tickets, live music, food vendors and lit paths through the habitats that are open late."
+    },
+    "adults-only-events": {
+      "p": "A few evenings each year the zoo opens for guests 21 and over, with local breweries and wineries pouring along the main loop and live music on the plaza. The habitats stay open, and keepers hold talks you would not hear on a family afternoon.",
+      "h3": "Brew at the Zoo and the Wild Wine Walk",
+      "p2": "Brew at the Zoo takes over the savanna side of the grounds in late summer with 40 breweries and food trucks. The Wild Wine Walk in early fall follows the rainforest trail with tastings at each habitat and a seated dinner on the lakeshore."
+    },
+    "private-events-rentals": {
+      "p": "The zoo hosts weddings, corporate meetings and family reunions in six rentable spaces, from the glass-walled Lakeside Pavilion to the open-air savanna overlook. Every rental includes tables, chairs, an event coordinator and after-hours access to nearby habitats.",
+      "h3": "Spaces and capacity",
+      "p2": "The Lakeside Pavilion seats 200 for dinner and opens onto the lawn for ceremonies. The savanna overlook holds 120 with the giraffes in view, and the picnic grove accommodates up to 500 for casual gatherings. Catering is handled by the zoo's own kitchen."
+    },
+    "event-calendar": {
+      "p": "The calendar lists every scheduled event, talk and feeding for the next three months, from daily keeper talks to ticketed evening events. Entries show the time, the region where the event takes place and whether it is included with admission.",
+      "h3": "Filtering by what you want",
+      "p2": "Filter the calendar by date, by region or by type to see only keeper talks, family events or adults-only evenings. Members can filter for member previews, and each entry links to tickets when a reservation is needed."
+    },
+    "support-the-zoo": {
+      "p": "The zoo is a nonprofit, and admission covers only about half of what it costs to care for the animals. Memberships, donations, volunteers and corporate partners make up the rest and fund the conservation work the zoo supports around the world.",
+      "h3": "Where support goes",
+      "p2": "Every dollar given is split between animal care, habitat improvements and field conservation. In the past year that funded a new veterinary hospital wing, the expansion of the penguin coast and grants to twelve conservation projects on four continents."
+    },
+    "membership": {
+      "p": "Members visit free all year, park for free and get early entry an hour before the public on weekends. A family membership pays for itself in two visits, and members also receive discounts at the cafés, the gift shops and on camps and classes.",
+      "h3": "Membership levels",
+      "p2": "Individual, dual and family levels cover admission for one, two or up to six people. The Explorer and Patron levels add guest passes, behind-the-scenes tours and invitations to member evenings, and all memberships include reciprocal admission at 150 zoos nationwide."
+    },
+    "donate": {
+      "p": "Donations of any size support animal care and conservation directly. A $50 gift feeds a red panda for a month, $250 covers a wellness exam for a giraffe, and $1,000 funds a week of field work for a conservation partner.",
+      "h3": "Ways to give",
+      "p2": "You can make a one-time or monthly gift online, symbolically adopt an animal and receive updates on it through the year, or give in tribute or memory of someone. Planned gifts through a will or estate support the zoo's long-term endowment."
+    },
+    "our-conservation-work": {
+      "p": "The zoo supports conservation in the field because the animals in its care stand in for wild populations that are shrinking. Staff and funding go to projects protecting lions in Kenya, tigers in Sumatra and Andean bears in Peru, among others.",
+      "h3": "Species survival plans",
+      "p2": "Forty of the zoo's species are part of cooperative breeding programs managed with other accredited zoos. These plans track the genetics of every animal to keep populations healthy, and several species bred here have been released back into the wild."
+    },
+    "volunteer": {
+      "p": "More than 400 volunteers give 20,000 hours a year at the zoo. They staff the information carts, help at the barnyard and the touch tank, assist with camps and events, and support the horticulture team that cares for the grounds.",
+      "h3": "Joining the program",
+      "p2": "Adult volunteers commit to one shift a week for at least six months and complete a training course on the animals and the grounds. Internships for college students run in animal care, education, veterinary medicine and conservation research."
+    },
+    "corporate-partnership": {
+      "p": "Corporate partners support the zoo through event sponsorship, habitat naming and employee volunteer days. In return they reach more than a million visitors a year and connect their name with animal care and conservation.",
+      "h3": "Sponsorship and matching gifts",
+      "p2": "Sponsorships are available for each seasonal event and for individual habitats and exhibits. Many employers match their employees' donations to the zoo, which doubles the impact of a gift at no extra cost to the giver."
+    },
+    "annual-report-financials": {
+      "p": "The annual report is published each spring and covers attendance, animal care, conservation grants and the zoo's finances for the year. It includes the audited financial statements and the list of donors and partners.",
+      "h3": "Last year in numbers",
+      "p2": "The zoo welcomed 1.1 million visitors, cared for 1,400 animals, hosted 60,000 students and granted $800,000 to field conservation. Eighty-four cents of every dollar went directly to animal care, education and conservation programs."
+    }
   };
-  function topSectionOf(slug) {
+  function copyFor(slug) {
     let s = slug;
-    while (PAGES[s] && PAGES[s].v > 1 && PAGES[s].p) s = PAGES[s].p;
-    return TB_COPY[s] ? s : null;
+    while (s && PAGES[s] && !TB_COPY[s]) s = PAGES[s].p;
+    return TB_COPY[s] || null;
   }
   function renderTextBlock(slug, p) {
-    const sec = topSectionOf(slug);
-    const t = (sec && TB_COPY[sec]) || TB_COPY['plan-your-visit'];
-    const fill = (str) => esc(str.replace(/\{label\}/g, p.l));
+    const t = copyFor(slug);
     const h2 = p.s ? `<h2 class="tb-h2">${esc(p.s)}</h2>` : '';
     const paras = (p.b || []).map((b) => `<p class="tb-p">${esc(b)}</p>`).join('');
-    // Plain prose only: no lists or page links that would pull a tester's
-    // attention away from the navigation.
-    return `<div class="rvt-text-block">${h2}${paras}` +
-      `<p class="tb-p">${fill(t.p)}</p>` +
-      `<h3 class="tb-h3">${fill(t.h3)}</h3>` +
-      `<p class="tb-p">${fill(t.p2)}</p>` +
-      `<p class="tb-p">${fill(t.close)}</p></div>`;
+    const more = t
+      ? `<p class="tb-p">${esc(t.p)}</p><h3 class="tb-h3">${esc(t.h3)}</h3><p class="tb-p">${esc(t.p2)}</p>`
+      : '';
+    return `<div class="rvt-text-block">${h2}${paras}${more}</div>`;
   }
-
 
   function renderInterior(slug, p) {
     // Depth 0-1 (home + the five top-level sections) carry the slanted
