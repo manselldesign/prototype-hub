@@ -999,31 +999,37 @@
     transform: none;
   }
   }
+  /* v1.2: the chevron is a plain 12px icon 4px after the label, with no
+     box, border or fill. It is part of the item's single click target. */
   .masthead-nav-disclosure {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
-    width: 22px;
-    height: 22px;
-    padding: 4px;
-    border: 1px solid #EFDFC8;
-    border-radius: 0;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    border: 0;
     background: transparent;
     color: #1F2528;
     cursor: pointer;
   }
-    .masthead-nav-disclosure:active,
-  .masthead-nav-item.is-mega-open .masthead-nav-disclosure,
-  .masthead-nav-item.is-mega-open .masthead-nav-disclosure:active {
-    background-color: #FAF6EF;
-    color: #1F2528;
+  /* The label is a <button> on items with a menu: reset the button chrome. */
+  button.masthead-nav-trigger {
+    font-family: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
   }
+  .masthead-nav-item.has-mega {
+    cursor: pointer;
+  }
+  /* Hovering anywhere on the item (label or chevron) underlines the label,
+     same as hovering the label alone. The current section never underlines. */
 @media (min-width: 1024px) {
-  .masthead-nav-disclosure:hover,
-  .masthead-nav-item.is-mega-open .masthead-nav-disclosure:hover {
-    background-color: #FAF6EF;
-    color: #1F2528;
+  .masthead-nav-item.has-mega:not(.is-current):hover .masthead-nav-label {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
   }
   .masthead-nav-chevron {
@@ -1038,8 +1044,7 @@
   .masthead-top > a:focus-visible,
   .masthead-tool:focus-visible,
   .masthead-cta:focus-visible,
-  .masthead-nav-link:focus-visible,
-  .masthead-nav-disclosure:focus-visible {
+  .masthead-nav-link:focus-visible {
     isolation: isolate;
     outline: 2px solid #6D0808;
     outline-offset: 2px;
@@ -1127,8 +1132,10 @@
       color: #000;
       text-decoration: none;
     }
+    /* v1.2: the first menu row (under Back) shares the breadcrumb row's
+       vertical center; Back sits above it. */
     .has-sidenav #sidenav {
-      padding-top: 12px;
+      padding-top: 20px;
     }
   }
   #sidenav .t-sidenav-back {
@@ -1183,6 +1190,132 @@
   }
   }
 
+  /* -----------------------------------------------------------------------
+     v1.2 — sidenav list styles copied from Option C (Siblings).
+     Parent rows: 14/20 wght 600, 12px top/bottom, 1px #F0E1CC hairline
+     under each row (none above the first). Open rows drop their bottom
+     pad; the child list is 12px top / 16px bottom with 4px between
+     children (14/20 T18). Chevrons are 16px Rivet glyphs. Hover/focus
+     turns a row crimson and underlines its label. Accordion toggles are
+     <button>s; their open state shows only through the chevron.
+     ----------------------------------------------------------------------- */
+  #sidenav .sidenav-after-back {
+    padding-top: 20px;
+  }
+  .t-sidenav-parent {
+    font-size: 14px;
+    line-height: 20px;
+    font-variation-settings: 'wght' 600, 'wdth' 115;
+  }
+  #sidenav .sidenav-after-back > ul > li {
+    position: relative;
+  }
+  #sidenav .sidenav-after-back > ul > li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: #F0E1CC;
+    pointer-events: none;
+  }
+  #sidenav .sidenav-item {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    min-height: 0;
+    line-height: 20px;
+    text-decoration: none;
+  }
+  #sidenav button.sidenav-toggle {
+    border: 0;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+  }
+  #sidenav .sidenav-item.sidenav-item--open {
+    padding-bottom: 0;
+  }
+  #sidenav .sidenav-item .t-sidenav-parent.is-current {
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+  #sidenav li ul {
+    margin: 0;
+    padding: 12px 0 16px;
+  }
+  #sidenav ul a.sidenav-child {
+    min-height: 0;
+    line-height: 20px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 0;
+    text-decoration: none;
+    color: #1F2528;
+  }
+  #sidenav ul a.sidenav-child .t18 {
+    line-height: 20px;
+  }
+  #sidenav li ul li:first-child > a.sidenav-child { padding-top: 0; }
+  #sidenav li ul li + li > a.sidenav-child { margin-top: 4px; }
+  #sidenav li ul li:last-child > a.sidenav-child { padding-bottom: 0; }
+  /* The page you are on: crimson + underline. */
+  #sidenav ul a.sidenav-child.is-current {
+    color: #990000;
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+  #sidenav ul a.sidenav-child:active,
+  #sidenav ul a.sidenav-child:focus-visible {
+    color: #990000;
+    text-decoration: underline;
+  }
+  #sidenav .sidenav-toggle:active,
+  #sidenav .sidenav-toggle:focus-visible,
+  #sidenav .sidenav-toggle:active .sidenav-chevron,
+  #sidenav .sidenav-toggle:focus-visible .sidenav-chevron {
+    color: #990000;
+  }
+  #sidenav .sidenav-toggle:active .sidenav-item-label,
+  #sidenav .sidenav-toggle:focus-visible .sidenav-item-label {
+    text-decoration: underline;
+  }
+  @media (min-width: 1024px) {
+    #sidenav ul a.sidenav-child:hover {
+      color: #990000;
+      text-decoration: underline;
+    }
+    #sidenav .sidenav-toggle:hover,
+    #sidenav .sidenav-toggle:hover .sidenav-chevron {
+      color: #990000;
+    }
+    #sidenav .sidenav-toggle:hover .sidenav-item-label {
+      text-decoration: underline;
+    }
+  }
+
+  /* Children: the title row is 14/20 wght 600 with 12px under it and the
+     cream rule; it underlines only when it is the page you are on. */
+  #sidenav a.sidenav-title {
+    padding-bottom: 12px;
+  }
+  #sidenav a.sidenav-title .sidenav-title-label {
+    line-height: 20px;
+  }
+  #sidenav ul a.sidenav-item .sidenav-item-label.is-current {
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+  @media (min-width: 1024px) {
+    #sidenav ul a.sidenav-item:hover .sidenav-item-label {
+      color: #990000;
+      text-decoration: underline;
+    }
+    #sidenav ul a.sidenav-item:hover,
+    #sidenav ul a.sidenav-item:hover .sidenav-chevron {
+      color: #990000;
+    }
+  }
   /*
     Crimson footer (Figma rvt-footer 1539:11977).
     Desktop: 48px above the columns, 32px below them. The identity name
@@ -1207,7 +1340,8 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 28px;
-    padding-top: 24px;
+    /* v1.2: 32px top on mobile, matching Figma rvt-footer Mobile (spacing/32). */
+    padding-top: 32px;
   }
   .footer-identity {
     display: flex;
@@ -1219,6 +1353,57 @@
     margin: 0;
     color: #fff;
     line-height: 24px;
+  }
+  /* v1.2: the site name links to the homepage. No underline at rest;
+     on hover/focus it shows the standard Rivet underline (1px, 3px below). */
+  .footer-home-link {
+    color: #fff;
+    text-decoration: none;
+  }
+  .footer-home-link:hover,
+  .footer-home-link:focus-visible {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  /* v1.2: Jump to top, Normal Large button on Crimson (Figma rvt-link,
+     Style=Normal). 40px tall, 16px side padding, 8px gap, no fill,
+     1px border/accent #FAF6EF inside. Label action/lg/strong 16/24 wght 600
+     and the 16px arrow-up in text/accent #FAF6EF. Hover: border and text
+     go to accent-strong / brand-strong #FFFFFF. Focus: 2px ring, 2px outside. */
+  .footer-jump {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-self: flex-start;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 15px;
+    border: 1px solid #FAF6EF;
+    border-radius: 0;
+    background: transparent;
+    color: #FAF6EF;
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    font-variation-settings: 'wght' 600, 'wdth' 115;
+    cursor: pointer;
+  }
+  /* 24px from the button to the site name at every size (the identity
+     column's own gap is 8px under 1024px and 16px above). */
+  .footer-jump {
+    margin-bottom: 16px;
+  }
+  @media (min-width: 1024px) {
+    .footer-jump { margin-bottom: 8px; }
+  }
+  .footer-jump:hover {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+  }
+  .footer-jump:focus-visible {
+    outline: 2px solid #EBD8BC;
+    outline-offset: 2px;
   }
   .footer-address {
     display: flex;
@@ -1370,7 +1555,8 @@
       flex-direction: row;
       align-items: flex-start;
       gap: 48px;
-      padding-top: 48px;
+      /* v1.2: 32px top and bottom (Figma rvt-footer container, spacing/32). */
+      padding-top: 32px;
       padding-bottom: 32px;
     }
     .footer-identity {
@@ -2157,14 +2343,17 @@
   <footer class="rvt-footer shrink-0 bg-crimson">
     <div class="footer-main">
       <div class="footer-identity">
-        <p class="t1">Indiana Zooniversity</p>
+        <button type="button" class="footer-jump" id="footer-jump">
+          <span class="footer-jump-label">Jump to top</span>
+          <span data-icon="arrow-up" class="block size-4 shrink-0"></span>
+        </button>
+        <p class="t1"><a data-nav class="footer-home-link" href="#/">Indiana Zooniversity</a></p>
         <div class="footer-address">
           <p>107 S. Indiana Avenue</p>
           <p>Bloomington, IN 47405-7000</p>
           <p><a href="tel:+18128554848">(812) 855-4848</a></p>
         </div>
       </div>
-      <nav id="footer-nav" class="footer-nav" aria-label="Footer"></nav>
     </div>
     <div class="footer-legal">
       <span data-icon="trident" class="block h-7 w-[22px] shrink-0 text-white"></span>
@@ -2397,6 +2586,7 @@
     'chevron-left': 'M9.737.854 3.69 8l6.047 7.146 1.526-1.292L6.31 8l4.953-5.854L9.737.854Z',
     close: 'm3.5 2.086 4.5 4.5 4.5-4.5L13.914 3.5 9.414 8l4.5 4.5-1.414 1.414-4.5-4.5-4.5 4.5L2.086 12.5l4.5-4.5-4.5-4.5L3.5 2.086Z',
     'arrow-right': 'M1 7h10.844L7.737 2.146 9.263.854 15.31 8l-6.047 7.146-1.526-1.292L11.844 9H1V7Z',
+    'arrow-up': 'M7 15V4.156L2.146 8.263.854 6.737 8 .69l7.146 6.047-1.292 1.526L9 4.156V15H7Z',
     'arrow-left': 'M15 7H4.156l4.107-4.854L6.737.854.69 8l6.047 7.146 1.526-1.292L4.156 9H15V7Z',
     'magnifying-glass': 'M7 2a5 5 0 1 0 0 10A5 5 0 0 0 7 2ZM0 7a7 7 0 1 1 12.606 4.192l3.101 3.1-1.414 1.415-3.1-3.1A7 7 0 0 1 0 7Z',
     menu: 'M15 4H1V2H15V4ZM15 9H1V7H15V9ZM1 14H15V12H1V14Z',
@@ -2542,18 +2732,23 @@
       const style = current
         ? ` style="--masthead-sel-wdth:${fit ? fit.wdth : 93};--masthead-label-scale:${fit ? fit.scale : 1}"`
         : '';
-      /* No children: the label is the only control and goes to the page.
-         A disclosure icon is only for items that open a menu. */
-      const disclosure = hasKids(s)
-        ?         `<button type="button" class="masthead-nav-disclosure" aria-controls="mega" aria-expanded="${open ? 'true' : 'false'}" aria-label="${esc(label)} menu">` +
-          `<svg class="masthead-nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">` +
-          `<path d="M11 4L6 8.5L1 4" stroke="currentColor" stroke-width="1.75"/></svg></button>`
-        : '';
-      return `<span class="masthead-nav-item${current ? ' is-current' : ''}${open ? ' is-mega-open' : ''}" data-section="${s}"${style}>` +
-        `<a data-nav href="${href(s)}" class="masthead-nav-link"${current ? ' aria-current="page"' : ''}>` +
+      /* v1.2: an item with children is one control. Clicking anywhere on it
+         (label or chevron) opens its mega menu instead of going to the page;
+         the menu's "{Section} Overview" link goes to the page. The chevron
+         has no box. Items without children stay plain page links. */
+      const labelSpans =
         `<span class="masthead-nav-sizer" aria-hidden="true">${esc(label)}</span>` +
-        `<span class="masthead-nav-label">${esc(label)}</span></a>` +
-        disclosure + `</span>`;
+        `<span class="masthead-nav-label">${esc(label)}</span>`;
+      const control = hasKids(s)
+        ? `<button type="button" class="masthead-nav-link masthead-nav-trigger" aria-controls="mega" aria-expanded="${open ? 'true' : 'false'}"${current ? ' aria-current="page"' : ''}>` +
+          labelSpans + `</button>` +
+          `<span class="masthead-nav-disclosure" aria-hidden="true">` +
+          `<svg class="masthead-nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">` +
+          `<path d="M11 4L6 8.5L1 4" stroke="currentColor" stroke-width="1.75"/></svg></span>`
+        : `<a data-nav href="${href(s)}" class="masthead-nav-link"${current ? ' aria-current="page"' : ''}>` +
+          labelSpans + `</a>`;
+      return `<span class="masthead-nav-item${hasKids(s) ? ' has-mega' : ''}${current ? ' is-current' : ''}${open ? ' is-mega-open' : ''}" data-section="${s}"${style}>` +
+        control + `</span>`;
     }).join('');
     paintIcons(nav);
   }
@@ -2620,7 +2815,7 @@
       item.classList.toggle('is-mega-open', open);
       item.classList.toggle('is-current', current);
       const link = item.querySelector('.masthead-nav-link');
-      const button = item.querySelector('.masthead-nav-disclosure');
+      const button = item.querySelector('.masthead-nav-trigger');
       if (current) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
       if (button) button.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -2672,11 +2867,11 @@
   }
 
   document.getElementById('masthead-nav').addEventListener('click', (e) => {
-    const button = e.target.closest('.masthead-nav-disclosure');
-    if (!button || !megaDesktop.matches) return;
+    const item = e.target.closest('.masthead-nav-item.has-mega');
+    if (!item || !megaDesktop.matches) return;
     e.preventDefault();
     e.stopPropagation();
-    const section = button.closest('.masthead-nav-item').dataset.section;
+    const section = item.dataset.section;
     if (megaOpenSlug === section && megaEl.classList.contains('is-open')) closeMega();
     else openMega(section);
   });
@@ -3377,40 +3572,38 @@
      rows; child chevrons sit flush on that shared right edge with no
      second inset on the icon.
      ========================================================================= */
+  /* v1.2 — "Children" sidenav (from Option C Children), with the v1.2 rules:
+     - Every page except Home starts with Back (top-level sections go Back
+       to Home). The section title row shares the breadcrumb row's center.
+     - The title is the page whose children are listed: the current page if
+       it has children, otherwise its parent. Rows are that page's children
+       and go to their pages; rows with children carry a right chevron.
+     - The page you are on is always crimson + underlined (the title when
+       you are on it, otherwise your row). Nothing else is crimson. */
   function renderSidenav(slug) {
-    const section = sectionOf(slug);
-    if (!section) return ''; // Home: the design shows no sidenav there.
-
-    const sec = PAGES[section];
+    if (slug === HOME) return '';
+    const parent = PAGES[slug].p;
+    const section = hasKids(slug) ? slug : (parent && parent !== HOME ? parent : slug);
     const onSection = section === slug;
-
-    const rows = (sec.c || []).map((c) => ({ slug: c, label: PAGES[c].l, chevron: hasKids(c) }));
-
+    const rows = section === slug && !hasKids(slug) ? [] : (PAGES[section].c || []).filter((c) => PAGES[c]);
     const items = rows
-      .map((r, i) => {
-        const current = r.slug === slug;
-        const label = current
-          ? `<span class="sidenav-item-label t18 min-w-0 flex-1 whitespace-normal underline">${esc(r.label)}</span>`
-          : `<span class="sidenav-item-label t18 min-w-0 flex-1 whitespace-normal">${esc(r.label)}</span>`;
-        const chev =
-          r.chevron && !current
-            ? `<span class="sidenav-chevron block size-3 shrink-0" aria-hidden="true">${SIDENAV_CHEVRON}</span>`
-            : '';
+      .map((c) => {
+        const current = c === slug;
+        const chev = hasKids(c)
+          ? `<span data-icon="chevron-right" class="sidenav-chevron block size-4 shrink-0" aria-hidden="true"></span>`
+          : '';
         return (
-          `<li class="-mb-px">` +
-          `<a data-nav href="${href(r.slug)}"${current ? ' aria-current="page"' : ''} ` +
-          `class="sidenav-item flex items-center gap-2 py-3 ${i === 0 ? 'border-b' : 'border-y'} border-cream px-0 ` +
-          `${current ? 'text-crimson' : 'text-ink'}">${label}${chev}</a></li>`
+          `<li><a data-nav href="${href(c)}"${current ? ' aria-current="page"' : ''} ` +
+          `class="sidenav-item flex items-center gap-2 px-0 ${current ? 'text-crimson' : 'text-ink'}">` +
+          `<span class="sidenav-item-label t18 min-w-0 flex-1 whitespace-normal${current ? ' is-current' : ''}">${esc(PAGES[c].l)}</span>` +
+          `${chev}</a></li>`
         );
       })
       .join('');
-
     const title =
-      `<a data-nav href="${href(section)}" class="sidenav-title t-section-heading flex w-full items-center border-b border-cream ${onSection ? 'text-crimson' : 'text-ink'}"` +
+      `<a data-nav href="${href(section)}" class="sidenav-title t-sidenav-parent flex w-full items-center border-b border-cream ${onSection ? 'text-crimson' : 'text-ink'}"` +
       `${onSection ? ' aria-current="page"' : ''}>` +
-      `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(sec.l)}</span></a>`;
-
-    const parent = PAGES[slug].p;
+      `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(PAGES[section].l)}</span></a>`;
     const back = parent && PAGES[parent]
       ? `<a data-nav href="${href(parent)}" class="nav-btn-back">` +
         `<span data-icon="arrow-left" class="block size-3.5 shrink-0"></span>` +
@@ -3709,7 +3902,7 @@
     sidenav.classList.toggle('lg:block', !isHome);
     document.body.classList.toggle('has-sidenav', !isHome);
     if (isHome) sidenav.removeAttribute('aria-label');
-    else sidenav.setAttribute('aria-label', PAGES[section].l);
+    else sidenav.setAttribute('aria-label', 'Menu');
 
     main.innerHTML = isHome ? renderHome(p) : renderInterior(slug, p);
     paintIcons(main);
@@ -3773,6 +3966,20 @@
   }
   paintIcons(document);
   renderFooterNav();
+  /* v1.2: Jump to top scrolls back up (instantly when reduced motion is
+     on) and moves keyboard focus to the page header. */
+  document.getElementById('footer-jump').addEventListener('click', () => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    // Focus the page header itself (not the skip link, which would pop
+    // into view), so the next Tab starts from the top of the page.
+    const target = document.querySelector('rvt-header');
+    if (target) {
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.style.outline = 'none';
+      target.focus({ preventScroll: true });
+    }
+  });
   render();
   const afterMastheadFonts = () => {
     calibrateMastheadSelectedWeight();

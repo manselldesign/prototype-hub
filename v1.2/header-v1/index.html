@@ -1101,8 +1101,10 @@
       color: #000;
       text-decoration: none;
     }
+    /* v1.2: the first menu row (under Back) shares the breadcrumb row's
+       vertical center; Back sits above it. */
     .has-sidenav #sidenav {
-      padding-top: 12px;
+      padding-top: 20px;
     }
   }
   #sidenav .t-sidenav-back {
@@ -1157,6 +1159,132 @@
   }
   }
 
+  /* -----------------------------------------------------------------------
+     v1.2 — sidenav list styles copied from Option C (Siblings).
+     Parent rows: 14/20 wght 600, 12px top/bottom, 1px #F0E1CC hairline
+     under each row (none above the first). Open rows drop their bottom
+     pad; the child list is 12px top / 16px bottom with 4px between
+     children (14/20 T18). Chevrons are 16px Rivet glyphs. Hover/focus
+     turns a row crimson and underlines its label. Accordion toggles are
+     <button>s; their open state shows only through the chevron.
+     ----------------------------------------------------------------------- */
+  #sidenav .sidenav-after-back {
+    padding-top: 20px;
+  }
+  .t-sidenav-parent {
+    font-size: 14px;
+    line-height: 20px;
+    font-variation-settings: 'wght' 600, 'wdth' 115;
+  }
+  #sidenav .sidenav-after-back > ul > li {
+    position: relative;
+  }
+  #sidenav .sidenav-after-back > ul > li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: #F0E1CC;
+    pointer-events: none;
+  }
+  #sidenav .sidenav-item {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    min-height: 0;
+    line-height: 20px;
+    text-decoration: none;
+  }
+  #sidenav button.sidenav-toggle {
+    border: 0;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+  }
+  #sidenav .sidenav-item.sidenav-item--open {
+    padding-bottom: 0;
+  }
+  #sidenav .sidenav-item .t-sidenav-parent.is-current {
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+  #sidenav li ul {
+    margin: 0;
+    padding: 12px 0 16px;
+  }
+  #sidenav ul a.sidenav-child {
+    min-height: 0;
+    line-height: 20px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 0;
+    text-decoration: none;
+    color: #1F2528;
+  }
+  #sidenav ul a.sidenav-child .t18 {
+    line-height: 20px;
+  }
+  #sidenav li ul li:first-child > a.sidenav-child { padding-top: 0; }
+  #sidenav li ul li + li > a.sidenav-child { margin-top: 4px; }
+  #sidenav li ul li:last-child > a.sidenav-child { padding-bottom: 0; }
+  /* The page you are on: crimson + underline. */
+  #sidenav ul a.sidenav-child.is-current {
+    color: #990000;
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+  #sidenav ul a.sidenav-child:active,
+  #sidenav ul a.sidenav-child:focus-visible {
+    color: #990000;
+    text-decoration: underline;
+  }
+  #sidenav .sidenav-toggle:active,
+  #sidenav .sidenav-toggle:focus-visible,
+  #sidenav .sidenav-toggle:active .sidenav-chevron,
+  #sidenav .sidenav-toggle:focus-visible .sidenav-chevron {
+    color: #990000;
+  }
+  #sidenav .sidenav-toggle:active .sidenav-item-label,
+  #sidenav .sidenav-toggle:focus-visible .sidenav-item-label {
+    text-decoration: underline;
+  }
+  @media (min-width: 1024px) {
+    #sidenav ul a.sidenav-child:hover {
+      color: #990000;
+      text-decoration: underline;
+    }
+    #sidenav .sidenav-toggle:hover,
+    #sidenav .sidenav-toggle:hover .sidenav-chevron {
+      color: #990000;
+    }
+    #sidenav .sidenav-toggle:hover .sidenav-item-label {
+      text-decoration: underline;
+    }
+  }
+
+  /* Children: the title row is 14/20 wght 600 with 12px under it and the
+     cream rule; it underlines only when it is the page you are on. */
+  #sidenav a.sidenav-title {
+    padding-bottom: 12px;
+  }
+  #sidenav a.sidenav-title .sidenav-title-label {
+    line-height: 20px;
+  }
+  #sidenav ul a.sidenav-item .sidenav-item-label.is-current {
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+  @media (min-width: 1024px) {
+    #sidenav ul a.sidenav-item:hover .sidenav-item-label {
+      color: #990000;
+      text-decoration: underline;
+    }
+    #sidenav ul a.sidenav-item:hover,
+    #sidenav ul a.sidenav-item:hover .sidenav-chevron {
+      color: #990000;
+    }
+  }
   /*
     Crimson footer (Figma rvt-footer 1539:11977).
     Desktop: 48px above the columns, 32px below them. The identity name
@@ -3381,40 +3509,38 @@
      rows; child chevrons sit flush on that shared right edge with no
      second inset on the icon.
      ========================================================================= */
+  /* v1.2 — "Children" sidenav (from Option C Children), with the v1.2 rules:
+     - Every page except Home starts with Back (top-level sections go Back
+       to Home). The section title row shares the breadcrumb row's center.
+     - The title is the page whose children are listed: the current page if
+       it has children, otherwise its parent. Rows are that page's children
+       and go to their pages; rows with children carry a right chevron.
+     - The page you are on is always crimson + underlined (the title when
+       you are on it, otherwise your row). Nothing else is crimson. */
   function renderSidenav(slug) {
-    const section = sectionOf(slug);
-    if (!section) return ''; // Home: the design shows no sidenav there.
-
-    const sec = PAGES[section];
+    if (slug === HOME) return '';
+    const parent = PAGES[slug].p;
+    const section = hasKids(slug) ? slug : (parent && parent !== HOME ? parent : slug);
     const onSection = section === slug;
-
-    const rows = (sec.c || []).map((c) => ({ slug: c, label: PAGES[c].l, chevron: hasKids(c) }));
-
+    const rows = section === slug && !hasKids(slug) ? [] : (PAGES[section].c || []).filter((c) => PAGES[c]);
     const items = rows
-      .map((r, i) => {
-        const current = r.slug === slug;
-        const label = current
-          ? `<span class="sidenav-item-label t18 min-w-0 flex-1 whitespace-normal underline">${esc(r.label)}</span>`
-          : `<span class="sidenav-item-label t18 min-w-0 flex-1 whitespace-normal">${esc(r.label)}</span>`;
-        const chev =
-          r.chevron && !current
-            ? `<span class="sidenav-chevron block size-3 shrink-0" aria-hidden="true">${SIDENAV_CHEVRON}</span>`
-            : '';
+      .map((c) => {
+        const current = c === slug;
+        const chev = hasKids(c)
+          ? `<span data-icon="chevron-right" class="sidenav-chevron block size-4 shrink-0" aria-hidden="true"></span>`
+          : '';
         return (
-          `<li class="-mb-px">` +
-          `<a data-nav href="${href(r.slug)}"${current ? ' aria-current="page"' : ''} ` +
-          `class="sidenav-item flex items-center gap-2 py-3 ${i === 0 ? 'border-b' : 'border-y'} border-cream px-0 ` +
-          `${current ? 'text-crimson' : 'text-ink'}">${label}${chev}</a></li>`
+          `<li><a data-nav href="${href(c)}"${current ? ' aria-current="page"' : ''} ` +
+          `class="sidenav-item flex items-center gap-2 px-0 ${current ? 'text-crimson' : 'text-ink'}">` +
+          `<span class="sidenav-item-label t18 min-w-0 flex-1 whitespace-normal${current ? ' is-current' : ''}">${esc(PAGES[c].l)}</span>` +
+          `${chev}</a></li>`
         );
       })
       .join('');
-
     const title =
-      `<a data-nav href="${href(section)}" class="sidenav-title t-section-heading flex w-full items-center border-b border-cream ${onSection ? 'text-crimson' : 'text-ink'}"` +
+      `<a data-nav href="${href(section)}" class="sidenav-title t-sidenav-parent flex w-full items-center border-b border-cream ${onSection ? 'text-crimson' : 'text-ink'}"` +
       `${onSection ? ' aria-current="page"' : ''}>` +
-      `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(sec.l)}</span></a>`;
-
-    const parent = PAGES[slug].p;
+      `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(PAGES[section].l)}</span></a>`;
     const back = parent && PAGES[parent]
       ? `<a data-nav href="${href(parent)}" class="nav-btn-back">` +
         `<span data-icon="arrow-left" class="block size-3.5 shrink-0"></span>` +
@@ -3737,7 +3863,7 @@
     sidenav.classList.toggle('lg:block', !isHome);
     document.body.classList.toggle('has-sidenav', !isHome);
     if (isHome) sidenav.removeAttribute('aria-label');
-    else sidenav.setAttribute('aria-label', PAGES[section].l);
+    else sidenav.setAttribute('aria-label', 'Menu');
 
     main.innerHTML = isHome ? renderHome(p) : renderInterior(slug, p);
     paintIcons(main);
