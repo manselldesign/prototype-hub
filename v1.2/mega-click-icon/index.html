@@ -1374,6 +1374,34 @@
   @media (max-width: 1023.98px) and (prefers-reduced-motion: reduce) {
     #sidenav { transition: none; }
   }
+  /* v1.2: a long Back label wraps instead of running out of the rail.
+     The arrow stays on the first line. */
+  #sidenav .nav-btn-back {
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 24px;
+    align-items: flex-start;
+    padding: 2px 0;
+  }
+  #sidenav .nav-btn-back > [data-icon] {
+    margin-top: 3px;
+  }
+  #sidenav .nav-btn-back .t-sidenav-back {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  #sidenav .sidenav-back-row {
+    gap: 16px;
+    align-items: flex-start;
+  }
+  #sidenav .sidenav-back-row .sidenav-main-menu {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding-top: 2px;
+  }
   /* v1.2: header nav hover matches the sidenav — crimson + underline on
      the label and a crimson chevron, anywhere on the item. The current
      section keeps its selected style. */
@@ -2708,6 +2736,9 @@
      stock icon leaves ~2.8px of empty viewBox on that side, which reads as a
      gap past the cream title rule. Drawer / breadcrumbs keep the stock box. */
   const SIDENAV_CHEVRON = svg('-3.69 0 16 16', `<path d="${ICON_16['chevron-right']}"/>`);
+  // v1.2: 12px open-state chevron for the Siblings accordion (same glyph
+  // size as SIDENAV_CHEVRON, rotated to point down).
+  const SIDENAV_CHEVRON_DOWN = svg('0 0 16 16', `<path d="${ICON_16['chevron-down']}"/>`);
 
   const icon = (name) => ICON_MARKUP[name] || '';
 
@@ -3660,7 +3691,7 @@
       const top = (PAGES[HOME].c || []).filter((c) => PAGES[c]).map((c) =>
         `<li><a data-nav href="${href(c)}" class="sidenav-item flex items-center gap-2 px-0 text-ink">` +
         `<span class="sidenav-item-label t-sidenav-parent min-w-0 flex-1 whitespace-normal">${esc(PAGES[c].l)}</span>` +
-        (hasKids(c) ? `<span data-icon="chevron-right" class="sidenav-chevron block size-4 shrink-0" aria-hidden="true"></span>` : '') +
+        (hasKids(c) ? `<span class="sidenav-chevron block size-3 shrink-0" aria-hidden="true">${SIDENAV_CHEVRON}</span>` : '') +
         `</a></li>`).join('');
       return `<div class="sidenav-after-back"><ul>${top}</ul></div>`;
     }
@@ -3672,7 +3703,7 @@
       .map((c) => {
         const current = c === slug;
         const chev = hasKids(c)
-          ? `<span data-icon="chevron-right" class="sidenav-chevron block size-4 shrink-0" aria-hidden="true"></span>`
+          ? `<span class="sidenav-chevron block size-3 shrink-0" aria-hidden="true">${SIDENAV_CHEVRON}</span>`
           : '';
         return (
           `<li><a data-nav href="${href(c)}"${current ? ' aria-current="page"' : ''} ` +
@@ -4016,6 +4047,20 @@
   }
 
   const sidenav = document.getElementById('sidenav');
+  /* v1.2: when a long Back label wraps on desktop, take the extra height
+     out of the gap under Back so the first menu row stays on the
+     breadcrumb row. */
+  function alignSidenavBack() {
+    const after = sidenav.querySelector('.sidenav-after-back');
+    const back = sidenav.querySelector('.nav-btn-back');
+    if (!after) return;
+    after.style.paddingTop = '';
+    if (!back || !window.matchMedia('(min-width: 1024px)').matches) return;
+    const extra = back.offsetHeight - 24;
+    if (extra > 0) after.style.paddingTop = Math.max(0, 20 - extra) + 'px';
+  }
+  window.addEventListener('resize', () => requestAnimationFrame(alignSidenavBack));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => alignSidenavBack());
   const main = document.getElementById('main-content');
 
   function render() {
@@ -4043,6 +4088,7 @@
     main.innerHTML = isHome ? renderHome(p) : renderInterior(slug, p);
     paintIcons(main);
     paintIcons(sidenav);
+    alignSidenavBack();
     renderHeaderNav(slug);
     closeMega();
 
