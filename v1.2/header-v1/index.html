@@ -311,12 +311,20 @@
   .crumbs-trail {
     max-width: 100%;
   }
+  /* v1.2: the trail sits in a tint box with a hairline border
+     (Figma rvt-breadcrumbs 14607:3160): background/strong #FAF6EF,
+     no border, 4px side padding, 4px gaps, hugs its content. */
+  .crumbs-trail ol {
+    box-sizing: border-box;
+    background: #FAF6EF;
+    padding: 0 4px;
+  }
   @media (max-width: 1023.98px) {
     .crumbs-trail {
       overflow: visible;
     }
     .crumbs-trail ol {
-      width: 100%;
+      width: fit-content;
       max-width: 100%;
       min-width: 0;
       flex-wrap: wrap;
@@ -1185,6 +1193,18 @@
     margin: 0;
     color: #fff;
     line-height: 24px;
+  }
+  /* v1.2: the site name links to the homepage. No underline at rest;
+     on hover/focus it shows the standard Rivet underline (1px, 3px below). */
+  .footer-home-link {
+    color: #fff;
+    text-decoration: none;
+  }
+  .footer-home-link:hover,
+  .footer-home-link:focus-visible {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
   .footer-address {
     display: flex;
@@ -2118,14 +2138,13 @@
   <footer class="rvt-footer shrink-0 bg-crimson">
     <div class="footer-main">
       <div class="footer-identity">
-        <p class="t1">Indiana Zooniversity</p>
+        <p class="t1"><a data-nav class="footer-home-link" href="#/">Indiana Zooniversity</a></p>
         <div class="footer-address">
           <p>107 S. Indiana Avenue</p>
           <p>Bloomington, IN 47405-7000</p>
           <p><a href="tel:+18128554848">(812) 855-4848</a></p>
         </div>
       </div>
-      <nav id="footer-nav" class="footer-nav" aria-label="Footer"></nav>
     </div>
     <div class="footer-legal">
       <span data-icon="trident" class="block h-7 w-[22px] shrink-0 text-white"></span>
@@ -3631,6 +3650,30 @@
   const sidenav = document.getElementById('sidenav');
   const main = document.getElementById('main-content');
 
+  /* v1.2: when the trail wraps (under 1024px), a wrapped flex row still
+     fills the column, leaving a wide empty strip on the right of the cream
+     box. Shrink the box to its longest line so the padding looks even on
+     every side. One-row trails already hug their content. */
+  function fitCrumbs() {
+    document.querySelectorAll('.crumbs-trail ol').forEach((ol) => {
+      ol.style.width = '';
+      const items = [...ol.children];
+      if (!items.length) return;
+      const top = items[0].offsetTop;
+      if (!items.some((li) => li.offsetTop !== top)) return;
+      const box = ol.getBoundingClientRect();
+      const cs = getComputedStyle(ol);
+      const right = Math.max(...items.map((li) => li.getBoundingClientRect().right));
+      ol.style.width = Math.ceil(right - box.left + parseFloat(cs.paddingRight) + parseFloat(cs.borderRightWidth)) + 'px';
+    });
+  }
+  let fitCrumbsFrame = 0;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(fitCrumbsFrame);
+    fitCrumbsFrame = requestAnimationFrame(fitCrumbs);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitCrumbs);
+
   function render() {
     const slug = currentSlug();
     if (slug === null) return; // anchor jump, leave the page alone
@@ -3652,6 +3695,7 @@
 
     main.innerHTML = isHome ? renderHome(p) : renderInterior(slug, p);
     paintIcons(main);
+    fitCrumbs();
     paintIcons(sidenav);
     renderHeaderNav(slug);
     closeMega();
