@@ -1181,7 +1181,8 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 28px;
-    padding-top: 24px;
+    /* v1.2: 32px top on mobile, matching Figma rvt-footer Mobile (spacing/32). */
+    padding-top: 32px;
   }
   .footer-identity {
     display: flex;
@@ -1205,6 +1206,45 @@
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
+  }
+  /* v1.2: Jump to top, Normal Large button on Crimson (Figma rvt-link,
+     Style=Normal). 40px tall, 16px side padding, 8px gap, no fill,
+     1px border/accent #FAF6EF inside. Label action/lg/strong 16/24 wght 600
+     and the 16px arrow-up in text/accent #FAF6EF. Hover: border and text
+     go to accent-strong / brand-strong #FFFFFF. Focus: 2px ring, 2px outside. */
+  .footer-jump {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-self: flex-start;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 15px;
+    border: 1px solid #FAF6EF;
+    border-radius: 0;
+    background: transparent;
+    color: #FAF6EF;
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    font-variation-settings: 'wght' 600, 'wdth' 115;
+    cursor: pointer;
+  }
+  /* 24px from the button to the site name at every size (the identity
+     column's own gap is 8px under 1024px and 16px above). */
+  .footer-jump {
+    margin-bottom: 16px;
+  }
+  @media (min-width: 1024px) {
+    .footer-jump { margin-bottom: 8px; }
+  }
+  .footer-jump:hover {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+  }
+  .footer-jump:focus-visible {
+    outline: 2px solid #EBD8BC;
+    outline-offset: 2px;
   }
   .footer-address {
     display: flex;
@@ -1356,7 +1396,8 @@
       flex-direction: row;
       align-items: flex-start;
       gap: 48px;
-      padding-top: 48px;
+      /* v1.2: 32px top and bottom (Figma rvt-footer container, spacing/32). */
+      padding-top: 32px;
       padding-bottom: 32px;
     }
     .footer-identity {
@@ -2138,6 +2179,10 @@
   <footer class="rvt-footer shrink-0 bg-crimson">
     <div class="footer-main">
       <div class="footer-identity">
+        <button type="button" class="footer-jump" id="footer-jump">
+          <span class="footer-jump-label">Jump to top</span>
+          <span data-icon="arrow-up" class="block size-4 shrink-0"></span>
+        </button>
         <p class="t1"><a data-nav class="footer-home-link" href="#/">Indiana Zooniversity</a></p>
         <div class="footer-address">
           <p>107 S. Indiana Avenue</p>
@@ -2379,6 +2424,7 @@
     close: 'm3.5 2.086 4.5 4.5 4.5-4.5L13.914 3.5 9.414 8l4.5 4.5-1.414 1.414-4.5-4.5-4.5 4.5L2.086 12.5l4.5-4.5-4.5-4.5L3.5 2.086Z',
     'chevron-down': 'M15.146 6.263 8 12.31.854 6.263 2.146 4.737 8 9.69l5.854-4.953 1.292 1.526Z',
     'arrow-right': 'M1 7h10.844L7.737 2.146 9.263.854 15.31 8l-6.047 7.146-1.526-1.292L11.844 9H1V7Z',
+    'arrow-up': 'M7 15V4.156L2.146 8.263.854 6.737 8 .69l7.146 6.047-1.292 1.526L9 4.156V15H7Z',
     'arrow-left': 'M15 7H4.156l4.107-4.854L6.737.854.69 8l6.047 7.146 1.526-1.292L4.156 9H15V7Z',
     'magnifying-glass': 'M7 2a5 5 0 1 0 0 10A5 5 0 0 0 7 2ZM0 7a7 7 0 1 1 12.606 4.192l3.101 3.1-1.414 1.415-3.1-3.1A7 7 0 0 1 0 7Z',
     menu: 'M15 4H1V2H15V4ZM15 9H1V7H15V9ZM1 14H15V12H1V14Z',
@@ -3756,6 +3802,20 @@
   }
   paintIcons(document);
   renderFooterNav();
+  /* v1.2: Jump to top scrolls back up (instantly when reduced motion is
+     on) and moves keyboard focus to the page header. */
+  document.getElementById('footer-jump').addEventListener('click', () => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    // Focus the page header itself (not the skip link, which would pop
+    // into view), so the next Tab starts from the top of the page.
+    const target = document.querySelector('rvt-header');
+    if (target) {
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.style.outline = 'none';
+      target.focus({ preventScroll: true });
+    }
+  });
   render();
   const afterMastheadFonts = () => {
     calibrateMastheadSelectedWeight();
