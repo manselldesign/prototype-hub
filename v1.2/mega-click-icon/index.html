@@ -1316,6 +1316,80 @@
       color: #990000;
     }
   }
+  /* -----------------------------------------------------------------------
+     v1.2 mobile menu panel (below 1024px), from the Option C Siblings
+     prototype: the sidenav sits in flow under the header, collapsed to 0.
+     Open, it grows to its content (400ms, same ease as search), pushes the
+     page down and carries a 0 2px 6px rgba(0,0,0,.15) shadow. 44px top,
+     8px bottom, page gutters left/right. Back gets a hairline under it;
+     the last row has none.
+     ----------------------------------------------------------------------- */
+  @media (max-width: 1023.98px) {
+    #sidenav {
+      display: block !important;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 !important;
+      border-right: 0 !important;
+      background: #fff;
+      visibility: hidden;
+      pointer-events: none;
+      box-shadow: none;
+      transition:
+        max-height 400ms cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #sidenav.is-open {
+      visibility: visible;
+      pointer-events: auto;
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
+    }
+    #sidenav .sidenav-inner {
+      padding: 44px var(--chrome-gutter) 8px;
+    }
+    #sidenav .nav-btn-back + .sidenav-after-back {
+      position: relative;
+      margin-top: 20px;
+      padding-top: 0;
+    }
+    #sidenav .nav-btn-back + .sidenav-after-back > .sidenav-title {
+      padding-top: 12px;
+    }
+    #sidenav .nav-btn-back + .sidenav-after-back::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: #F0E1CC;
+    }
+    #sidenav .sidenav-after-back > ul > li:last-child::after {
+      content: none;
+    }
+  }
+  @media (max-width: 1023.98px) and (prefers-reduced-motion: reduce) {
+    #sidenav { transition: none; }
+  }
+  /* v1.2: header nav hover matches the sidenav — crimson + underline on
+     the label and a crimson chevron, anywhere on the item. The current
+     section keeps its selected style. */
+  @media (min-width: 1024px) {
+    .masthead-nav-item:not(.is-current) .masthead-nav-link:hover,
+    .masthead-nav-item:not(.is-current) .masthead-nav-link:hover .masthead-nav-label,
+    .masthead-nav-item.has-mega:not(.is-current):hover .masthead-nav-label,
+    .masthead-nav-item.has-mega:not(.is-current):hover .masthead-nav-disclosure {
+      color: #990000;
+    }
+    .masthead-nav-item:not(.is-current) .masthead-nav-link:hover .masthead-nav-label,
+    .masthead-nav-item.has-mega:not(.is-current):hover .masthead-nav-label {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
   /*
     Crimson footer (Figma rvt-footer 1539:11977).
     Desktop: 48px above the columns, 32px below them. The identity name
@@ -3581,7 +3655,15 @@
      - The page you are on is always crimson + underlined (the title when
        you are on it, otherwise your row). Nothing else is crimson. */
   function renderSidenav(slug) {
-    if (slug === HOME) return '';
+    if (slug === HOME) {
+      // Home (mobile panel only): the top-level sections.
+      const top = (PAGES[HOME].c || []).filter((c) => PAGES[c]).map((c) =>
+        `<li><a data-nav href="${href(c)}" class="sidenav-item flex items-center gap-2 px-0 text-ink">` +
+        `<span class="sidenav-item-label t-sidenav-parent min-w-0 flex-1 whitespace-normal">${esc(PAGES[c].l)}</span>` +
+        (hasKids(c) ? `<span data-icon="chevron-right" class="sidenav-chevron block size-4 shrink-0" aria-hidden="true"></span>` : '') +
+        `</a></li>`).join('');
+      return `<div class="sidenav-after-back"><ul>${top}</ul></div>`;
+    }
     const parent = PAGES[slug].p;
     const section = hasKids(slug) ? slug : (parent && parent !== HOME ? parent : slug);
     const onSection = section === slug;
@@ -3835,7 +3917,57 @@
     if (searchDrawer.contains(document.activeElement)) searchToggle.focus();
   }
 
-  toggle.addEventListener('click', () => (drawerOpen ? closeDrawer() : openDrawer()));
+  /* v1.2 mobile menu (from the Option C Siblings prototype): below 1024px the
+     menu button slides the sidenav down in-flow under the header (400ms,
+     pushes the page down, drop shadow), and the button turns into Close.
+     The panel shows the same list as the desktop rail; Home lists the
+     top-level sections. Desktop keeps the drawer. */
+  let mobileMenuOpen = false;
+  function setMenuIcon(open) {
+    const ic = toggle.querySelector('[data-icon]');
+    if (ic) ic.innerHTML = icon(open ? 'close' : 'menu');
+    const sr = toggle.querySelector('.sr-only');
+    if (sr) sr.textContent = open ? 'Close' : 'Menu';
+  }
+  function sizeMobileMenu() {
+    if (!mobileMenuOpen) return;
+    sidenav.style.maxHeight = sidenav.scrollHeight + 'px';
+  }
+  function openMobileMenu() {
+    closeSearch();
+    mobileMenuOpen = true;
+    sidenav.classList.add('is-open');
+    sidenav.style.maxHeight = sidenav.scrollHeight + 'px';
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-controls', 'sidenav');
+    setMenuIcon(true);
+  }
+  function closeMobileMenu(opts) {
+    const was = mobileMenuOpen;
+    mobileMenuOpen = false;
+    if (opts && opts.instant) {
+      sidenav.style.transition = 'none';
+      requestAnimationFrame(() => { sidenav.style.transition = ''; });
+    }
+    sidenav.classList.remove('is-open');
+    sidenav.style.maxHeight = '';
+    if (was) {
+      toggle.setAttribute('aria-expanded', 'false');
+      setMenuIcon(false);
+      if (sidenav.contains(document.activeElement)) toggle.focus();
+    }
+  }
+  toggle.addEventListener('click', () => {
+    if (!desktopView.matches) {
+      if (mobileMenuOpen) closeMobileMenu();
+      else openMobileMenu();
+      return;
+    }
+    toggle.setAttribute('aria-controls', 'drawer');
+    drawerOpen ? closeDrawer() : openDrawer();
+  });
+  desktopView.addEventListener('change', () => closeMobileMenu({ instant: true }));
+  searchToggle.addEventListener('click', () => { if (mobileMenuOpen) closeMobileMenu(); });
   searchToggle.addEventListener('click', () => (searchOpen ? closeSearch() : openSearch()));
   document.getElementById('drawer-close').addEventListener('click', closeDrawer);
   document.getElementById('search-drawer-close').addEventListener('click', closeSearch);
@@ -3848,7 +3980,8 @@
     if (e.key !== 'Escape') return;
     const t = e.target;
     if (t && t.tagName === 'INPUT' && t.type === 'search' && t.value.length > 0) return;
-    if (drawerOpen) closeDrawer();
+    if (mobileMenuOpen) closeMobileMenu();
+    else if (drawerOpen) closeDrawer();
     else if (searchOpen) closeSearch();
     else closeMega();
   });
@@ -3893,7 +4026,10 @@
 
     const isHome = slug === HOME;
     const section = isHome ? null : sectionOf(slug);
-    sidenav.innerHTML = isHome ? '' : renderSidenav(slug);
+    // v1.2: Home renders too — the desktop rail stays hidden there, but the
+    // mobile menu panel lists the top-level sections.
+    sidenav.innerHTML = `<div class="sidenav-inner">${renderSidenav(slug)}</div>`;
+    closeMobileMenu({ instant: true });
     // The column must not merely be invisible on Home — it has to leave the
     // flex row entirely, or it keeps reserving its 300px and squeezes the hero.
     // Dropping `lg:block` lets the base `hidden` class apply at every width.
@@ -3918,6 +4054,7 @@
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[data-nav]');
     if (!a) return;
+    if (mobileMenuOpen) closeMobileMenu();
     if (drawerOpen) closeDrawer();
     if (searchOpen) closeSearch();
     closeMega();
