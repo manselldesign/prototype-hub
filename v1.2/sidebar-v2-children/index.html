@@ -4604,6 +4604,29 @@
   });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitCrumbs);
 
+  /* v1.2: the stylesheet (Tailwind builds it in the browser) and the web font
+     can land after the first render, and a one-time measurement taken before
+     that leaves the sidenav title off the breadcrumb row or the breadcrumb
+     box the wrong width. Re-measure whenever styles are added or changed and
+     whenever the page or the sidenav changes size. Both measurements only
+     set inline styles and settle on the same result, so this cannot loop. */
+  let remeasureFrame = 0;
+  function remeasureLayout() {
+    cancelAnimationFrame(remeasureFrame);
+    remeasureFrame = requestAnimationFrame(() => {
+      if (typeof alignSidenavBack === 'function') alignSidenavBack();
+      if (typeof fitCrumbs === 'function') fitCrumbs();
+    });
+  }
+  new MutationObserver(remeasureLayout).observe(document.head, { childList: true, subtree: true, characterData: true });
+  if ('ResizeObserver' in window) {
+    const remeasureRO = new ResizeObserver(remeasureLayout);
+    remeasureRO.observe(document.body);
+    remeasureRO.observe(document.getElementById('sidenav'));
+  }
+  window.addEventListener('load', remeasureLayout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasureLayout);
+
   function render() {
     const slug = currentSlug();
     if (slug === null) return; // anchor jump, leave the page alone
