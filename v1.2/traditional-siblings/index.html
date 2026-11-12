@@ -1507,6 +1507,15 @@
   @media (max-width: 1023.98px) and (prefers-reduced-motion: reduce) {
     #sidenav { transition: none; }
   }
+  /* v1.2 C - Traditional: at 1024px and up the breadcrumbs, and the menu
+     title / first menu row that lines up with them, sit 8px lower than in
+     A and B. Back stays where it is, so the gap under Back is 28px (was
+     20px); alignSidenavBack() uses the same 28. */
+  @media (min-width: 1024px) {
+    rvt-breadcrumbs { padding-top: 8px; }
+    #sidenav .sidenav-after-back { padding-top: 28px; }
+  }
+
   /* v1.2: a long Back label wraps instead of running out of the rail.
      The arrow stays on the first line. */
   #sidenav .nav-btn-back {
@@ -4263,7 +4272,7 @@
     after.style.paddingTop = '';
     if (!back || !window.matchMedia('(min-width: 1024px)').matches) return;
     const extra = back.offsetHeight - 24;
-    if (extra > 0) after.style.paddingTop = Math.max(0, 20 - extra) + 'px';
+    if (extra > 0) after.style.paddingTop = Math.max(0, 28 - extra) + 'px'; // 28 = C - Traditional gap under Back
   }
   window.addEventListener('resize', () => requestAnimationFrame(alignSidenavBack));
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => alignSidenavBack());
