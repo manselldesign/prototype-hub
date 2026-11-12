@@ -2682,6 +2682,7 @@
      16-wide viewBox is shifted so path x=12.31 sits on the right edge. The
      stock icon leaves ~2.8px of empty viewBox on that side, which reads as a
      gap past the cream title rule. Drawer / breadcrumbs keep the stock box. */
+  // v1.2 Siblings: these render in a 16x16 box (the Rivet 16px icon at full size).
   const SIDENAV_CHEVRON = svg('-3.69 0 16 16', `<path d="${ICON_16['chevron-right']}"/>`);
   // v1.2: 12px open-state chevron for the Siblings accordion (same glyph
   // size as SIDENAV_CHEVRON, rotated to point down).
@@ -3654,7 +3655,7 @@
           `<li><button type="button" class="sidenav-item sidenav-toggle${open ? ' sidenav-item--open' : ''} flex w-full items-center gap-2 px-0 text-left text-ink" ` +
           `data-sidenav-toggle="${s}" aria-expanded="${open ? 'true' : 'false'}"${open ? ` aria-controls="${id}"` : ''}>` +
           `<span class="sidenav-item-label t-sidenav-parent min-w-0 flex-1 whitespace-normal">${label}</span>` +
-          `<span class="sidenav-chevron block size-3 shrink-0" aria-hidden="true">${open ? SIDENAV_CHEVRON_DOWN : SIDENAV_CHEVRON}</span>` +
+          `<span class="sidenav-chevron block size-4 shrink-0" aria-hidden="true">${open ? SIDENAV_CHEVRON_DOWN : SIDENAV_CHEVRON}</span>` +
           `</button>${kids}</li>`
         );
       })
