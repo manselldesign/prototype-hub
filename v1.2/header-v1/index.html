@@ -311,13 +311,30 @@
   .crumbs-trail {
     max-width: 100%;
   }
-  /* v1.2: the trail sits in a tint box with a hairline border
-     (Figma rvt-breadcrumbs 14607:3160): background/strong #FAF6EF,
-     no border, 4px side padding, 4px gaps, hugs its content. */
+  /* v1.2: rvt-breadcrumbs (Figma 14607:3160). The trail sits in a box:
+     white #FFFFFF (no cream tint, per Jenn), spacing/4 top/bottom, spacing/8
+     left/right, spacing/4 gaps, shadow/xs (0 1px 4px #1F25281A), no border
+     or radius; hugs its content. Chevrons are icon/brand crimson.
+     The -4px top/bottom margin keeps the 20px text row exactly where it was
+     (the sidenav lines up with it); the 4px under rvt-breadcrumbs keeps the
+     box 12px from the H1. */
   .crumbs-trail ol {
     box-sizing: border-box;
-    background: #FAF6EF;
-    padding: 0 4px;
+    background: #FFFFFF;
+    padding: 4px 8px;
+    margin: -4px 0;
+    box-shadow: 0 1px 4px 0 rgba(31, 37, 40, 0.1);
+  }
+  rvt-breadcrumbs {
+    margin-bottom: 4px;
+  }
+  @media (min-width: 1024px) {
+    /* The desktop trail scrolls sideways, which clips anything outside it:
+       give the shadow room without moving the row. */
+    .crumbs-trail {
+      padding: 8px 6px 20px; /* 20 = the 12px (pb-3) under the trail + 8 */
+      margin: -8px -6px -8px;
+    }
   }
   @media (max-width: 1023.98px) {
     .crumbs-trail {
@@ -2875,7 +2892,7 @@
        home         12×12 glyph #343C42, nudged up 1px; chevron has no nudge
        visited      14/20 wght 350 wdth 115 #343C42; chevron nudged down 1px
        current      14/20 wght 600 wdth 115 #1F2528, no underline, no chevron
-       separator    12×12 chevron, ink #1F2528 (v1.2; was crimson)
+       separator    12×12 chevron, icon/brand crimson #990000 (v1.2, Figma 14607:3160)
        hover        home glyph and visited label turn #990000 and underline;
                     the chevron stays #990000. Current does not change.
      ========================================================================= */
@@ -2893,7 +2910,7 @@
     rest.forEach((s, i) => {
       const label = esc(PAGES[s].l);
       // Chevron after Home is flush; chevrons after visited labels sit 1px lower.
-      const sep = `<span data-icon="chevron-right" class="crumb-sep block size-3 shrink-0 text-ink${i === 0 ? '' : ' crumb-sep-nudge'}"></span>`;
+      const sep = `<span data-icon="chevron-right" class="crumb-sep block size-3 shrink-0 text-crimson${i === 0 ? '' : ' crumb-sep-nudge'}"></span>`;
       out += i === rest.length - 1
         ? `<li aria-current="page" class="flex h-5 items-center gap-1">${sep}` +
           `<span class="t-crumb-current">${label}</span></li>`
