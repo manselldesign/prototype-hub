@@ -314,12 +314,37 @@
   .crumbs-trail {
     max-width: 100%;
   }
+  /* v1.2: rvt-breadcrumbs (Figma 14607:3160). The trail sits in a box:
+     white #FFFFFF (no cream tint, per Jenn), spacing/4 top/bottom, spacing/8
+     left/right, spacing/4 gaps, shadow/xs (0 1px 4px #1F25281A), no border
+     or radius; hugs its content. Chevrons are icon/brand crimson.
+     The -4px top/bottom margin keeps the 20px text row exactly where it was
+     (the sidenav lines up with it); the 4px under rvt-breadcrumbs keeps the
+     box 12px from the H1. */
+  .crumbs-trail ol {
+    box-sizing: border-box;
+    background: #FFFFFF;
+    padding: 4px 8px;
+    margin: -4px 0;
+    box-shadow: 0 1px 4px 0 rgba(31, 37, 40, 0.1);
+  }
+  rvt-breadcrumbs {
+    margin-bottom: 4px;
+  }
+  @media (min-width: 1024px) {
+    /* The desktop trail scrolls sideways, which clips anything outside it:
+       give the shadow room without moving the row. */
+    .crumbs-trail {
+      padding: 8px 6px 20px; /* 20 = the 12px (pb-3) under the trail + 8 */
+      margin: -8px -6px -8px;
+    }
+  }
   @media (max-width: 1023.98px) {
     .crumbs-trail {
       overflow: visible;
     }
     .crumbs-trail ol {
-      width: 100%;
+      width: fit-content;
       max-width: 100%;
       min-width: 0;
       flex-wrap: wrap;
@@ -4555,6 +4580,30 @@
   syncMobileSidenavHidden();
   syncMobileSearchHidden();
 
+  /* v1.2: when the trail wraps (under 1024px), a wrapped flex row still
+     fills the column, leaving a wide empty strip on the right of the
+     box. Shrink the box to its longest line so the padding looks even on
+     every side. One-row trails already hug their content. */
+  function fitCrumbs() {
+    document.querySelectorAll('.crumbs-trail ol').forEach((ol) => {
+      ol.style.width = '';
+      const items = [...ol.children];
+      if (!items.length) return;
+      const top = items[0].offsetTop;
+      if (!items.some((li) => li.offsetTop !== top)) return;
+      const box = ol.getBoundingClientRect();
+      const cs = getComputedStyle(ol);
+      const right = Math.max(...items.map((li) => li.getBoundingClientRect().right));
+      ol.style.width = Math.ceil(right - box.left + parseFloat(cs.paddingRight) + parseFloat(cs.borderRightWidth)) + 'px';
+    });
+  }
+  let fitCrumbsFrame = 0;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(fitCrumbsFrame);
+    fitCrumbsFrame = requestAnimationFrame(fitCrumbs);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitCrumbs);
+
   function render() {
     const slug = currentSlug();
     if (slug === null) return; // anchor jump, leave the page alone
@@ -4573,6 +4622,7 @@
 
     main.innerHTML = isHome ? renderHome(p) : renderInterior(slug, p);
     paintIcons(main);
+    fitCrumbs();
     paintIcons(sidenavNav);
     renderHeaderNav(slug);
     closeMega();
