@@ -1387,10 +1387,13 @@
     gap: 16px;
     align-items: flex-start;
   }
+  /* v1.2: "Main menu" uses Back's 24px box (2px top/bottom + 20px line)
+     so the two share one vertical center. */
   #sidenav .sidenav-back-row .sidenav-main-menu {
     flex-shrink: 0;
     white-space: nowrap;
-    padding-top: 2px;
+    padding: 2px 0;
+    line-height: 20px;
   }
   /* v1.2: header nav hover matches the sidenav — crimson + underline on
      the label and a crimson chevron, anywhere on the item. The current

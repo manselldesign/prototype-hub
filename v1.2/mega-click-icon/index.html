@@ -1316,64 +1316,8 @@
       color: #990000;
     }
   }
-  /* -----------------------------------------------------------------------
-     v1.2 mobile menu panel (below 1024px), from the Option C Siblings
-     prototype: the sidenav sits in flow under the header, collapsed to 0.
-     Open, it grows to its content (400ms, same ease as search), pushes the
-     page down and carries a 0 2px 6px rgba(0,0,0,.15) shadow. 44px top,
-     8px bottom, page gutters left/right. Back gets a hairline under it;
-     the last row has none.
-     ----------------------------------------------------------------------- */
-  @media (max-width: 1023.98px) {
-    #sidenav {
-      display: block !important;
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-height: 0;
-      overflow: hidden;
-      padding: 0 !important;
-      border-right: 0 !important;
-      background: #fff;
-      visibility: hidden;
-      pointer-events: none;
-      box-shadow: none;
-      transition:
-        max-height 400ms cubic-bezier(0.4, 0, 0.2, 1),
-        box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    #sidenav.is-open {
-      visibility: visible;
-      pointer-events: auto;
-      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
-    }
-    #sidenav .sidenav-inner {
-      padding: 44px var(--chrome-gutter) 8px;
-    }
-    #sidenav .nav-btn-back + .sidenav-after-back {
-      position: relative;
-      margin-top: 20px;
-      padding-top: 0;
-    }
-    #sidenav .nav-btn-back + .sidenav-after-back > .sidenav-title {
-      padding-top: 12px;
-    }
-    #sidenav .nav-btn-back + .sidenav-after-back::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: 1px;
-      background: #F0E1CC;
-    }
-    #sidenav .sidenav-after-back > ul > li:last-child::after {
-      content: none;
-    }
-  }
-  @media (max-width: 1023.98px) and (prefers-reduced-motion: reduce) {
-    #sidenav { transition: none; }
-  }
+  /* v1.2 Children: mobile uses the full-screen drill-down drawer, exactly as
+     v1.1 header-v1 (no slide-down sidenav panel). */
   /* v1.2: a long Back label wraps instead of running out of the rail.
      The arrow stays on the first line. */
   #sidenav .nav-btn-back {
@@ -3988,15 +3932,7 @@
       if (sidenav.contains(document.activeElement)) toggle.focus();
     }
   }
-  toggle.addEventListener('click', () => {
-    if (!desktopView.matches) {
-      if (mobileMenuOpen) closeMobileMenu();
-      else openMobileMenu();
-      return;
-    }
-    toggle.setAttribute('aria-controls', 'drawer');
-    drawerOpen ? closeDrawer() : openDrawer();
-  });
+  toggle.addEventListener('click', () => (drawerOpen ? closeDrawer() : openDrawer()));
   desktopView.addEventListener('change', () => closeMobileMenu({ instant: true }));
   searchToggle.addEventListener('click', () => { if (mobileMenuOpen) closeMobileMenu(); });
   searchToggle.addEventListener('click', () => (searchOpen ? closeSearch() : openSearch()));

@@ -1263,6 +1263,78 @@
     }
   }
 
+  /* -----------------------------------------------------------------------
+     v1.2 mobile menu panel (below 1024px), from the Option C Siblings
+     prototype: the sidenav sits in flow under the header, collapsed to 0.
+     Open, it grows to its content (400ms, same ease as search), pushes the
+     page down and carries a 0 2px 6px rgba(0,0,0,.15) shadow. 44px top,
+     8px bottom, page gutters left/right. Back gets a hairline under it;
+     the last row has none.
+     ----------------------------------------------------------------------- */
+  @media (max-width: 1023.98px) {
+    #layout { flex-direction: column; }
+    #sidenav {
+      display: block !important;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 !important;
+      border-right: 0 !important;
+      background: #fff;
+      visibility: hidden;
+      pointer-events: none;
+      box-shadow: none;
+      transition:
+        max-height 400ms cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #sidenav.is-open {
+      visibility: visible;
+      pointer-events: auto;
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
+    }
+    #sidenav .sidenav-inner {
+      padding: 44px var(--chrome-gutter) 8px;
+    }
+    #sidenav .sidenav-back-row + .sidenav-after-back {
+      position: relative;
+      margin-top: 20px;
+      padding-top: 0;
+    }
+    #sidenav .sidenav-back-row + .sidenav-after-back > .sidenav-title {
+      padding-top: 12px;
+    }
+    #sidenav .sidenav-back-row + .sidenav-after-back::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: #F0E1CC;
+    }
+    #sidenav .sidenav-after-back > ul > li:last-child::after {
+      content: none;
+    }
+  }
+  @media (min-width: 1024px) {
+    #sidenav .sidenav-main-menu { display: none; }
+  }
+  #sidenav .sidenav-main-menu {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  @media (min-width: 1024px) and (hover: hover) {
+    #sidenav .sidenav-main-menu:hover { color: #990000; }
+  }
+  @media (max-width: 1023.98px) and (prefers-reduced-motion: reduce) {
+    #sidenav { transition: none; }
+  }
+
   /* v1.2: a long Back label wraps instead of running out of the rail.
      The arrow stays on the first line. */
   #sidenav .nav-btn-back {
@@ -1286,10 +1358,13 @@
     gap: 16px;
     align-items: flex-start;
   }
+  /* v1.2: "Main menu" uses Back's 24px box (2px top/bottom + 20px line)
+     so the two share one vertical center. */
   #sidenav .sidenav-back-row .sidenav-main-menu {
     flex-shrink: 0;
     white-space: nowrap;
-    padding-top: 2px;
+    padding: 2px 0;
+    line-height: 20px;
   }
   /* v1.2: header nav hover matches the sidenav — crimson + underline.
      The current section keeps its selected style. */
@@ -3545,10 +3620,10 @@
   let sidenavRouteSlug = null;
 
   function renderSidenav(slug) {
-    if (slug === HOME) return '';
+    // Home (mobile panel only): the top-level sections, all closed.
     if (sidenavRouteSlug !== slug) {
       sidenavRouteSlug = slug;
-      sidenavOpen = new Set(hasKids(slug) ? [slug] : []);
+      sidenavOpen = new Set(slug !== HOME && hasKids(slug) ? [slug] : []);
     }
     const parent = PAGES[slug].p;
     const atTop = !parent || parent === HOME;
@@ -3593,13 +3668,33 @@
       })
       .join('');
 
+    // Mobile only: "Main menu" (like the drill-down) shows the top-level
+    // sections in the panel without leaving the page. Hidden at 1024px+,
+    // and not shown where Back already goes to Home.
+    const mainMenu = parent && parent !== HOME
+      ? `<button type="button" data-sidenav-root class="sidenav-main-menu ml-auto t16 text-ink underline">Main menu</button>`
+      : '';
     const back = parent && PAGES[parent]
-      ? `<a data-nav href="${href(parent)}" class="nav-btn-back">` +
+      ? `<div class="sidenav-back-row flex items-center">` +
+        `<a data-nav href="${href(parent)}" class="nav-btn-back">` +
         `<span data-icon="arrow-left" class="block size-3.5 shrink-0"></span>` +
-        `<span class="t-sidenav-back">${esc(PAGES[parent].l)}</span></a>`
+        `<span class="t-sidenav-back">${esc(PAGES[parent].l)}</span></a>${mainMenu}</div>`
       : '';
     return `${back}<div class="sidenav-after-back"><ul>${items}</ul></div>`;
   }
+
+  // Mobile "Main menu": swap the panel to the top-level sections.
+  document.getElementById('sidenav').addEventListener('click', (e) => {
+    if (!e.target.closest('[data-sidenav-root]')) return;
+    const nav = document.getElementById('sidenav');
+    sidenavRouteSlug = HOME;
+    sidenavOpen = new Set();
+    nav.innerHTML = `<div class="sidenav-inner">${renderSidenav(HOME)}</div>`;
+    paintIcons(nav);
+    if (typeof sizeMobileMenu === 'function') sizeMobileMenu();
+    const first = nav.querySelector('.sidenav-item');
+    if (first) first.focus({ preventScroll: true });
+  });
 
   // Accordion toggles: open/close in place, keep focus on the toggle.
   document.getElementById('sidenav').addEventListener('click', (e) => {
@@ -3609,9 +3704,10 @@
     if (sidenavOpen.has(s)) sidenavOpen.delete(s);
     else sidenavOpen.add(s);
     const nav = document.getElementById('sidenav');
-    nav.innerHTML = renderSidenav(currentSlug());
+    nav.innerHTML = `<div class="sidenav-inner">${renderSidenav(sidenavRouteSlug === HOME ? HOME : currentSlug())}</div>`;
     paintIcons(nav);
     alignSidenavBack();
+    if (typeof sizeMobileMenu === 'function') sizeMobileMenu();
     const again = nav.querySelector(`[data-sidenav-toggle="${s}"]`);
     if (again) again.focus({ preventScroll: true });
   });
@@ -3839,7 +3935,57 @@
     if (searchDrawer.contains(document.activeElement)) searchToggle.focus();
   }
 
-  toggle.addEventListener('click', () => (drawerOpen ? closeDrawer() : openDrawer()));
+  /* v1.2 mobile menu (from the Option C Siblings prototype): below 1024px the
+     menu button slides the sidenav down in-flow under the header (400ms,
+     pushes the page down, drop shadow), and the button turns into Close.
+     The panel shows the same list as the desktop rail; Home lists the
+     top-level sections. Desktop keeps the drawer. */
+  let mobileMenuOpen = false;
+  function setMenuIcon(open) {
+    const ic = toggle.querySelector('[data-icon]');
+    if (ic) ic.innerHTML = icon(open ? 'close' : 'menu');
+    const sr = toggle.querySelector('.sr-only');
+    if (sr) sr.textContent = open ? 'Close' : 'Menu';
+  }
+  function sizeMobileMenu() {
+    if (!mobileMenuOpen) return;
+    sidenav.style.maxHeight = sidenav.scrollHeight + 'px';
+  }
+  function openMobileMenu() {
+    closeSearch();
+    mobileMenuOpen = true;
+    sidenav.classList.add('is-open');
+    sidenav.style.maxHeight = sidenav.scrollHeight + 'px';
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-controls', 'sidenav');
+    setMenuIcon(true);
+  }
+  function closeMobileMenu(opts) {
+    const was = mobileMenuOpen;
+    mobileMenuOpen = false;
+    if (opts && opts.instant) {
+      sidenav.style.transition = 'none';
+      requestAnimationFrame(() => { sidenav.style.transition = ''; });
+    }
+    sidenav.classList.remove('is-open');
+    sidenav.style.maxHeight = '';
+    if (was) {
+      toggle.setAttribute('aria-expanded', 'false');
+      setMenuIcon(false);
+      if (sidenav.contains(document.activeElement)) toggle.focus();
+    }
+  }
+  toggle.addEventListener('click', () => {
+    if (!desktopView.matches) {
+      if (mobileMenuOpen) closeMobileMenu();
+      else openMobileMenu();
+      return;
+    }
+    toggle.setAttribute('aria-controls', 'drawer');
+    drawerOpen ? closeDrawer() : openDrawer();
+  });
+  desktopView.addEventListener('change', () => closeMobileMenu({ instant: true }));
+  searchToggle.addEventListener('click', () => { if (mobileMenuOpen) closeMobileMenu(); });
   searchToggle.addEventListener('click', () => (searchOpen ? closeSearch() : openSearch()));
   document.getElementById('drawer-close').addEventListener('click', closeDrawer);
   document.getElementById('search-drawer-close').addEventListener('click', closeSearch);
@@ -3852,7 +3998,8 @@
     if (e.key !== 'Escape') return;
     const t = e.target;
     if (t && t.tagName === 'INPUT' && t.type === 'search' && t.value.length > 0) return;
-    if (drawerOpen) closeDrawer();
+    if (mobileMenuOpen) closeMobileMenu();
+    else if (drawerOpen) closeDrawer();
     else if (searchOpen) closeSearch();
     else closeMega();
   });
@@ -3935,7 +4082,10 @@
 
     const isHome = slug === HOME;
     const section = isHome ? null : sectionOf(slug);
-    sidenav.innerHTML = isHome ? '' : renderSidenav(slug);
+    // v1.2: Home renders too — the desktop rail stays hidden there, but the
+    // mobile menu panel lists the top-level sections.
+    sidenav.innerHTML = `<div class="sidenav-inner">${renderSidenav(slug)}</div>`;
+    closeMobileMenu({ instant: true });
     // The column must not merely be invisible on Home — it has to leave the
     // flex row entirely, or it keeps reserving its 300px and squeezes the hero.
     // Dropping `lg:block` lets the base `hidden` class apply at every width.
@@ -3962,6 +4112,7 @@
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[data-nav]');
     if (!a) return;
+    if (mobileMenuOpen) closeMobileMenu();
     if (drawerOpen) closeDrawer();
     if (searchOpen) closeSearch();
     closeMega();
