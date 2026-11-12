@@ -1066,6 +1066,36 @@
     transform: rotate(180deg);
   }
 
+  /* v1.2 B.1: the header item is a split button again. */
+  /* Split button, as in the original mega-click-icon: the label is the
+     page link and the chevron is a separate 22px control 4px after it
+     (12px chevron, 4px pad, 1px #EFDFC8 border, no radius). Hover and the
+     open mega menu fill the box with #FAF6EF; the chevron stays ink. */
+  button.masthead-nav-disclosure {
+    box-sizing: border-box;
+    width: 22px;
+    height: 22px;
+    padding: 4px;
+    border: 1px solid #EFDFC8;
+    border-radius: 0;
+    background: transparent;
+    color: #1F2528;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  button.masthead-nav-disclosure:active,
+  .masthead-nav-item.is-mega-open button.masthead-nav-disclosure {
+    background-color: #FAF6EF;
+  }
+  @media (min-width: 1024px) {
+    button.masthead-nav-disclosure:hover { background-color: #FAF6EF; }
+  }
+  button.masthead-nav-disclosure:focus-visible {
+    isolation: isolate;
+    outline: 2px solid #6D0808;
+    outline-offset: 2px;
+  }
+
   .masthead-top > a:focus-visible,
   .masthead-tool:focus-visible,
   .masthead-cta:focus-visible,
@@ -1791,7 +1821,7 @@
 
   @media screen(lg) {
     :root {
-      --header-h: 123px;     /* 20 top + 44 lockup + 16 + 26 nav + 17 */
+      --header-h: 119px;     /* 20 top + 44 lockup + 16 + 26 nav + 13 (B.1: 4px less under the nav than B) */
       --chrome-gutter: var(--sidenav-pad-x); /* 24px; equal L/R, matches sidenav text */
     }
 
@@ -1825,7 +1855,7 @@
       gap: 24px;
       /* 17px (not 20): nav text ink sits 3px above the 24px box bottom,
          so 20px pad read as 23px under the words vs 20px above the lockup. */
-      padding: 0 var(--chrome-gutter) 17px;
+      padding: 0 var(--chrome-gutter) 13px; /* B.1: 13px (B uses 17px) */
     }
 
     /* Mega menu — Figma CLICK frames under canvas `1497:134367`
@@ -1873,9 +1903,12 @@
       min-height: 0;
     }
     .mega-content {
-      /* 35px top + the 17px under the nav row = 48px from the nav
-         to the first menu line. Bottom pad is 48px. */
-      padding: 35px 40px 48px var(--chrome-gutter);
+      /* B.1 (Figma 1591:5491): size/16 top, size/40 bottom. Left/right is
+         the page gutter minus the card's 16px padding (8px), so the card
+         text is flush with the first nav label and the logo (Figma has
+         size/40). With the card's 16px padding the first heading sits 32px
+         under the header rule. */
+      padding: 16px calc(var(--chrome-gutter) - 16px) 40px;
       opacity: 0;
       transform: translateY(-16px);
       transition: opacity 280ms ease, transform 400ms cubic-bezier(0.32, 0.08, 0.24, 1);
@@ -1961,43 +1994,66 @@
       height: 12px;
       flex-shrink: 0;
     }
+    /* B.1 grid (Figma 1591:5498): cards in rows, 48px between columns,
+       size/40 between rows. Five columns at wide desktop widths, fewer as
+       the window narrows (a card is never narrower than 220px). */
     .mega-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, 250px);
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       column-gap: 48px;
-      row-gap: 48px;
-      justify-content: start;
-      flex: 1 1 auto;
+      row-gap: 40px;
       min-width: 0;
+      margin: 0;
     }
-    .mega-col {
+    /* B.1 card (Figma slot-wrapper-2 1591:5499 = hover, 1591:5516 = rest).
+       One link per child section. spacing/16 padding, size/16 between the
+       heading and the list, size/8 between list lines.
+       Rest:  no fill, no shadow; heading text/strong #1F2528.
+       Hover: fill base/ultra-light #FFF + shadow/sm (0 2px 8px
+              rgba(31,37,40,.12)); heading and arrow brand/main #990000.
+       Keyboard focus shows the same raised state plus the 2px #6D0808 ring.
+       The raise fades in over 150ms (none with reduced motion). */
+    .mega-card {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: 16px;
-      width: 250px;
       min-width: 0;
+      padding: 16px;
+      background: transparent;
+      color: #1F2528;
+      text-decoration: none;
+      transition: background-color 150ms ease, box-shadow 150ms ease;
     }
-    .mega-col--leaf {
-      gap: 8px;
+    .mega-card:hover,
+    .mega-card:active,
+    .mega-card:focus-visible {
+      background: #FFFFFF;
+      box-shadow: 0 2px 8px 0 rgba(31, 37, 40, 0.12);
+      text-decoration: none;
+    }
+    .mega-card:focus-visible {
+      isolation: isolate;
+      outline: 2px solid #6D0808;
+      outline-offset: 2px;
     }
     .mega-heading {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      width: fit-content;
       max-width: 100%;
       font-size: 14px;
       line-height: 20px;
       font-weight: 600;
       font-variation-settings: 'wght' 600, 'wdth' 115, 'opsz' 14;
       color: #1F2528;
-      text-decoration: none;
+      transition: color 150ms ease;
     }
-    .mega-heading:hover,
-    .mega-heading:active,
-    .mega-heading:focus-visible {
+    .mega-card:hover .mega-heading,
+    .mega-card:active .mega-heading,
+    .mega-card:focus-visible .mega-heading,
+    .mega-card[aria-current="page"] .mega-heading {
       color: #990000;
-      text-decoration: none;
     }
     .mega-arrow {
       display: block;
@@ -2009,26 +2065,25 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
+    /* Not links: Action/small/regular 14/20, wght 350, wdth 115, body #343C42. */
     .mega-child {
       display: block;
-      width: fit-content;
       max-width: 100%;
       font-size: 14px;
       line-height: 20px;
       font-weight: 350;
-      font-stretch: 100%;
-      font-optical-sizing: none;
-      font-variation-settings: 'wght' 350, 'wdth' 100;
+      font-variation-settings: 'wght' 350, 'wdth' 115;
       color: #343C42;
-      text-decoration: none;
     }
-    .mega-child:hover,
-    .mega-child:active,
-    .mega-child:focus-visible {
-      color: #990000;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+    @media (prefers-reduced-motion: reduce) {
+      .mega-card,
+      .mega-heading {
+        transition: none;
+      }
     }
     .mega-scrim {
       display: block;
@@ -2806,22 +2861,23 @@
       const style = current
         ? ` style="--masthead-sel-wdth:${fit ? fit.wdth : 93};--masthead-label-scale:${fit ? fit.scale : 1}"`
         : '';
-      /* v1.2: an item with children is one control. Clicking anywhere on it
-         (label or chevron) opens its mega menu instead of going to the page;
-         the menu's "{Section} Overview" link goes to the page. The chevron
-         has no box. Items without children stay plain page links. */
+      /* v1.2 B.1: split button. The label is always the link to the section's
+         own page. An item with children also gets the boxed chevron as a
+         separate button that opens the mega menu. */
       const labelSpans =
         `<span class="masthead-nav-sizer" aria-hidden="true">${esc(label)}</span>` +
         `<span class="masthead-nav-label">${esc(label)}</span>`;
+      const link =
+        `<a data-nav href="${href(s)}" class="masthead-nav-link"${current ? ' aria-current="page"' : ''}>` +
+        labelSpans + `</a>`;
       const control = hasKids(s)
-        ? `<button type="button" class="masthead-nav-link masthead-nav-trigger" aria-controls="mega" aria-expanded="${open ? 'true' : 'false'}"${current ? ' aria-current="page"' : ''}>` +
-          labelSpans + `</button>` +
-          `<span class="masthead-nav-disclosure" aria-hidden="true">` +
+        ? link +
+          `<button type="button" class="masthead-nav-disclosure" data-dropdown-toggle aria-controls="mega" aria-expanded="${open ? 'true' : 'false'}">` +
+          `<span class="sr-only">${esc(label)} menu</span>` +
           `<svg class="masthead-nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">` +
-          `<path d="M11 4L6 8.5L1 4" stroke="currentColor" stroke-width="1.75"/></svg></span>`
-        : `<a data-nav href="${href(s)}" class="masthead-nav-link"${current ? ' aria-current="page"' : ''}>` +
-          labelSpans + `</a>`;
-      return `<span class="masthead-nav-item${hasKids(s) ? ' has-mega' : ''}${current ? ' is-current' : ''}${open ? ' is-mega-open' : ''}" data-section="${s}"${style}>` +
+          `<path d="M11 4L6 8.5L1 4" stroke="currentColor" stroke-width="1.75"/></svg></button>`
+        : link;
+      return `<span class="masthead-nav-item${hasKids(s) ? ' has-dropdown' : ''}${current ? ' is-current' : ''}${open ? ' is-mega-open' : ''}" data-section="${s}"${style}>` +
         control + `</span>`;
     }).join('');
     paintIcons(nav);
@@ -2851,28 +2907,30 @@
     return row ? row[1] : PAGES[sectionSlug].l;
   }
 
+  /* v1.2 B.1 - Mega Menu hover rework (Figma Nav Example, rvt-megamenu-rework
+     1591:5490). Each child section is ONE link (a card) that goes to that
+     section's page. The pages listed under it are plain text: a guide to
+     what is inside, not links. There is no Overview column and no Close
+     button in this design; the section's own page is the nav label link.
+     For screen readers the card's name is its heading and the listed pages
+     are its description, so the link is announced as "{Section}, link" and
+     then the pages inside. */
   function renderMegaMarkup(sectionSlug) {
-    const overview =
-      `<div class="mega-overview">` +
-      `<a data-nav class="mega-overview-link t14" href="${href(sectionSlug)}">` +
-      `<span>${esc(sectionNavLabel(sectionSlug))} Overview</span>` +
-      `<span data-icon="arrow-right" class="mega-arrow"></span></a>` +
-      `<button type="button" class="mega-close t16" data-mega-close>` +
-      `<span data-icon="close" class="mega-close-icon"></span><span>Close</span></button>` +
-      `</div>`;
-    return `<div class="mega-layout">${overview}<div class="mega-grid">${megaColumnOrder(sectionSlug).map((s) => {
+    const here = currentSlug();
+    return `<div class="mega-grid">${megaColumnOrder(sectionSlug).map((s) => {
       const page = PAGES[s];
-      const kids = page.c || [];
-      const leaf = kids.length === 0;
-      const list = leaf
-        ? ''
-        : `<div class="mega-kids">${kids.map((g) =>
-            `<a data-nav class="mega-child" href="${href(g)}">${esc(PAGES[g].l)}</a>`
-          ).join('')}</div>`;
-      return `<div class="mega-col${leaf ? ' mega-col--leaf' : ''}">` +
-        `<a data-nav class="mega-heading" href="${href(s)}"><span>${esc(page.l)}</span>` +
-        `<span data-icon="arrow-right" class="mega-arrow"></span></a>${list}</div>`;
-    }).join('')}</div></div>`;
+      const kids = (page.c || []).filter((g) => PAGES[g]);
+      const id = `mega-card-${s}`;
+      const list = kids.length
+        ? `<ul id="${id}-list" class="mega-kids">${kids.map((g) =>
+            `<li class="mega-child">${esc(PAGES[g].l)}</li>`
+          ).join('')}</ul>`
+        : '';
+      return `<a data-nav class="mega-card" href="${href(s)}" aria-labelledby="${id}-title"` +
+        `${kids.length ? ` aria-describedby="${id}-list"` : ''}${s === here ? ' aria-current="page"' : ''}>` +
+        `<span class="mega-heading"><span id="${id}-title">${esc(page.l)}</span>` +
+        `<span data-icon="arrow-right" class="mega-arrow"></span></span>${list}</a>`;
+    }).join('')}</div>`;
   }
 
   function mastheadTopSection() {
@@ -2889,7 +2947,7 @@
       item.classList.toggle('is-mega-open', open);
       item.classList.toggle('is-current', current);
       const link = item.querySelector('.masthead-nav-link');
-      const button = item.querySelector('.masthead-nav-trigger');
+      const button = item.querySelector('[data-dropdown-toggle]');
       if (current) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
       if (button) button.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -2941,11 +2999,11 @@
   }
 
   document.getElementById('masthead-nav').addEventListener('click', (e) => {
-    const item = e.target.closest('.masthead-nav-item.has-mega');
-    if (!item || !megaDesktop.matches) return;
+    const btn = e.target.closest('[data-dropdown-toggle]');
+    if (!btn || !megaDesktop.matches) return;
     e.preventDefault();
     e.stopPropagation();
-    const section = item.dataset.section;
+    const section = btn.closest('.masthead-nav-item').dataset.section;
     if (megaOpenSlug === section && megaEl.classList.contains('is-open')) closeMega();
     else openMega(section);
   });
