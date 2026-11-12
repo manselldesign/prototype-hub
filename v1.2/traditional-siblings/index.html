@@ -1155,9 +1155,17 @@
     }
     .masthead-nav-chevron { transition: none; }
   }
+  /* The whole row is the click target: each link stretches to the full
+     inner width of the open panel (the panel still hugs its longest label).
+     Only the text is underlined on hover. */
+  .nav-dropdown > li {
+    align-self: stretch;
+  }
   .nav-dropdown-item {
     display: flex;
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
     height: 32px;
     padding: 0 8px;
     font-size: 14px;
