@@ -4196,5 +4196,51 @@
   );
 })();
 </script>
+<!-- 2026-11-13: no widows or orphans in menu items (mega menu, sidenav,
+     mobile drawer). Balanced line breaks, and the last two words of a
+     label are kept together so one word never sits alone on a line.
+     Pairs longer than 22 characters are left alone so narrow columns
+     never overflow. Top nav bar labels are not touched (single line). -->
+<style id="menu-no-orphans">
+  #mega a, #mega li, #mega span, #mega p,
+  #sidenav a, #sidenav li, #sidenav span,
+  #drawer a, #drawer li, #drawer span, #drawer h2, #drawer p {
+    text-wrap: balance;
+  }
+</style>
+<script id="menu-no-orphans-js">
+(function () {
+  var ROOTS = ['#mega', '#sidenav', '#drawer'];
+  var MAX_PAIR = 22;
+  function fix(root) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = walker.nextNode())) {
+      var p = n.parentElement;
+      if (!p || p.closest('.sr-only, script, style, svg')) continue;
+      var t = n.nodeValue;
+      var trimmed = t.replace(/\s+$/, '');
+      var lastGap = trimmed.search(/[\s ](?=\S+$)/);
+      if (lastGap < 0 || trimmed.charAt(lastGap) === ' ') continue;
+      var head = trimmed.slice(0, lastGap).replace(/\s+$/, '');
+      if (!/\s/.test(head.trim())) continue; /* 2-word labels may still wrap */
+      var prev = head.split(/\s+/).pop();
+      var last = trimmed.slice(lastGap + 1);
+      if ((prev + ' ' + last).length > MAX_PAIR) continue;
+      n.nodeValue = trimmed.slice(0, lastGap) + ' ' + last + t.slice(trimmed.length);
+    }
+  }
+  function run() {
+    ROOTS.forEach(function (s) { var r = document.querySelector(s); if (r) fix(r); });
+  }
+  var queued = false;
+  function queue() {
+    if (queued) return; queued = true;
+    requestAnimationFrame(function () { queued = false; run(); });
+  }
+  run();
+  new MutationObserver(queue).observe(document.body, { childList: true, subtree: true, characterData: true });
+})();
+</script>
 </body>
 </html>
