@@ -4001,7 +4001,9 @@
     if (!section || section === HOME) {
       return { items: PAGES[HOME].c || [], back: null, current: slug, top: true };
     }
-    const parent = PAGES[slug].p;
+    /* v1.2 (2026-11-13): Back names the page above the MENU TITLE (the
+       section), not the page above the current page. */
+    const parent = PAGES[section].p;
     return {
       items: PAGES[section].c || [],
       back: parent ? { slug: parent, label: PAGES[parent].l } : null,

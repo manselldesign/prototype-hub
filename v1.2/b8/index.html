@@ -3852,10 +3852,14 @@
       `<a data-nav href="${href(section)}" class="sidenav-title t-sidenav-parent flex w-full items-center border-b border-cream ${onSection ? 'text-crimson' : 'text-ink'}"` +
       `${onSection ? ' aria-current="page"' : ''}>` +
       `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(PAGES[section].l)}</span></a>`;
-    const back = parent && PAGES[parent]
-      ? `<a data-nav href="${href(parent)}" class="nav-btn-back">` +
+    /* v1.2 (2026-11-13): Back names the page above the MENU TITLE, not the
+       page above the current page, so on the deepest page of a section it
+       no longer repeats the title sitting right under it. */
+    const backTo = PAGES[section].p;
+    const back = backTo && PAGES[backTo]
+      ? `<a data-nav href="${href(backTo)}" class="nav-btn-back">` +
         `<span data-icon="arrow-left" class="block size-3.5 shrink-0"></span>` +
-        `<span class="t-sidenav-back">${esc(PAGES[parent].l)}</span></a>`
+        `<span class="t-sidenav-back">${esc(PAGES[backTo].l)}</span></a>`
       : '';
     return `${back}<div class="sidenav-after-back">${title}<ul>${items}</ul></div>`;
   }

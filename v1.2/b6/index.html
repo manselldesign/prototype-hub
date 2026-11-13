@@ -1908,7 +1908,9 @@
          text is flush with the first nav label and the logo (Figma has
          size/40). With the card's 16px padding the first heading sits 32px
          under the header rule. */
-      padding: 16px calc(var(--chrome-gutter) - 16px) 40px;
+      /* 2026-11-13: cards are raised boxes now, so the BOX (not the text)
+         lines up with the logo and first nav label: full page gutter. */
+      padding: 16px var(--chrome-gutter) 40px;
       opacity: 0;
       transform: translateY(-16px);
       transition: opacity 280ms ease, transform 400ms cubic-bezier(0.32, 0.08, 0.24, 1);
@@ -2000,8 +2002,9 @@
     .mega-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      column-gap: 48px;
-      row-gap: 40px;
+      /* 2026-11-13: spacing/24 between cards, both ways (was 48 / 40). */
+      column-gap: 24px;
+      row-gap: 24px;
       min-width: 0;
       margin: 0;
     }
@@ -2017,19 +2020,28 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      /* 2026-11-13: every card is a Rivet Raised card at rest (rvt-card
+         Raised: background/raised #FFF, shadow/sm, no border, radius 0),
+         so the whole hit area reads as one link and the listed pages do
+         not look like links of their own. spacing/16 between the heading
+         and the list (12 was previewed and rejected).
+         Hover / focus: shadow/md (0 4px 12px rgba(31,37,40,.14)); the
+         heading + arrow turn brand/main and the heading text is
+         underlined. The card for the page you are on keeps a brand/main
+         heading at rest. */
       gap: 16px;
       min-width: 0;
       padding: 16px;
-      background: transparent;
+      background: #FFFFFF;
+      box-shadow: 0 2px 8px 0 rgba(31, 37, 40, 0.12);
       color: #1F2528;
       text-decoration: none;
-      transition: background-color 150ms ease, box-shadow 150ms ease;
+      transition: box-shadow 150ms ease;
     }
     .mega-card:hover,
     .mega-card:active,
     .mega-card:focus-visible {
-      background: #FFFFFF;
-      box-shadow: 0 2px 8px 0 rgba(31, 37, 40, 0.12);
+      box-shadow: 0 4px 12px 0 rgba(31, 37, 40, 0.14);
       text-decoration: none;
     }
     .mega-card:focus-visible {
@@ -2054,6 +2066,13 @@
     .mega-card:focus-visible .mega-heading,
     .mega-card[aria-current="page"] .mega-heading {
       color: #990000;
+    }
+    /* 2026-11-13: hover / focus also gets the simple underline (same as
+       the sidenav), on the heading text only, not the arrow. */
+    .mega-card:hover .mega-heading > span:first-child,
+    .mega-card:active .mega-heading > span:first-child,
+    .mega-card:focus-visible .mega-heading > span:first-child {
+      text-decoration: underline;
     }
     .mega-arrow {
       display: block;
@@ -3744,10 +3763,14 @@
       `<a data-nav href="${href(section)}" class="sidenav-title t-sidenav-parent flex w-full items-center border-b border-cream ${onSection ? 'text-crimson' : 'text-ink'}"` +
       `${onSection ? ' aria-current="page"' : ''}>` +
       `<span class="sidenav-title-label min-w-0 flex-1 whitespace-normal">${esc(PAGES[section].l)}</span></a>`;
-    const back = parent && PAGES[parent]
-      ? `<a data-nav href="${href(parent)}" class="nav-btn-back">` +
+    /* v1.2 (2026-11-13): Back names the page above the MENU TITLE, not the
+       page above the current page, so on the deepest page of a section it
+       no longer repeats the title sitting right under it. */
+    const backTo = PAGES[section].p;
+    const back = backTo && PAGES[backTo]
+      ? `<a data-nav href="${href(backTo)}" class="nav-btn-back">` +
         `<span data-icon="arrow-left" class="block size-3.5 shrink-0"></span>` +
-        `<span class="t-sidenav-back">${esc(PAGES[parent].l)}</span></a>`
+        `<span class="t-sidenav-back">${esc(PAGES[backTo].l)}</span></a>`
       : '';
     return `${back}<div class="sidenav-after-back">${title}<ul>${items}</ul></div>`;
   }
