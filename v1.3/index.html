@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prototype v1.3</title>
+  <meta name="description" content="Prototype v1.3: Zoo site navigation options for review.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --crimson: #990000;
+      --cream: #f4efe6;
+      --paper: #fffdf8;
+      --ink: #241f1c;
+      --body: #3c352f;
+      --muted: #5e564e;
+      --line: #e3d6c6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 1.0625rem;
+      line-height: 1.5;
+    }
+
+    header { background: var(--crimson); color: #fff; }
+    header a { color: #fff; }
+
+    .wrap {
+      width: min(40rem, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    header .wrap { padding: 1.75rem 0 1.5rem; }
+
+    .eyebrow {
+      margin: 0 0 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+    }
+
+    main { padding: 1.75rem 0 4rem; }
+
+    .lede {
+      margin: 0 0 1.5rem;
+      color: var(--body);
+    }
+
+    .group { margin: 0 0 2rem; }
+
+    .group-title {
+      margin: 0 0 0.35rem;
+      font-size: 1.35rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .group-title a { font-weight: 500; }
+
+    .group > p {
+      margin: 0 0 0.75rem;
+      color: var(--body);
+    }
+
+    .prototype-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .prototype-list li {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.05rem 1.1rem 1rem;
+      margin: 0 0 0.75rem;
+    }
+
+    .prototype-list h2 {
+      margin: 0 0 0.35rem;
+      font-size: 1.15rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .prototype-list p {
+      margin: 0 0 0.75rem;
+      color: var(--body);
+    }
+
+    a {
+      color: var(--crimson);
+      font-weight: 500;
+      overflow-wrap: anywhere;
+    }
+
+    a:hover { text-decoration-thickness: 2px; }
+
+    a:focus-visible {
+      outline: 2px solid var(--crimson);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .later, .empty { color: var(--muted); }
+    .later { margin: 0.5rem 0 0; }
+
+    .empty {
+      margin: 0 0 1rem;
+      padding: 1rem 1.1rem;
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+    }
+
+    body:not(.is-empty) .empty { display: none; }
+
+    @media (max-width: 32rem) {
+      body { font-size: 1rem; }
+      h1 { font-size: 1.7rem; }
+      header .wrap { padding: 1.35rem 0 1.2rem; }
+    }
+
+    .notes {
+      margin: 0 0 0.9rem;
+      padding-left: 1.2rem;
+      color: var(--body);
+    }
+
+    .notes li { margin: 0 0 0.2rem; }
+
+    .earlier {
+      margin: 2.5rem 0 0;
+      border-top: 1px solid var(--line);
+      padding-top: 1.25rem;
+    }
+
+    .earlier > summary {
+      cursor: pointer;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .earlier > summary:focus-visible {
+      outline: 2px solid var(--crimson);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .earlier[open] > summary { margin-bottom: 1rem; }
+
+    .earlier .group-title { font-size: 1.1rem; }
+
+    .earlier .prototype-list li { background: transparent; }
+
+
+    .overview {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.05rem 1.1rem 0.6rem;
+    }
+    .overview .notes li { margin: 0 0 0.5rem; }
+    .overview > p { margin: 0 0 0.75rem; }
+    .overview em { font-style: normal; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <p class="eyebrow">Drafts for review</p>
+      <h1>Prototype v1.3</h1>
+    </div>
+  </header>
+  <main>
+    <div class="wrap">
+      <p class="lede">Version 1.3 of the navigation prototypes, shown on the Indiana Zooniversity sample site only. These pages are for review and discussion. They are not live university websites.</p>
+      <section class="group overview" id="overview">
+        <h2 class="group-title">What changed from v1.2</h2>
+        <p>Both prototypes share everything outside the menu itself.</p>
+        <ul class="notes">
+          <li><strong>Menu button in the header.</strong> A small chevron button next to each main section opens its menu. The label still links to the page. <em>Why:</em> you can see what is in a section without leaving the page.</li>
+          <li><strong>One look for the current page.</strong> Crimson, underlined and bold. Hover is crimson and underlined only. <em>Why:</em> a hovered link no longer looks like the page you are on.</li>
+          <li><strong>Header section.</strong> Crimson, underlined and bold on the section’s own page. Bold only on the pages under it. <em>Why:</em> it shows which section you are in without repeating the side menu.</li>
+          <li><strong>Wider side menu.</strong> 280px, up from 260px. <em>Why:</em> fewer page names wrap.</li>
+          <li><strong>Back link on one line.</strong> A long name is cut at a whole word, with a small ellipsis button that shows the rest. <em>Why:</em> the menu below it stays in the same place on every page.</li>
+          <li><strong>Chevrons at the end of the row.</strong> We explored chevrons on the left. They pushed some labels in, so rows without a chevron looked like sub-items of the row above. At the end of the row, every label lines up.</li>
+          <li><strong>No breadcrumbs at the top of tier 1 pages.</strong> Breadcrumbs start one level down. <em>Why:</em> on a tier 1 page they only repeated the section name, which the header and the side menu already show.</li>
+          <li><strong>Simpler breadcrumbs.</strong> No raised card behind them.</li>
+          <li><strong>Icons and spacing.</strong> Rivet icons at their true 12px or 16px size, and all spacing on a 4px grid. <em>Why:</em> sharper icons and cleaner alignment.</li>
+        </ul>
+        <p><strong>A6 only.</strong> The drop-down is a raised card, to match the cards in B10.</p>
+        <p><strong>B10 only.</strong> The card title, with its arrow, is the one link on each card. “Includes:” sits above the page names to show they are a list of what is inside, not links. No more than four cards in a row. Pages with nothing under them get a short card.</p>
+      </section>
+      <section class="group" id="group-header">
+        <h2 class="group-title">A - Visible Header</h2>
+        <p>Main sections sit in the header and link to their page. A small button next to each one opens a simple drop-down of that section’s pages.</p>
+        <ul class="prototype-list">
+          <li>
+            <h2>A6 · Children · Zoo site</h2>
+            <p>The rail lists only the current page’s children.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/v1.3/a6/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3/a6/#/</a>
+          </li>
+        </ul>
+      </section>
+      <section class="group" id="group-mega">
+        <h2 class="group-title">B - Mega Menu</h2>
+        <p>The same header, where the small button next to each main section opens a full-width menu of cards. Each card links to one page and lists what it includes.</p>
+        <ul class="prototype-list">
+          <li>
+            <h2>B10 · Children · Zoo site</h2>
+            <p>The rail lists only the current page’s children.</p>
+            <a href="https://manselldesign.github.io/prototype-hub/v1.3/b10/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3/b10/#/</a>
+          </li>
+        </ul>
+      </section>
+      <p class="later"><a href="https://manselldesign.github.io/prototype-hub/v1.2/" target="_blank" rel="noopener">Prototype v1.2</a></p>
+      <p class="later"><a href="https://manselldesign.github.io/prototype-hub/" target="_blank" rel="noopener">Original prototype review hub</a></p>
+    </div>
+  </main>
+</body>
+</html>
