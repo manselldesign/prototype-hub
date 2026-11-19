@@ -2511,7 +2511,10 @@
      and link rules). No cards. Left: "{Section} Overview" link + Close.
      Right: one column per page; the heading is a link, and every page under
      it is a link too.
-     Type: Overview 18/28 semibold with the 16px arrow (Jenn: 18); headings
+     Type (Rivet text styles): Overview action/xl/strong 18/24 with the 16px
+     arrow; headings action/lg/strong; pages action/sm/regular (current page
+     action/sm/strong); Close action/sm/strong; help line body/xs/regular.
+     Detail: headings
      16/24 semibold with the 12px arrow (same as the B10 card title); pages
      14/20 regular #343C42; Close 14/20 semibold with the 12px close icon.
      Links: hover / focus = brand/main #990000 + underline; current page =
@@ -2523,9 +2526,9 @@
   .mega-layout { gap: 48px; }
   .mega-overview-link {
     display: inline-block;
-    margin-top: -2px; /* 18/28 next to 16/24: line centers match */
+    margin-top: 0; /* action/xl/strong 18/24 next to action/lg/strong 16/24 */
     font-size: 18px;
-    line-height: 28px;
+    line-height: 24px;
     font-weight: 600;
     font-variation-settings: 'wght' 600, 'wdth' 115, 'opsz' 18;
   }
@@ -2604,14 +2607,15 @@
   }
   /* Keyboard help line, under Close. Hidden until keyboard focus is inside
      the menu (:focus-visible), so mouse and touch users never see it.
-     12/16 regular, text/default #343C42, at most 250px wide. It stays in
+     body/xs/regular 14/20 (Jenn: standard body copy, same size as the
+     page links), text/default #343C42, the width of the Overview column. It stays in
      the page for screen readers (it describes the menu group). */
   .mega-hint {
     display: none;
-    max-width: 250px;
+    max-width: 300px;
     margin: 0;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 20px;
     font-weight: 350;
     font-variation-settings: 'wght' 350, 'wdth' 115;
     color: #343C42;
