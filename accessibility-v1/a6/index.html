@@ -698,7 +698,7 @@
      it.
      ========================================================================= */
   :root {
-    --sidenav-width: 260px;
+    --sidenav-width: 280px; /* A6: 280 (the other prototypes use 260) so fewer labels wrap */
     --sidenav-pad-x: 24px; /* equal inner L/R; measured from the cream-rule gap */
     --header-h: 116px;     /* Figma mobile `1504:243935`: 68 lockup + 48 CTA row */
     --chrome-gutter: 16px; /* equal header L/R; former `px-4` */
@@ -1070,9 +1070,11 @@
      open dropdown fill the box with #FAF6EF; the chevron stays ink. */
   button.masthead-nav-disclosure {
     box-sizing: border-box;
-    width: 22px;
-    height: 22px;
-    padding: 4px;
+    /* A6 (4px grid): 20px box = 12px icon + 4px on every side (1px border
+       + 3px pad). Was 22px. Same box as the Back "more" button. */
+    width: 20px;
+    height: 20px;
+    padding: 3px;
     border: 1px solid #EFDFC8;
     border-radius: 0;
     background: transparent;
@@ -1482,15 +1484,88 @@
     padding: 2px 0;
   }
   /* A6: 12px Rivet arrow (was 14px, a size the icon library does not have),
-     centered on the 20px first line, 4px from the label. */
+     4px from the label. */
   #sidenav .nav-btn-back > [data-icon] {
-    margin-top: 4px;
+    margin-top: 0;
   }
-  #sidenav .nav-btn-back { gap: 4px; }
+  /* Centered on the label's full height, also when the label wraps. */
+  #sidenav .nav-btn-back { gap: 4px; align-items: center; }
+  /* A6: Back stays on one line. A label too long for the rail is cut at the
+     last whole word that fits, and a small "more" button (the breadcrumb
+     ellipsis chip, tightened to 20x16: 1px #EFDFC8 border, no fill, no radius,
+     rvt-ellipsis-12) follows it, 4px after the text. The button shows the
+     full label (it wraps) and hides it again. The words that are cut stay
+     in the link as hidden text, so screen readers always read the full
+     name. fitSidenavBack() does the cutting. Menu items are never cut;
+     they wrap. */
+  #sidenav .sidenav-back-wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+  }
+  #sidenav .sidenav-back-wrap .nav-btn-back {
+    flex: 0 1 auto;
+  }
   #sidenav .nav-btn-back .t-sidenav-back {
     min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  #sidenav .sidenav-back-wrap.is-expanded {
+    align-items: flex-start;
+  }
+  /* Open: the first line and the button stay exactly where they are; the
+     words that were cut appear on the next line(s) under the label. The
+     rest is as wide as the rail allows (--back-rest-w, set in script) but
+     adds nothing to the label's own width, so the button does not move. */
+  #sidenav .sidenav-back-wrap.is-expanded .t-sidenav-back {
+    overflow: visible;
+  }
+  #sidenav .sidenav-back-rest {
+    display: block;
+    width: var(--back-rest-w, 100%);
+    margin-right: calc(-1 * var(--back-rest-w, 0px));
     white-space: normal;
-    overflow-wrap: anywhere;
+  }
+  #sidenav .sidenav-back-wrap.is-expanded .nav-btn-back {
+    align-items: flex-start;
+  }
+  #sidenav .sidenav-back-wrap.is-expanded .nav-btn-back > [data-icon] {
+    margin-top: 4px; /* centered on the first 20px line */
+  }
+  #sidenav .sidenav-back-wrap.is-expanded .sidenav-back-more {
+    margin-top: 4px; /* centered on the first line (24px row) */
+  }
+  .sidenav-back-more {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 20px;  /* 12px icon + 4px left and right */
+    height: 16px; /* 12px icon + 2px above and below */
+    padding: 0;
+    border: 1px solid #EFDFC8;
+    border-radius: 0;
+    background: transparent;
+    color: #1F2528;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .sidenav-back-more[hidden] { display: none; }
+  .sidenav-back-more:active,
+  .sidenav-back-more[aria-expanded="true"] {
+    background-color: #FAF6EF;
+  }
+  @media (min-width: 1024px) {
+    .sidenav-back-more:hover { background-color: #FAF6EF; }
+  }
+  .sidenav-back-more:focus-visible {
+    isolation: isolate;
+    outline: 2px solid #6D0808;
+    outline-offset: 2px;
   }
   #sidenav .sidenav-back-row {
     gap: 16px;
@@ -1921,7 +1996,7 @@
 
   @media screen(lg) {
     :root {
-      --header-h: 121px;     /* 20 top + 44 lockup + 16 + 26 nav + 15 */
+      --header-h: 121px;     /* 20 top + 44 lockup + 16 + 24 nav + 16 + 1px rule */
       --chrome-gutter: var(--sidenav-pad-x); /* 24px; equal L/R, matches sidenav text */
     }
 
@@ -1953,9 +2028,9 @@
       display: flex;
       align-items: center;
       gap: 24px;
-      /* A6: the nav row is 26px tall (22px chevron box + 2px above and
-         below), so 15px under it keeps the header at 121px, same as A4. */
-      padding: 0 var(--chrome-gutter) 15px;
+      /* A6 (4px grid): the nav row is 24px tall (20px line + 2px above and
+         below) with 16px under it. Header stays 121px (120 + the 1px rule). */
+      padding: 0 var(--chrome-gutter) 16px;
     }
 
     /* Mega menu — Figma CLICK frames under canvas `1497:134367`
@@ -2802,6 +2877,11 @@
     'chevron-down': ['M11.5205 4.42578L6 9.09668L0.479492 4.42578L1.77051 2.89844L6 6.47656L10.2295 2.89844L11.5205 4.42578Z'],
     'arrow-right': ['M10.998 6L6.34766 11.5195L4.81836 10.2305L7.53906 7H1V5H7.53906L4.81836 1.76953L6.34766 0.480469L10.998 6Z'],
     'arrow-left': ['M7.18164 1.76953L4.45996 5H11V7H4.45996L7.18164 10.2305L5.65137 11.5195L1.00195 6L5.65137 0.480469L7.18164 1.76953Z'],
+    ellipsis: [
+      'M3 6C3 6.82843 2.32843 7.5 1.5 7.5C0.671573 7.5 0 6.82843 0 6C0 5.17157 0.671573 4.5 1.5 4.5C2.32843 4.5 3 5.17157 3 6Z',
+      'M7.5 6C7.5 6.82843 6.82843 7.5 6 7.5C5.17157 7.5 4.5 6.82843 4.5 6C4.5 5.17157 5.17157 4.5 6 4.5C6.82843 4.5 7.5 5.17157 7.5 6Z',
+      'M12 6C12 6.82843 11.3284 7.5 10.5 7.5C9.67157 7.5 9 6.82843 9 6C9 5.17157 9.67157 4.5 10.5 4.5C11.3284 4.5 12 5.17157 12 6Z',
+    ],
     home: ['M5 7H7V10H5V7Z', 'M12 4.5V12H0V4.5L6 0L12 4.5ZM2 5.49902V10H10V5.49902L6 2.49902L2 5.49902Z'],
   };
 
@@ -3823,7 +3903,9 @@
            readers (hidden ", has subpages"). Its chevron sits at the START
            of the row, in line with the Back arrow and the menu title, so it
            is always next to the label under screen magnification. Every row
-           keeps the same 12px icon slot + 4px gap as Back, so all labels
+           keeps the same 12px icon slot + 4px gap as Back (the icon is
+           centered on the label's FIRST line, so it stays at the top when a
+           label wraps), so all labels
            line up with each other and with the Back label; the slot is
            empty on rows with no subpages. */
         const kids = hasKids(c);
@@ -3850,9 +3932,16 @@
        no longer repeats the title sitting right under it. */
     const backTo = PAGES[section].p;
     const back = backTo && PAGES[backTo]
-      ? `<a data-nav href="${href(backTo)}" class="nav-btn-back">` +
+      ? `<div class="sidenav-back-wrap">` +
+        `<a data-nav href="${href(backTo)}" class="nav-btn-back" data-full="${esc(PAGES[backTo].l)}">` +
         `<span data-icon="arrow-left" class="block size-3 shrink-0"></span>` +
-        `<span class="t-sidenav-back"><span class="sr-only">Back to </span>${esc(PAGES[backTo].l)}</span></a>`
+        `<span class="t-sidenav-back"><span class="sr-only">Back to </span>${esc(PAGES[backTo].l)}</span></a>` +
+        // A6: shown only when the label is cut (see fitSidenavBack).
+        `<button type="button" class="sidenav-back-more" data-back-more aria-expanded="false" hidden>` +
+        `<span class="sr-only">Show full name</span>` +
+        `<svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" focusable="false">` +
+        ICON_12.ellipsis.map((d) => `<path d="${d}"/>`).join('') + `</svg></button>` +
+        `</div>`
       : '';
     return `${back}<div class="sidenav-after-back">${title}<ul>${items}</ul></div>`;
   }
@@ -4143,14 +4232,103 @@
   /* v1.2: when a long Back label wraps on desktop, take the extra height
      out of the gap under Back so the first menu row stays on the
      breadcrumb row. */
+  /* A6: keep Back on one line. If the label is too long, show whole words
+     up to the last one that fits, park the rest in a visually hidden span
+     (still read by screen readers) and show the "more" button. When the
+     button has been used (backExpanded), show the whole label, wrapped. */
+  let backExpanded = false;
+  let backAnimating = 0; // time until which an open/close animation runs
+  function fitSidenavBack() {
+    const wrap = sidenav.querySelector('.sidenav-back-wrap');
+    if (!wrap) return;
+    // Do not rebuild the label in the middle of its own animation.
+    if (performance.now() < backAnimating) return;
+    const link = wrap.querySelector('.nav-btn-back');
+    const label = wrap.querySelector('.t-sidenav-back');
+    const more = wrap.querySelector('[data-back-more]');
+    const full = link.dataset.full;
+    const prefix = '<span class="sr-only">Back to </span>';
+    const safe = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    // Closed: the cut words are visually hidden (still read aloud).
+    // Open: the same words sit on the next line.
+    const set = (shown, rest, open) => {
+      label.innerHTML = prefix + safe(shown) +
+        (rest ? `<span class="${open ? 'sidenav-back-rest' : 'sr-only'}"> ${safe(rest)}</span>` : '');
+    };
+    const fits = () => label.scrollWidth <= label.clientWidth + 1;
+    // Hiding the button to measure drops keyboard focus; put it back after.
+    const hadFocus = document.activeElement === more;
+    const refocus = () => { if (hadFocus && !more.hidden) more.focus({ preventScroll: true }); };
+    wrap.classList.remove('is-expanded');
+    more.hidden = true;
+    set(full, '');
+    if (!window.matchMedia('(min-width: 1024px)').matches || fits()) {
+      backExpanded = false;
+      return;
+    }
+    more.hidden = false; // the button takes 24px, so measure with it showing
+    more.setAttribute('aria-expanded', backExpanded ? 'true' : 'false');
+    more.querySelector('.sr-only').textContent = backExpanded ? 'Show less of the name' : 'Show full name';
+    refocus();
+    // Find the first line: whole words up to the last one that fits (or, for
+    // one very long word, as many letters as fit).
+    const words = full.split(' ');
+    let shown = '';
+    let rest = full;
+    for (let n = words.length - 1; n > 0; n--) {
+      set(words.slice(0, n).join(' '), words.slice(n).join(' '));
+      if (fits()) { shown = words.slice(0, n).join(' '); rest = words.slice(n).join(' '); break; }
+    }
+    if (!shown) {
+      for (let c = full.length - 1; c > 1; c--) {
+        set(full.slice(0, c), full.slice(c));
+        if (fits()) { shown = full.slice(0, c); rest = full.slice(c); break; }
+      }
+    }
+    if (backExpanded) {
+      set(shown, rest, true);
+      wrap.classList.add('is-expanded');
+      const room = wrap.getBoundingClientRect().right - label.getBoundingClientRect().left;
+      wrap.style.setProperty('--back-rest-w', Math.max(0, Math.floor(room)) + 'px');
+    }
+  }
+  /* Open / close motion: the first line and the button never move. On open
+     the menu below slides down one line while the new line fades in and
+     settles 4px into place (280ms); on close the menu slides back up
+     (200ms). No motion with reduced motion. */
+  sidenav.addEventListener('click', (e) => {
+    const more = e.target.closest('[data-back-more]');
+    if (!more) return;
+    const after = sidenav.querySelector('.sidenav-after-back');
+    const before = after ? after.getBoundingClientRect().top : 0;
+    backAnimating = 0;
+    backExpanded = !backExpanded;
+    more.focus({ preventScroll: true });
+    alignSidenavBack();
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (still || !after || !after.animate) return;
+    const moved = before - after.getBoundingClientRect().top;
+    // Opening is a little slower (280ms) than closing (200ms).
+    const ms = backExpanded ? 280 : 200;
+    const timing = { duration: ms, easing: 'cubic-bezier(0.2, 0, 0, 1)' };
+    backAnimating = performance.now() + ms + 20;
+    if (moved) after.animate([{ transform: `translateY(${moved}px)` }, { transform: 'translateY(0)' }], timing);
+    const rest = sidenav.querySelector('.sidenav-back-rest');
+    if (rest) rest.animate([{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'translateY(0)' }], timing);
+  });
+
   function alignSidenavBack() {
     const after = sidenav.querySelector('.sidenav-after-back');
     const back = sidenav.querySelector('.nav-btn-back');
+    if (performance.now() < backAnimating) return; // A6: leave a running open/close alone
+    fitSidenavBack();
     if (!after) return;
     after.style.paddingTop = '';
     if (!back || !window.matchMedia('(min-width: 1024px)').matches) return;
     const extra = back.offsetHeight - 24;
-    if (extra > 0) after.style.paddingTop = Math.max(0, 20 - extra) + 'px';
+    // A6: Back only gets taller when the user opens the full name; then the
+    // menu moves down and the 20px gap above the title is kept.
+    if (extra > 0 && !backExpanded) after.style.paddingTop = Math.max(0, 20 - extra) + 'px';
   }
   window.addEventListener('resize', () => requestAnimationFrame(alignSidenavBack));
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => alignSidenavBack());
@@ -4200,6 +4378,8 @@
 
     const isHome = slug === HOME;
     const section = isHome ? null : sectionOf(slug);
+    backExpanded = false; // A6: a new page starts with Back on one line
+    backAnimating = 0;
     sidenav.innerHTML = isHome ? '' : renderSidenav(slug);
     // The column must not merely be invisible on Home — it has to leave the
     // flex row entirely, or it keeps reserving its 300px and squeezes the hero.
