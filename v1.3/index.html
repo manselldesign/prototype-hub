@@ -192,13 +192,42 @@
     .prototype-list li:has(a:focus-visible) { outline: 2px solid var(--text-accent-strong); outline-offset: 1px; }
     .prototype-list li:hover h2 { color: var(--text-accent); text-decoration: underline; text-underline-offset: 3px; }
 
-    /* "What changed" box: background/raised with the default border. */
-    .overview { background: var(--raised); box-shadow: inset 0 0 0 1px var(--border); padding: 32px; }
-    .overview .group-title { font-size: 20px; line-height: 24px; }
-    .overview .notes li { margin: 0 0 8px; }
-    .overview > p { margin: 0 0 16px; }
-    .overview > p:last-child, .overview .notes:last-child { margin-bottom: 0; }
-    .overview em { font-style: normal; font-weight: 600; }
+    /* "What changed" box = rvt-alert, Default status, Default type, as on
+       the dochub Alert page, in the Rivet Dark theme:
+       background/brand-subtle #000000, 1px border/brand #edddc4 drawn inside,
+       spacing/24 padding (spacing/16 mobile), spacing/16 gap. Title row:
+       28px badge background/brand-strong #990000 with the 16px rvt bell
+       glyph (white), spacing/8 to the title, heading/md/strong 20/24
+       text/brand #ffffff, 2px down to center on the badge. Description and
+       list indent 36px (28px badge + spacing/8), body/sm 16/24 text/default.
+       List items spacing/8 apart, 6px icon/default square bullets. */
+    .overview {
+      display: flex; flex-direction: column; gap: 16px;
+      padding: 24px;
+      background: #000000;
+      box-shadow: inset 0 0 0 1px #edddc4;
+      color: var(--text);
+    }
+    .overview .rvt-alert__block { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+    .overview .rvt-alert__head { display: flex; align-items: flex-start; gap: 8px; }
+    .overview .rvt-alert__badge {
+      flex: none; display: flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #990000; color: #ffffff;
+    }
+    .overview .rvt-alert__badge svg { display: block; width: 16px; height: 16px; fill: currentColor; }
+    .overview .rvt-alert__title {
+      flex: 1 1 auto; min-width: 0; margin: 0; padding-top: 2px;
+      color: #ffffff; font-size: 20px; line-height: 24px; font-weight: 700;
+      font-variation-settings: "YTAS" 720, "YTLC" 530;
+    }
+    .overview .rvt-alert__desc { margin: 0; padding-left: 36px; max-width: calc(850px + 36px); }
+    .overview .rvt-alert__list {
+      display: flex; flex-direction: column; gap: 8px;
+      margin: 0; padding: 0 0 0 36px; list-style: none;
+    }
+    .overview .rvt-alert__list li { display: flex; align-items: flex-start; gap: 8px; max-width: calc(6px + 8px + 920px); }
+    .overview .rvt-alert__list li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: 9px; background: #ffffff; }
 
     .later, .empty { margin: 0 0 8px; }
     .empty { padding: 16px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--border); }
@@ -216,7 +245,8 @@
       .lede { font-size: 16px; line-height: 24px; margin-bottom: 36px; }
       .group { margin-bottom: 36px; }
       .group-title { font-size: 23px; line-height: 28px; }
-      .prototype-list li, .overview { padding: 24px; }
+      .prototype-list li { padding: 24px; }
+      .overview { padding: 16px; }
       .prototype-list h2 { font-size: 18px; line-height: 24px; }
       .prototype-list h2::after { margin-top: 4px; }
     }
@@ -240,21 +270,26 @@
   <main>
     <div class="wrap">
       <p class="lede">Navigation prototypes on the Indiana Zooniversity sample site. These pages are for review. They are not live university websites.</p>
-      <section class="group overview" id="overview">
-        <h2 class="group-title">What changed from v1.2</h2>
-        <p>Everything outside the menu is the same in both prototypes.</p>
-        <ul class="notes">
-          <li><strong>Menu button.</strong> Each main section has a small button that opens its menu. You can see what is inside without leaving the page.</li>
-          <li><strong>Current page.</strong> Crimson, underlined and bold. A hovered link is not bold, so the two look different.</li>
-          <li><strong>Header.</strong> A section is crimson and underlined on its own page, and bold on the pages under it.</li>
-          <li><strong>Side menu.</strong> Wider, so fewer names wrap.</li>
-          <li><strong>Back link.</strong> Always one line. A long name gets a small button that shows the rest.</li>
-          <li><strong>Chevrons.</strong> At the end of the row. Chevrons on the left were tried. They pushed some labels in, which made those rows look like sub-items.</li>
-          <li><strong>Breadcrumbs.</strong> Removed from the top of tier 1 pages, where they only repeated the section name. Simpler style on the other pages.</li>
-          <li><strong>Icons and spacing.</strong> Rivet icons at their true size. Spacing on a 4px grid.</li>
+      <section class="group overview" id="overview" aria-labelledby="overview-title">
+        <div class="rvt-alert__block">
+          <div class="rvt-alert__head">
+            <span class="rvt-alert__badge" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="M10 14L15.5 14L15.5 12L14.118 12L13.7516 11.2672C13.5771 10.918 13.4758 10.5368 13.4542 10.147L13.2203 5.93837C13.0854 3.50893 11.3068 1.54301 9 1.09569V0H7V1.09569C4.69318 1.543 2.91463 3.50892 2.77966 5.93837L2.54585 10.147C2.52419 10.5368 2.42295 10.918 2.24835 11.2672L1.88197 12H0.5V14L6 14C6 15.1046 6.89543 16 8 16C9.10457 16 10 15.1046 10 14ZM11.8857 12L4.11434 12C4.36381 11.4514 4.50928 10.8607 4.54277 10.2579L4.77658 6.04931C4.87162 4.33853 6.28658 3 8 3C9.71341 3 11.1284 4.33853 11.2234 6.04931L11.4572 10.2579C11.4907 10.8607 11.6362 11.4514 11.8857 12Z"/></svg></span>
+            <h2 class="rvt-alert__title" id="overview-title">What changed from v1.2</h2>
+          </div>
+          <p class="rvt-alert__desc">Everything outside the menu is the same in both prototypes.</p>
+        </div>
+        <ul class="rvt-alert__list">
+          <li><span><strong>Menu button.</strong> Each main section has a small button that opens its menu. You can see what is inside without leaving the page.</span></li>
+          <li><span><strong>Current page.</strong> Crimson, underlined and bold. A hovered link is not bold, so the two look different.</span></li>
+          <li><span><strong>Header.</strong> A section is crimson and underlined on its own page, and bold on the pages under it.</span></li>
+          <li><span><strong>Side menu.</strong> Wider, so fewer names wrap.</span></li>
+          <li><span><strong>Back link.</strong> Always one line. A long name gets a small button that shows the rest.</span></li>
+          <li><span><strong>Chevrons.</strong> At the end of the row. Chevrons on the left were tried. They pushed some labels in, which made those rows look like sub-items.</span></li>
+          <li><span><strong>Breadcrumbs.</strong> Removed from the top of tier 1 pages, where they only repeated the section name. Simpler style on the other pages.</span></li>
+          <li><span><strong>Icons and spacing.</strong> Rivet icons at their true size. Spacing on a 4px grid.</span></li>
         </ul>
-        <p><strong>A6.</strong> The drop-down is a raised card, like the cards in B10.</p>
-        <p><strong>B10.</strong> Only the card title is a link. “Includes:” shows the page names are a list, not links. Up to four cards in a row.</p>
+        <p class="rvt-alert__desc"><strong>A6.</strong> The drop-down is a raised card, like the cards in B10.</p>
+        <p class="rvt-alert__desc"><strong>B10.</strong> Only the card title is a link. “Includes:” shows the page names are a list, not links. Up to four cards in a row.</p>
       </section>
       <section class="group" id="group-header">
         <h2 class="group-title">A - Visible Header</h2>
