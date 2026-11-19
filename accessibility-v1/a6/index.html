@@ -1125,14 +1125,15 @@
     flex-direction: column;
     align-items: flex-start;
     margin: 0;
+    /* A6 (match B10): the panel is a Rivet Raised card, the same surface as
+       the mega menu cards: white, shadow/sm, no border, no radius. 18px
+       top/bottom + the 6px above/below a 20px line in a 32px row = 24px of
+       space around the text, the same as left/right (16 + 8). */
     padding: 18px 16px;
     list-style: none;
     background: #FFFFFF;
-    /* The 1px border/default line is drawn just inside the panel edge, so
-       the panel is exactly 24px wider than its text on the left and the
-       first dropdown keeps its left border at the window gutter. */
     border: 0;
-    box-shadow: inset 0 0 0 1px #EDDDC4, 0 1px 4px 0 rgba(31, 37, 40, 0.1);
+    box-shadow: 0 2px 8px 0 rgba(31, 37, 40, 0.12);
     visibility: hidden;
     pointer-events: none;
     opacity: 0;
@@ -1172,6 +1173,8 @@
     box-sizing: border-box;
     height: 32px;
     padding: 0 8px;
+    /* 14/20 regular (Jenn tried 16/24 to match the B10 card titles and
+       went back to the smaller text). */
     font-size: 14px;
     line-height: 20px;
     font-variation-settings: 'wght' 350, 'wdth' 115;
@@ -1254,6 +1257,10 @@
     padding-top: 12px;
     padding-bottom: 12px;
     padding-right: 4px; /* A6: long labels stop 4px short of the row's right edge */
+  }
+  /* A row with a chevron ends on the chevron's own 12px box instead. */
+  #sidenav ul a.sidenav-item.has-subpages {
+    padding-right: 0;
     min-height: 0;
     line-height: 20px;
     text-decoration: none;
@@ -2489,6 +2496,79 @@
       transition: transform 250ms ease-out, visibility 0s;
     }
   }
+
+  /* =======================================================================
+     Accessibility Considerations v1, round 2 (Jenn, 2026-11-19). Same block
+     in A6 and B10.
+
+     1. Current page = crimson + underline + STRONG (wght 600), everywhere:
+        side menu row, header section, mobile menu row (the A dropdown and
+        the menu titles already did this). Hover stays crimson + underline at
+        regular weight, so pointing at a row no longer looks like "you are
+        here".
+     2. Small boxes keep their look but get a 24px-wide invisible hit area.
+     ======================================================================= */
+  #sidenav ul a.sidenav-item .sidenav-item-label.is-current {
+    font-variation-settings: 'wght' 600, 'wdth' 112.5;
+  }
+  #drawer-nav .drawer-current {
+    font-variation-settings: 'wght' 600, 'wdth' 115;
+  }
+  /* Header, round 4 (Jenn, trial). Two states for the section you are in:
+       on the section's own page   crimson + underline + strong (the same
+                                   "this is the page you are on" as elsewhere)
+       deeper inside the section   strong ink only ("you are in here"); it is
+                                   a useful link there, so hover gives the
+                                   usual crimson + underline. */
+  .masthead-nav-item.is-current-page .masthead-nav-link,
+  .masthead-nav-item.is-current-page .masthead-nav-link:hover,
+  .masthead-nav-item.is-current-page .masthead-nav-link:active,
+  .masthead-nav-item.is-current-page .masthead-nav-link .masthead-nav-label,
+  .masthead-nav-item.is-current-page .masthead-nav-link:hover .masthead-nav-label,
+  .masthead-nav-item.is-current-page .masthead-nav-link:active .masthead-nav-label {
+    color: #990000;
+  }
+  .masthead-nav-item.is-current-page .masthead-nav-link .masthead-nav-label,
+  .masthead-nav-item.is-current-page .masthead-nav-link:hover .masthead-nav-label,
+  .masthead-nav-item.is-current-page .masthead-nav-link:active .masthead-nav-label {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  @media (min-width: 1024px) {
+    .masthead-nav-item.is-current:not(.is-current-page) .masthead-nav-link:hover,
+    .masthead-nav-item.is-current:not(.is-current-page) .masthead-nav-link:hover .masthead-nav-label {
+      color: #990000;
+    }
+    .masthead-nav-item.is-current:not(.is-current-page) .masthead-nav-link:hover .masthead-nav-label {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+  /* Hit areas: header chevron box 20x20 -> 24 wide x 36 tall; Back "more"
+     box 20x16 -> 24x24. 2px each side keeps clear of the label 4px away. */
+  button.masthead-nav-disclosure,
+  .sidenav-back-more {
+    position: relative;
+  }
+  button.masthead-nav-disclosure::after,
+  .sidenav-back-more::after {
+    content: "";
+    position: absolute;
+  }
+  button.masthead-nav-disclosure::after { inset: -9px -3px; } /* from the 1px border edge */
+  .sidenav-back-more::after { inset: -5px -3px; }
+
+  /* Round 5: top-level pages have no breadcrumbs, and the page heading
+     moves up into their place so it lines up with the side menu title (the
+     first item in the menu). Jenn tried holding the heading at the deeper
+     pages' height and chose this instead. The 2px pull is optical: it puts
+     the top of the heading's capitals level with the top of the title's
+     capitals (their text boxes already start on the same line). */
+  .crumbs-spacer { display: none; }
+  @media (min-width: 1024px) {
+    .crumbs-spacer { display: block; height: 0; margin-bottom: -2px; }
+  }
+
 </style>
 </head>
 
@@ -3041,7 +3121,7 @@
         `<span class="masthead-nav-sizer" aria-hidden="true">${esc(label)}</span>` +
         `<span class="masthead-nav-label">${esc(label)}</span>`;
       const link =
-        `<a data-nav href="${href(s)}" class="masthead-nav-link"${current ? ' aria-current="page"' : ''}>` +
+        `<a data-nav href="${href(s)}" class="masthead-nav-link"${current ? ` aria-current="${slug === s ? 'page' : 'true'}"` : ''}>` +
         labelSpans + `</a>`;
       const trail = slug === HOME ? [] : ancestry(slug);
       const control = hasKids(s)
@@ -3057,7 +3137,7 @@
           }).join('') +
           `</ul>`
         : link;
-      return `<span class="masthead-nav-item${hasKids(s) ? ' has-dropdown' : ''}${current ? ' is-current' : ''}${open ? ' is-mega-open' : ''}" data-section="${s}"${style}>` +
+      return `<span class="masthead-nav-item${hasKids(s) ? ' has-dropdown' : ''}${current ? ' is-current' : ''}${slug === s ? ' is-current-page' : ''}${open ? ' is-mega-open' : ''}" data-section="${s}"${style}>` +
         control + `</span>`;
     }).join('');
     paintIcons(nav);
@@ -3126,7 +3206,11 @@
       item.classList.toggle('is-current', current);
       const link = item.querySelector('.masthead-nav-link');
       const button = item.querySelector('[data-dropdown-toggle]');
-      if (current) link.setAttribute('aria-current', 'page');
+      // Round 4: "current page" only on the section's own page; deeper in the
+      // section the link is announced as "current" (the section you are in).
+      const exact = current && currentSlug() === item.dataset.section;
+      item.classList.toggle('is-current-page', exact);
+      if (current) link.setAttribute('aria-current', exact ? 'page' : 'true');
       else link.removeAttribute('aria-current');
       if (button) button.setAttribute('aria-expanded', open ? 'true' : 'false');
       const label = item.querySelector('.masthead-nav-label');
@@ -3175,7 +3259,24 @@
     e.preventDefault();
     const section = btn.closest('.masthead-nav-item').dataset.section;
     if (megaOpenSlug === section) closeMega();
-    else openMega(section);
+    else {
+      openMega(section);
+      // A6 (same as the B10 mega menu): opened from the keyboard or a screen
+      // reader (not a mouse click), focus goes to the first link in the menu.
+      if (e.detail === 0) {
+        const first = btn.closest('.masthead-nav-item').querySelector('.nav-dropdown-item');
+        if (first) first.focus({ preventScroll: true });
+      }
+    }
+  });
+  // A6 (same as B10): Tab past the last link closes the menu and carries on
+  // to the next header link.
+  document.getElementById('masthead-nav').addEventListener('focusout', (e) => {
+    const item = e.target.closest('.masthead-nav-item.is-mega-open');
+    if (!item) return;
+    requestAnimationFrame(() => {
+      if (megaOpenSlug && !item.contains(document.activeElement) && document.activeElement !== document.body) closeMega();
+    });
   });
   document.addEventListener('click', (e) => {
     if (megaOpenSlug && !e.target.closest('.masthead-nav-item.is-mega-open')) closeMega();
@@ -3214,6 +3315,12 @@
   function renderBreadcrumbs(slug) {
     const chain = ancestry(slug);
     if (chain.length < 2) return ''; // Home has no breadcrumbs in the source.
+    // Round 5 (Jenn): no breadcrumbs on a top-level section page either. There
+    // the trail is only "Home > Section", which the header and the side menu
+    // title already say. Breadcrumbs start one level down.
+    // The empty element only carries the 2px optical nudge that lines the
+    // heading up with the side menu title on desktop.
+    if (chain.length === 2) return '<div class="crumbs-spacer" aria-hidden="true"></div>';
 
     const rest = chain.slice(1);
     let out =
@@ -3899,26 +4006,23 @@
     const items = rows
       .map((c) => {
         const current = c === slug;
-        /* A6 (accessibility review): a row with subpages says so to screen
-           readers (hidden ", has subpages"). Its chevron sits at the START
-           of the row, in line with the Back arrow and the menu title, so it
-           is always next to the label under screen magnification. Every row
-           keeps the same 12px icon slot + 4px gap as Back (the icon is
-           centered on the label's FIRST line, so it stays at the top when a
-           label wraps), so all labels
-           line up with each other and with the Back label; the slot is
-           empty on rows with no subpages. */
+        /* Accessibility review: a row with subpages says so to screen
+           readers (hidden ", has subpages"); that does not depend on where
+           the chevron sits. The chevron is back at the END of the row
+           (Jenn, 2026-11-19): leading chevrons indented the labels, which
+           made rows without a chevron look like children of the row above.
+           All labels are flush left under the menu title. The chevron is
+           centered on the label's first line. */
         const kids = hasKids(c);
-        const slot =
-          `<span class="flex h-5 w-3 shrink-0 items-center" aria-hidden="true">` +
-          (kids ? `<span class="sidenav-chevron block size-3">${SIDENAV_CHEVRON}</span>` : '') +
-          `</span>`;
         return (
           `<li><a data-nav href="${href(c)}"${current ? ' aria-current="page"' : ''} ` +
-          `class="sidenav-item flex items-start gap-1 px-0${kids ? ' has-subpages' : ''} ${current ? 'text-crimson' : 'text-ink'}">` +
-          slot +
+          `class="sidenav-item flex items-start gap-2 px-0${kids ? ' has-subpages' : ''} ${current ? 'text-crimson' : 'text-ink'}">` +
           `<span class="sidenav-item-label t18 min-w-0 flex-1 whitespace-normal${current ? ' is-current' : ''}">${esc(PAGES[c].l)}</span>` +
-          (kids ? `<span class="sr-only">, has subpages</span>` : '') +
+          (kids
+            ? `<span class="sr-only">, has subpages</span>` +
+              `<span class="flex h-5 w-3 shrink-0 items-center" aria-hidden="true">` +
+              `<span class="sidenav-chevron block size-3">${SIDENAV_CHEVRON}</span></span>`
+            : '') +
           `</a></li>`
         );
       })
@@ -4016,7 +4120,8 @@
         // Current row stays at the level's rest weight (T13 / 600 at level 1;
         // T-drawer-item / 350 at level 2+) and only picks up crimson +
         // underline. Hover and selected must not change `wght`.
-        const labelClass = isCurrent ? 'text-crimson underline' : 'text-ink';
+        // Round 2: the current page is also strong (wght 600), as in the side menu.
+        const labelClass = isCurrent ? 'text-crimson underline drawer-current' : 'text-ink';
         // One control fills the row. Parent rows drill (`data-drawer-down`);
         // leaves navigate (`data-nav`). The 32px chevron box is
         // kept for glyph placement — 505.33px from the panel's left edge,
