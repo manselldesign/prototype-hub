@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prototype v1.3 Bloomington IA</title>
+  <meta name="description" content="Prototype v1.3 Bloomington IA: navigation options for review.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wdth,wght,YTAS,YTLC@8..144,-10..0,25..151,100..1000,649..854,416..570&family=Roboto+Mono:wght@100..700&display=swap" rel="stylesheet">
+  <style>
+    /* Prototype hub pages, restyled 2026-11-19 to match the Rivet 3 Component
+       Guide (dochub) in the Rivet DARK theme, top to bottom: dark rvt-header,
+       dark rvt-hero-callout, dark page. Each prototype option is an rvt-card
+       (Default size, Plain layout, Outlined, Vertical). Values are the Rivet 3
+       Dark-mode tokens, written out here so each hub page stays one file.
+       Spacing is on the 4px grid; no rounded corners. */
+    :root {
+      color-scheme: dark;
+      --bg: #1f2528;              /* background/default (Dark) */
+      --raised: #14181a;          /* background/raised (Dark) */
+      --border: #000000;          /* border/default (Dark) */
+      --text: #ffffff;            /* text/default, text/strong, text/brand (Dark) */
+      --text-accent: #faf6ef;     /* text/accent, text/link (Dark) */
+      --text-accent-strong: #edddc4; /* text/brand-strong, border/accent-strong (Dark) */
+      --font-sans: "Roboto Flex", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --page: 1400px;
+      --read: 800px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-weight: 350;
+      font-stretch: 110%;
+      font-size: 16px;
+      line-height: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, summary { text-wrap: balance; }
+    p, li { text-wrap: pretty; }
+
+    a {
+      color: var(--text-accent);
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      overflow-wrap: anywhere;
+    }
+    a:hover { color: var(--text-accent-strong); text-decoration-thickness: 2px; }
+    :focus-visible { outline: 2px solid var(--text-accent-strong); outline-offset: 2px; }
+
+    .wrap {
+      max-width: var(--page);
+      margin-inline: auto;
+      padding-inline: clamp(16px, 5vw, 80px);
+    }
+
+    /* rvt-header, Dark: campus lockup only. */
+    .site-header .wrap { padding-block: 24px; }
+    .rvt-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #ffffff;
+      text-decoration: none;
+    }
+    .rvt-lockup:hover { color: #ffffff; }
+    .rvt-lockup__mark { display: block; flex: none; width: 41px; height: 48px; }
+    .rvt-lockup__tab { fill: #ffffff; }
+    .rvt-lockup__trident { fill: #990000; }
+    .rvt-lockup__title {
+      font-size: 16px;
+      line-height: 16px;
+      font-weight: 600;
+      font-stretch: 40%;
+      font-variation-settings: "opsz" 16;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* rvt-hero-callout, Dark: tag, display/lg/strong title, rule under it. */
+    body > header .wrap { padding-block: 64px; }
+    body > header { border-block: 1px solid var(--border); }
+    .eyebrow {
+      margin: 0 0 8px;
+      font-family: var(--font-mono);
+      font-stretch: normal;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .eyebrow a { color: inherit; text-decoration: none; }
+    .eyebrow a:hover { text-decoration: underline; }
+    h1 {
+      margin: 0;
+      max-width: 936px;
+      font-size: 48px;
+      line-height: 52px;
+      font-weight: 700;
+      font-stretch: 100%;
+      font-variation-settings: "YTAS" 720, "YTLC" 530;
+    }
+
+    main { padding-block: 48px 64px; }
+    main .wrap > *, .group > p, .group > .notes { max-width: var(--read); }
+    main .wrap > .group:not(.overview), main .wrap > .earlier { max-width: none; }
+
+    .lede { margin: 0 0 48px; font-size: 18px; line-height: 28px; }
+
+    /* A group of prototypes: heading/xl/strong, body/sm, then the cards. */
+    .group { margin: 0 0 48px; }
+    .group-title {
+      margin: 0 0 8px;
+      font-size: 26px;
+      line-height: 32px;
+      font-weight: 700;
+      font-variation-settings: "YTAS" 720, "YTLC" 530;
+    }
+    .group-title a { color: inherit; text-decoration: none; }
+    .group-title a:hover { color: var(--text-accent-strong); text-decoration: underline; }
+    .group > p { margin: 0 0 16px; }
+
+    .notes { margin: 0 0 16px; padding-left: 20px; }
+    .notes li { margin: 0 0 4px; }
+    .notes strong, .overview strong { font-weight: 600; }
+
+    /* Each option is an rvt-card: Default size, Plain, Outlined, Vertical.
+       spacing/32 padding, background/raised, 1px border/default, no radius.
+       Title action/xl/strong 20/28 with rvt-arrow-right 16px (spacing/16
+       gap). Description body/sm 16/24, spacing/16 above. The web address is
+       the card's metadata line (tag/sm/regular 12/16), spacing/24 above, and
+       it is the link: it covers the whole card. Hover: title text/accent +
+       underline, arrow icon/accent. Cards sit in a grid, 300 to 440px wide,
+       spacing/24 between rows and spacing/32 between columns. */
+    /* Children / Children + Grandchildren pairs: one row per option. */
+    .pair { margin: 0 0 32px; padding-left: 16px; box-shadow: inset 2px 0 0 #edddc4; }
+    .pair:last-child { margin-bottom: 0; }
+    .pair-title { margin: 0 0 12px; font-family: var(--font-mono); font-size: 14px; line-height: 20px; letter-spacing: 1px; font-weight: 600; color: var(--text-accent-strong); }
+    .prototype-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 440px));
+      gap: 24px 32px;
+    }
+    .prototype-list li {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 32px;
+      background: var(--raised);
+      box-shadow: inset 0 0 0 1px var(--border);
+    }
+    .prototype-list h2 {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin: 0;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 600;
+    }
+    .prototype-list h2::after {
+      content: "";
+      flex: none;
+      width: 16px;
+      height: 16px;
+      margin-top: 6px;
+      margin-left: auto;
+      background: currentColor;
+      -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7h10.844L7.737 2.146 9.263.854 15.31 8l-6.047 7.146-1.526-1.292L11.844 9H1V7Z"/></svg>') center / 16px 16px no-repeat;
+      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7h10.844L7.737 2.146 9.263.854 15.31 8l-6.047 7.146-1.526-1.292L11.844 9H1V7Z"/></svg>') center / 16px 16px no-repeat;
+    }
+    .prototype-list p { margin: 0; padding-top: 16px; }
+    .prototype-list a {
+      margin-top: auto;
+      padding-top: 24px;
+      font-family: var(--font-mono);
+      font-stretch: normal;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .prototype-list a::after { content: ""; position: absolute; inset: 0; }
+    .prototype-list a:focus-visible { outline: none; }
+    .prototype-list li:has(a:focus-visible) { outline: 2px solid var(--text-accent-strong); outline-offset: 1px; }
+    .prototype-list li:hover h2 { color: var(--text-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* "What changed" box = rvt-alert, Default status, Default type, as on
+       the dochub Alert page, in the Rivet Dark theme:
+       background/brand-subtle #000000, 1px border/brand #edddc4 drawn inside,
+       spacing/24 padding (spacing/16 mobile), spacing/16 gap. Title row:
+       28px badge background/brand-strong #990000 with the 16px rvt bell
+       glyph (white), spacing/8 to the title, heading/md/strong 20/24
+       text/brand #ffffff, 2px down to center on the badge. Description and
+       list indent 36px (28px badge + spacing/8), body/sm 16/24 text/default.
+       List items spacing/8 apart, 6px icon/default square bullets. */
+    .overview {
+      display: flex; flex-direction: column; gap: 16px;
+      padding: 24px;
+      background: #000000;
+      box-shadow: inset 0 0 0 1px #edddc4;
+      color: var(--text);
+    }
+    .overview .rvt-alert__block { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+    .overview .rvt-alert__head { display: flex; align-items: flex-start; gap: 8px; }
+    .overview .rvt-alert__badge {
+      flex: none; display: flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #990000; color: #ffffff;
+    }
+    .overview .rvt-alert__badge svg { display: block; width: 16px; height: 16px; fill: currentColor; }
+    .overview .rvt-alert__title {
+      flex: 1 1 auto; min-width: 0; margin: 0; padding-top: 2px;
+      color: #ffffff; font-size: 20px; line-height: 24px; font-weight: 700;
+      font-variation-settings: "YTAS" 720, "YTLC" 530;
+    }
+    .overview .rvt-alert__desc { margin: 0; padding-left: 36px; max-width: calc(850px + 36px); }
+    .overview .rvt-alert__list {
+      display: flex; flex-direction: column; gap: 8px;
+      margin: 0; padding: 0 0 0 36px; list-style: none;
+    }
+    .overview .rvt-alert__list li { display: flex; align-items: flex-start; gap: 8px; max-width: calc(6px + 8px + 920px); }
+    .overview .rvt-alert__list li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: 9px; background: #ffffff; }
+
+    .later, .empty { margin: 0 0 8px; }
+    .empty { padding: 16px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--border); }
+    body:not(.is-empty) .empty { display: none; }
+
+    .earlier { margin: 0 0 24px; border-top: 1px solid var(--border); padding-top: 24px; }
+    .earlier > summary { cursor: pointer; font-size: 20px; line-height: 28px; font-weight: 600; }
+    .earlier[open] > summary { margin-bottom: 24px; }
+    .earlier .group-title { font-size: 20px; line-height: 24px; }
+
+    @media (max-width: 767px) {
+      body > header .wrap { padding-block: 32px 36px; }
+      h1 { font-size: 29px; line-height: 32px; }
+      main { padding-block: 32px 48px; }
+      .lede { font-size: 16px; line-height: 24px; margin-bottom: 36px; }
+      .group { margin-bottom: 36px; }
+      .group-title { font-size: 23px; line-height: 28px; }
+      .prototype-list li { padding: 24px; }
+      .overview { padding: 16px; }
+      .prototype-list h2 { font-size: 18px; line-height: 24px; }
+      .prototype-list h2::after { margin-top: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-header">
+    <div class="wrap">
+      <a class="rvt-lockup" href="https://manselldesign.github.io/prototype-hub/">
+        <svg class="rvt-lockup__mark" viewBox="0 0 41 48" width="41" height="48" aria-hidden="true" focusable="false"><path class="rvt-lockup__tab" d="M41 0H0V48H41V0Z"/><path class="rvt-lockup__trident" d="M25 11.5V14H27V28.5H23V9.5H25V7H16V9.5H18V28.5H14V14H16V11.5H7V14H9V30.5L12.5 34H18V37.5H16V41H25V37.5H23V34H28.5L32 30.5V14H34V11.5H25Z"/></svg>
+        <span class="rvt-lockup__title">Prototype Hub</span>
+      </a>
+    </div>
+  </div>
+  <header>
+    <div class="wrap">
+      <p class="eyebrow">Drafts for review</p>
+      <h1>Prototype v1.3 Bloomington IA</h1>
+    </div>
+  </header>
+  <main>
+    <div class="wrap">
+      <p class="lede">The v1.3 navigation prototypes with the IU Bloomington site’s navigation. These pages are for review. They are not live university websites.</p>
+      <section class="group overview" id="overview" aria-labelledby="overview-title">
+        <div class="rvt-alert__block">
+          <div class="rvt-alert__head">
+<span class="rvt-alert__badge" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="M10 14L15.5 14L15.5 12L14.118 12L13.7516 11.2672C13.5771 10.918 13.4758 10.5368 13.4542 10.147L13.2203 5.93837C13.0854 3.50893 11.3068 1.54301 9 1.09569V0H7V1.09569C4.69318 1.543 2.91463 3.50892 2.77966 5.93837L2.54585 10.147C2.52419 10.5368 2.42295 10.918 2.24835 11.2672L1.88197 12H0.5V14L6 14C6 15.1046 6.89543 16 8 16C9.10457 16 10 15.1046 10 14ZM11.8857 12L4.11434 12C4.36381 11.4514 4.50928 10.8607 4.54277 10.2579L4.77658 6.04931C4.87162 4.33853 6.28658 3 8 3C9.71341 3 11.1284 4.33853 11.2234 6.04931L11.4572 10.2579C11.4907 10.8607 11.6362 11.4514 11.8857 12Z"/></svg></span>
+            <h2 class="rvt-alert__title" id="overview-title">What is different from v1.3</h2>
+          </div>
+          <p class="rvt-alert__desc">The designs are the same as Prototype v1.3. Only the site inside them changed.</p>
+        </div>
+        <ul class="rvt-alert__list">
+          <li><span><strong>Navigation.</strong> The menu is the one on bloomington.iu.edu: 8 main sections and 228 pages, with the same names and order.</span></li>
+          <li><span><strong>Page content.</strong> Each page keeps its real headline and breadcrumbs. The rest is cream placeholder boxes.</span></li>
+          <li><span><strong>Page length.</strong> Each page is as long as the real Bloomington page, measured on a desktop screen.</span></li>
+          <li><span><strong>Header buttons.</strong> Removed. The Bloomington header has none.</span></li>
+        </ul>
+      </section>
+      <section class="group" id="group-header">
+        <h2 class="group-title">A - Visible Header</h2>
+        <p>Each main section links to its page. A small button next to it opens a drop-down of the pages inside.</p>
+        <div class="pair" role="group" aria-labelledby="pair-a6">
+          <h3 class="pair-title" id="pair-a6">A6</h3>
+          <ul class="prototype-list">
+            <li>
+              <h2>A6 · Children · Bloomington IA</h2>
+              <p>The side menu lists the pages under the current page.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a6/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a6/#/</a>
+            </li>
+            <li>
+              <h2>A6 · Children + Grandchildren · Bloomington IA</h2>
+              <p>Same as A6. The side menu also lists the pages under each child, as plain links with no icons.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a6-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a6-gc/#/</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="group" id="group-mega">
+        <h2 class="group-title">B - Mega Menu</h2>
+        <p>The same header. The small button opens a full-width menu.</p>
+        <div class="pair" role="group" aria-labelledby="pair-b10">
+          <h3 class="pair-title" id="pair-b10">B10</h3>
+          <ul class="prototype-list">
+            <li>
+              <h2>B10 · Children · Bloomington IA</h2>
+              <p>Each card has “Includes:” above the page names. The names are a plain list.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b10/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b10/#/</a>
+            </li>
+            <li>
+              <h2>B10 · Children + Grandchildren · Bloomington IA</h2>
+              <p>Same as B10. The side menu also lists the pages under each child, as plain links with no icons.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b10-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b10-gc/#/</a>
+            </li>
+          </ul>
+        </div>
+        <div class="pair" role="group" aria-labelledby="pair-b11">
+          <h3 class="pair-title" id="pair-b11">B11</h3>
+          <ul class="prototype-list">
+            <li>
+              <h2>B11 · Children · Bloomington IA</h2>
+              <p>Same as B10, without “Includes:”. The page names in each card are a bulleted list.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b11/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b11/#/</a>
+            </li>
+            <li>
+              <h2>B11 · Children + Grandchildren · Bloomington IA</h2>
+              <p>Same as B11. The side menu also lists the pages under each child, as plain links with no icons.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b11-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b11-gc/#/</a>
+            </li>
+          </ul>
+        </div>
+        <div class="pair" role="group" aria-labelledby="pair-b12">
+          <h3 class="pair-title" id="pair-b12">B12</h3>
+          <ul class="prototype-list">
+            <li>
+              <h2>B12 · Children · Bloomington IA</h2>
+              <p>Same as B10, without “Includes:”. The page names in each card are a plain list.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b12/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b12/#/</a>
+            </li>
+            <li>
+              <h2>B12 · Children + Grandchildren · Bloomington IA</h2>
+              <p>Same as B12. The side menu also lists the pages under each child, as plain links with no icons.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b12-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b12-gc/#/</a>
+            </li>
+          </ul>
+        </div>
+        <div class="pair" role="group" aria-labelledby="pair-b13">
+          <h3 class="pair-title" id="pair-b13">B13</h3>
+          <ul class="prototype-list">
+            <li>
+              <h2>B13 · Children · Bloomington IA</h2>
+              <p>No cards. Every page in the menu is a link. Tab moves between headings. Arrow keys move through the pages under a heading.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b13/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b13/#/</a>
+            </li>
+            <li>
+              <h2>B13 · Children + Grandchildren · Bloomington IA</h2>
+              <p>Same as B13. The side menu also lists the pages under each child, as plain links with no icons.</p>
+              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b13-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b13-gc/#/</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <p class="later"><a href="https://manselldesign.github.io/prototype-hub/v1.3/" target="_blank" rel="noopener">Prototype v1.3 (Zoo site)</a></p>
+      <p class="later"><a href="https://manselldesign.github.io/prototype-hub/" target="_blank" rel="noopener">Original prototype review hub</a></p>
+    </div>
+  </main>
+</body>
+</html>
