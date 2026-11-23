@@ -78,7 +78,7 @@
         colors: {
           crimson: '#990000',      // brand/main   — H1s, CTAs, current nav item, footer band
           'crimson-dk': '#6D0808', // brand/dark   — footer divider
-          cream: '#F0E1CC',        // brand/light  — every hairline rule
+          cream: '#EDDDC4',        // brand/light  — every hairline rule
           ink: '#1F2528',          // base/main    — headings, dark buttons, borders
           body: '#343C42',         // theme/text   — body copy
         },
@@ -672,7 +672,7 @@
          page's footer cannot shove the rail up behind the masthead. It
          stays in flow, so the content column is offset by `--sidenav-width`
          without a header or footer margin. The cream sidenav/content
-         divider is a 1px `#F0E1CC` `#layout::after` from the top of the
+         divider is a 1px `#EDDDC4` `#layout::after` from the top of the
          main row to its bottom (under the header, to the footer, and the
          full content height on long pages). The sticky rail is
          `align-self: flex-start`, so its own `border-r` only paints as
@@ -892,9 +892,9 @@
      label. A hidden sizer at rest settings reserves the
      label box; selected tightens `wdth` (and scaleX if needed) so the
      visible string width matches rest. The disclosure is a separate 26px
-     control (16px chevron, 4px pad, 1px #EFDFC8 border, 4px from the
+     control (16px chevron, 4px pad, 1px #EDDDC4 border, 4px from the
      label). The box is 22px: a 12px stroke chevron, 4px pad, and a
-     1px #EFDFC8 border. Hover and the open menu fill that box with #FAF6EF. */
+     1px #EDDDC4 border. Hover and the open menu fill that box with #FAF6EF. */
   .masthead-nav-item {
     --masthead-sel-wdth: 93;
     --masthead-label-scale: 1;
@@ -1046,7 +1046,7 @@
   /* v1.2 B.1: the header item is a split button again. */
   /* Split button, as in the original mega-click-icon: the label is the
      page link and the chevron is a separate 22px control 4px after it
-     (12px chevron, 4px pad, 1px #EFDFC8 border, no radius). Hover and the
+     (12px chevron, 4px pad, 1px #EDDDC4 border, no radius). Hover and the
      open mega menu fill the box with #FAF6EF; the chevron stays ink. */
   button.masthead-nav-disclosure {
     box-sizing: border-box;
@@ -1055,7 +1055,7 @@
     width: 20px;
     height: 20px;
     padding: 3px;
-    border: 1px solid #EFDFC8;
+    border: 1px solid #EDDDC4;
     border-radius: 0;
     background: transparent;
     color: #1F2528;
@@ -1231,7 +1231,7 @@
 
   /* -----------------------------------------------------------------------
      v1.2 — sidenav list styles copied from Option C (Siblings).
-     Parent rows: 14/20 wght 600, 12px top/bottom, 1px #F0E1CC hairline
+     Parent rows: 14/20 wght 600, 12px top/bottom, 1px #EDDDC4 hairline
      under each row (none above the first). Open rows drop their bottom
      pad; the child list is 12px top / 16px bottom with 4px between
      children (14/20 T18). Chevrons are 16px Rivet glyphs. Hover/focus
@@ -1256,7 +1256,7 @@
     right: 0;
     bottom: 0;
     height: 1px;
-    background: #F0E1CC;
+    background: #EDDDC4;
     pointer-events: none;
   }
   #sidenav .sidenav-item {
@@ -1375,7 +1375,7 @@
   #sidenav .nav-btn-back { gap: 4px; align-items: center; }
   /* A6: Back stays on one line. A label too long for the rail is cut at the
      last whole word that fits, and a small "more" button (the breadcrumb
-     ellipsis chip, tightened to 20x16: 1px #EFDFC8 border, no fill, no radius,
+     ellipsis chip, tightened to 20x16: 1px #EDDDC4 border, no fill, no radius,
      rvt-ellipsis-12) follows it, 4px after the text. The button shows the
      full label (it wraps) and hides it again. The words that are cut stay
      in the link as hidden text, so screen readers always read the full
@@ -1429,7 +1429,7 @@
     width: 20px;  /* 12px icon + 4px left and right */
     height: 16px; /* 12px icon + 2px above and below */
     padding: 0;
-    border: 1px solid #EFDFC8;
+    border: 1px solid #EDDDC4;
     border-radius: 0;
     background: transparent;
     color: #1F2528;
@@ -2240,7 +2240,7 @@
     }
     /*
       Full-height cream rule at the sidenav's right edge (spec 9: 1px
-      `#F0E1CC` at `calc(var(--sidenav-width) - 1px)`; sampled from 03-…-87690).
+      `#EDDDC4` at `calc(var(--sidenav-width) - 1px)`; sampled from 03-…-87690).
       `#sidenav` stays `align-self: flex-start` so sticky still pins the
       item list; a min-height of `100vh - header` on the rail would push
       the in-flow footer down on short pages. This ::after lives on
@@ -2258,7 +2258,7 @@
       bottom: 0;
       left: calc(var(--sidenav-width) - 1px);
       width: 1px;
-      background: #F0E1CC;
+      background: #EDDDC4;
       pointer-events: none;
     }
     /*
@@ -4676,7 +4676,7 @@
   #sidenav .sidenav-after-back > ul.sg-list > li::after { display: none; }
   /* Figma _rvt-sidebar-menu-edit: each group is 12px top/bottom with a 1px
      cream rule above it (none under the last), rules collapsed by 1px. */
-  #sidenav .sg-group { display: flex; flex-direction: column; gap: 12px; padding: 12px 0; box-shadow: inset 0 1px 0 #F0E1CC; }
+  #sidenav .sg-group { display: flex; flex-direction: column; gap: 12px; padding: 12px 0; box-shadow: inset 0 1px 0 #EDDDC4; }
   #sidenav .sg-group + .sg-group { margin-top: -1px; }
   #sidenav ul a.sg-child {
     display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; width: 100%;
