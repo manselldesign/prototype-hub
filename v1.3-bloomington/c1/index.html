@@ -2668,7 +2668,7 @@
         <div class="masthead-top">
           <a class="flex h-11 items-center gap-1.5" href="#/">
             <span data-icon="trident-tab" class="block h-11 w-[37px] shrink-0"></span>
-            <span class="rvt-lockup__title t1">Indiana University Bloomington</span>
+            <span class="lockup-text"><span class="lockup-campus-title">Indiana University</span><span class="lockup-campus-name">Bloomington</span></span>
           </a>
 
           <div class="masthead-tools">
@@ -3243,23 +3243,21 @@
         `<span class="mega-heading-last">${esc(headLast)}` +
         `<span data-icon="arrow-right" class="mega-arrow"></span></span></span></a>${list}</div>`;
     };
-    /* C1 (2026-11-23): five columns. Pages with pages under them are sorted
-       by how many they have (most first, ties A to Z) and fill the first
-       four columns row by row. Pages with nothing under them are stacked
-       A to Z in the fifth column. With only one kind, all five columns are
-       used from the left. Overview and Close sit in a row above. */
+    /* C1 (2026-11-23): four columns. Column 1 is Overview and Close, as in
+       B13. Pages with pages under them are sorted by how many they have
+       (most first, ties A to Z) and fill the next columns row by row.
+       Pages with nothing under them are stacked A to Z in the column right
+       after the last one used in the first row, never further right. */
     const count = (s) => (PAGES[s].c || []).filter((g) => PAGES[g]).length;
     const all = (PAGES[sectionSlug].c || []).filter((s) => PAGES[s]);
     const byName = (a, b) => PAGES[a].l.localeCompare(PAGES[b].l);
     const groups = all.filter((s) => count(s) > 0).sort((a, b) => count(b) - count(a) || byName(a, b));
     const leaves = all.filter((s) => count(s) === 0).sort(byName);
-    const split = groups.length > 0 && leaves.length > 0;
-    const per = split ? 4 : 5;
-    const main = groups.length ? groups : leaves;
-    const cells = main.map((s, i) => col(s).replace('<div class="mega-col">',
+    const per = leaves.length ? Math.min(groups.length, 2) : 3;
+    const cells = groups.map((s, i) => col(s).replace('<div class="mega-col">',
       `<div class="mega-col" style="grid-column:${(i % per) + 1};grid-row:${Math.floor(i / per) + 1}">`)).join('');
-    const side = split
-      ? `<div class="mega-leaves" style="grid-column:5;grid-row:1 / span ${Math.ceil(groups.length / per)}">${leaves.map(col).join('')}</div>`
+    const side = leaves.length
+      ? `<div class="mega-leaves" style="grid-column:${per + 1};grid-row:1 / span ${Math.max(1, Math.ceil(groups.length / Math.max(per, 1)))}">${leaves.map(col).join('')}</div>`
       : '';
     return `<div class="mega-layout mega-c-layout">${overview}<div class="mega-grid">${cells}${side}</div></div>`;
   }
@@ -4388,11 +4386,8 @@
   }
 </style>
 <style id="mega-c">
-  /* C1: Overview and Close in a row above five equal columns. */
-  .mega-c-layout { flex-direction: column; align-items: stretch; gap: 32px; }
-  .mega-c-layout .mega-overview { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; width: auto; flex: none; gap: 16px 24px; }
-  .mega-c-layout .mega-hint { flex-basis: 100%; }
-  .mega-c-layout .mega-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: 48px; row-gap: 40px; justify-content: stretch; }
+  /* C1: Overview and Close in column 1 (B13), then three equal columns. */
+  .mega-c-layout .mega-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 48px; row-gap: 40px; justify-content: stretch; }
   .mega-c-layout .mega-leaves { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; min-width: 0; }
   @media (max-width: 1279px) { .mega-c-layout .mega-grid { column-gap: 24px; } }
 </style>
@@ -4409,6 +4404,13 @@
     overflow-y: auto;
     overscroll-behavior: contain;
   }
+  /* Header lockup = Figma _rvt-logo-lockup, Type=Campus, Color=Default:
+     44px mark, 6px gap, then two lines 2px apart (1px above).
+     component/lockup/campus-title 16/16, wght 600, wdth 40, +0.25px, caps.
+     component/lockup/campus-name  14/14, wght 350, wdth 40, caps. */
+  .lockup-text { display: flex; flex-direction: column; gap: 2px; padding-top: 1px; color: #000000; text-transform: uppercase; white-space: nowrap; }
+  .lockup-campus-title { font-size: 16px; line-height: 16px; letter-spacing: 0.25px; font-variation-settings: 'wght' 600, 'wdth' 40; }
+  .lockup-campus-name { font-size: 14px; line-height: 14px; letter-spacing: 0; font-variation-settings: 'wght' 350, 'wdth' 40; }
   /* Cream placeholder boxes that stand in for page content. */
   .ph-stack { display: flex; flex-direction: column; gap: 32px; margin-top: 32px; max-width: 54rem; }
   .rvt-hero--statement .ph-stack { max-width: none; margin-top: 0; }

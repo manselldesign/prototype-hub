@@ -2604,7 +2604,7 @@
         <div class="masthead-top">
           <a class="flex h-11 items-center gap-1.5" href="#/">
             <span data-icon="trident-tab" class="block h-11 w-[37px] shrink-0"></span>
-            <span class="rvt-lockup__title t1">Indiana University Bloomington</span>
+            <span class="lockup-text"><span class="lockup-campus-title">Indiana University</span><span class="lockup-campus-name">Bloomington</span></span>
           </a>
 
           <div class="masthead-tools">
@@ -4282,6 +4282,13 @@
     overflow-y: auto;
     overscroll-behavior: contain;
   }
+  /* Header lockup = Figma _rvt-logo-lockup, Type=Campus, Color=Default:
+     44px mark, 6px gap, then two lines 2px apart (1px above).
+     component/lockup/campus-title 16/16, wght 600, wdth 40, +0.25px, caps.
+     component/lockup/campus-name  14/14, wght 350, wdth 40, caps. */
+  .lockup-text { display: flex; flex-direction: column; gap: 2px; padding-top: 1px; color: #000000; text-transform: uppercase; white-space: nowrap; }
+  .lockup-campus-title { font-size: 16px; line-height: 16px; letter-spacing: 0.25px; font-variation-settings: 'wght' 600, 'wdth' 40; }
+  .lockup-campus-name { font-size: 14px; line-height: 14px; letter-spacing: 0; font-variation-settings: 'wght' 350, 'wdth' 40; }
   /* Cream placeholder boxes that stand in for page content. */
   .ph-stack { display: flex; flex-direction: column; gap: 32px; margin-top: 32px; max-width: 54rem; }
   .rvt-hero--statement .ph-stack { max-width: none; margin-top: 0; }
