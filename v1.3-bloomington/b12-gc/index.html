@@ -4310,8 +4310,11 @@
   main .rvt-hero__title { max-width: 14em; text-wrap: balance; }
   /* Detail-page headlines can run a bit longer (Jenn, 2026-11-23): the
      Hero Callout headline limit, 920px. The italic main section and home
-     headlines keep the 14em limit above. */
+     headlines keep the 14em limit above; home is the exception below. */
   main .rvt-hero__title.hero-title { max-width: 920px; }
+  /* The home page headline is centered and uses the full width, so it
+     stays on one line when there is room (Jenn, 2026-11-23). */
+  main .rvt-hero--statement .rvt-hero__title { max-width: none; }
   /* Underlines (2026-11-23, Jenn): every underline (selected, current
      page, hover, focus; header, drop-downs, mega menus, side menu,
      breadcrumbs, footer) is the same 1px line at the same distance from
