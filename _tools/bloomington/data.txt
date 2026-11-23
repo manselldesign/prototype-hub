@@ -1,0 +1,228 @@
+0|academics/|Academics|Create your ideal future|5203
+1|degrees-majors/|Degrees & Majors|Your degree. Your career. Your next step starts here.|2979
+2|interests/|Academic Interests|Turn your passions into a purpose-driven degree|1594
+3|undergraduate/|Undergraduate Majors by Interest|Find the degree path that inspires you|3523
+4|art-design-performance.html|Art, Design, and Performance|Create what the world needs|1211
+4|business-organizations.html|Business & Organizations|Launch your career in business|1187
+4|communication.html|Communication|Create messages that matter|1187
+4|education.html|Education|Spark a love for learning|1187
+4|science-tech-engineering.html|Science, Tech & Engineering|The science of today and the tools for tomorrow|1239
+4|health-wellness.html|Health & Wellness|Put humanity at the heart of care|1187
+4|environment.html|Environment|Protect our shared future|1187
+4|society-community-culture.html|Society, Community & Culture|Learn to make a positive difference|1211
+4|global-perspectives.html|Global Perspectives|Bring the world together|1187
+4|law-justice.html|Law & Justice|Turn your conviction into a career|1215
+3|graduate/|Graduate Majors by Interest|Find your path to success|3603
+4|art-design-performance.html|Art, Design & Performance|Advance your artistic practice|1215
+4|business-organizations.html|Business & Organizations|Build the expertise companies rely on|1215
+4|communication.html|Communication|Shape messages that matter|1187
+4|education.html|Education|Influence how people learn and grow|1215
+4|science-tech-engineering.html|Science, Tech & Engineering|Push the boundaries of discovery|1187
+4|health-wellness.html|Health & Wellness|Build healthier communities|1215
+4|environment.html|Environment|Shape solutions for a changing world|1215
+4|society-community-culture.html|Society, Community & Culture|Understand how societies take shape|1211
+4|global-perspectives.html|Global Perspectives|Understand the world in deeper ways|1215
+4|law-justice.html|Law & Justice|Advance a fair and just society|1215
+2|honors.html|Honors Programs|Challenge yourself with an honors education at IU Bloomington|3694
+2|exploratory.html|Exploratory Program|Explore your options and still graduate in four years|2921
+2|individualized-majors.html|Individualized Major Program|Design your degree, shape your career|3504
+2|accelerated-masters/|Accelerated Master's Programs|Fast-track your future with an accelerated master’s degree|7303
+3|browse-programs.html|Browse Accelerated Programs|Match your major to an accelerated path|1140
+2|multidisciplinary.html|Multidisciplinary Programs|Study across disciplines|4009
+2|online.html|Online Programs|Take IU courses from anywhere|1089
+2|programs.html|Browse All Programs|Your future awaits at IU Bloomington|1185
+1|schools/|Schools|Find your place at IU Bloomington|3041
+1|experiential-learning/|Experiential Learning|Where curiosity becomes action|2877
+2|research-opportunities/|Research Opportunities|Undergraduate research opportunities|2534
+2|study-abroad.html|Study Abroad|Let the world be your classroom|3859
+2|learning-communities.html|Learning Communities|Learn and live in the best environment for you|4456
+1|classes-registration/|Classes & Registration|Everything you need to register for classes|2531
+1|calendars/|Academic Calendars|Every deadline, all in one place|1927
+1|records-grades/|Student Records & Grades|Manage your academic records and student status|2491
+2|atlas.html|Atlas Portal|Atlas for International Students and Scholars|2094
+1|degree-requirements-policies/|Degree Requirements & Policies|Degree requirements and policies|2149
+0|admissions/|Admissions|Own your story at IU Bloomington|6705
+1|apply/|How to Apply|Begin your journey to IU Bloomington|3602
+2|freshman/|Freshman Applicants|Application process for future freshmen|8725
+3|admission-standards.html|Freshman Admission Standards|Freshman admission standards|5221
+3|deadlines.html|Application Deadlines|Key freshman application deadlines|2412
+3|test-optional.html|Test-optional Admission|About the use of test scores in admissions|4180
+2|transfer/|Transfer Applicants|Application process for transfer students|9211
+3|admission-standards.html|Transfer Student Admission Standards|Transfer student admission standards|3866
+3|deadlines.html|Application Deadlines|Key transfer student application deadlines|2630
+3|intercampus-transfer.html|Transfer from an IU Campus|Application process for intercampus transfer students|7072
+2|graduate/|Graduate Applicants|Application process for future graduate students|3691
+3|application-fees.html|Graduate Application Fees|Get a fee waiver or reduced fee when you apply|3626
+2|nondegree/|Visiting & Non-degree Applicants|Visiting and non-degree applicants|12838
+2|adult/|Adult Applicants|Adult applicants|3374
+2|second-degree/|Second Undergraduate Applicants|Second degree applicants|1716
+2|military-veteran/|Military & Veteran Applicants|Application process for military & veteran applicants|4753
+2|application-faqs.html|Application FAQs|Frequently asked questions about applying|7645
+1|paths/|Admission Paths|Admission paths at IU Bloomington|4936
+2|indiana-residents.html|Pre-Admissions Initiative|A guaranteed path for Indiana residents earning the Indiana Diploma with the Enrollment Honors Plus Seal|5808
+1|visit/|Visit IU|Experience the beauty of IU Bloomington|7559
+2|counselor-visit.html|High School Counselor Visits|High school counselor visits|2252
+2|virtual-tour.html|Virtual Tour|Explore IU from anywhere|2196
+2|group/|Group Visits|Bring your group to IU|2886
+1|meet-counselor/|Admission Counselors|Here to support you|2051
+2|find-counselor.html|Find Your Counselor|Find your admissions counselor|2186
+1|precollege/|Precollege Programs|Precollege programs at IU Bloomington|4841
+2|programs.html|Find a Precollege Program|Get a head start on your future|1036
+2|parents.html|Information for Parents|Educational opportunities your child can feel good about|1865
+1|plan/|Planning for IU|Prepare for your future at IU Bloomington|3957
+2|family.html|Families|Support your student's journey to IU|6650
+2|eighth-ninth-grade.html|Eighth & Ninth Grade|Start exploring your future|2472
+2|sophomore.html|Sophomores|Pave your path to college|4333
+2|junior.html|Juniors|Get ready for application season|4042
+2|senior.html|Seniors|Finish strong: apply with confidence|3805
+2|iu-bound/|IUBound Programs|Find your path to becoming a Hoosier|5513
+3|college-access-advising/|College Access Advising|Increasing opportunity for Indiana students|2464
+1|class-profile.html|Class Profile|Who chooses IU?|2248
+1|orientation/|Undergraduate Orientation|Undergraduate student orientation|3317
+2|portal/|Orientation Portal|Access your Orientation Portal|2172
+3|roadmap/|Orientation Roadmap|Welcome to your Orientation Roadmap|4435
+2|steps/|Your Orientation Steps|Your Hoosier experience starts here|4242
+3|attend/|Attend Orientation|Attend your Foundations of Orientation program|6581
+3|prepare-advising/|Prepare for Advising|Set yourself up for a strong start|4208
+3|indiana-promise/|The Indiana Promise|A shared commitment to your success|1908
+3|first-year/|Your First Year|Your first year as a Hoosier|14492
+4|iu-bucket-list/|IU Bucket List|Experience the best of being a Hoosier|4357
+2|family/|Information for Families|Helping your new Hoosier succeed|2790
+2|travel/|Travel to Bloomington|=|3377
+3|international/|International Travel Arrangements|Plan your trip to Bloomington|2240
+4|arrival-us-customs.html|Arriving in the U.S.|Know what to expect when you arrive|3026
+2|student-staff/|Student Staff|Work with the Office of Orientation & Enrollment Programs|7170
+1|orientation-graduate/|Graduate Orientation|Your guide to graduate student orientation|2855
+1|enroll/|Steps to Enroll|Find your enrollment steps|2077
+2|freshman/|Freshman Students|Enrollment process for freshman students|5806
+2|transfer/|Transfer Students|Enrollment process for transfer students and spring freshmen|4817
+2|graduate/|Graduate Students|Enrollment process for graduate students|2321
+2|international/|International Students|Enrollment steps for international students|1343
+3|freshman/|Freshman Students|Enrollment process for international freshman students|5744
+3|transfer/|Transfer Students|Enrollment process for international transfer students|5812
+3|graduate/|Graduate Students|Enrollment process for international graduate students|3918
+2|intercampus-transfer/|Intercampus Transfer Students|Enrollment process for intercampus transfer students|3663
+2|adult/|Adult Students|Enrollment process for adult students|1366
+2|summer/|Summer Students|Enrollment process for summer students|4043
+0|cost-aid/|Cost & Aid|IU Bloomington costs and financial aid|2814
+1|cost-attendance/|Cost of Attendance|A smart investment in your future|2515
+2|undergraduate.html|Undergraduate Costs|See how much it costs to attend IU Bloomington|5911
+2|graduate.html|Graduate Costs|See the full value of an IU graduate degree|3571
+2|net-price-calculator.html|Net Price Calculator|Calculate your estimated costs|940
+2|international/|International Cost of Attendance|Estimate your international costs|1157
+3|undergraduate.html|International Undergraduate Costs|See how much it costs to attend IU Bloomington|5329
+3|graduate.html|International Graduate Costs|Invest in your graduate education|7920
+1|financial-aid/|Financial Aid|Get help paying for your IU education|4112
+2|international.html|Aid for International Students|Aid for international students|5381
+1|scholarships/|Scholarships|Scholarships that support your future|3186
+2|international/|International Student Scholarships|Scholarships for international students|3137
+3|cv-starr-foundation-scholarship.html|C.V. Starr Foundation Scholarship|=|2346
+3|japan-alumni-scholarship.html|Japan Alumni Chapter Scholarship|=|2030
+3|schurz-latin-american-scholarship.html|Scott Schurz Latin American Scholarship|=|2554
+3|bp-peduli-scholarship.html|BP Peduli Scholarship|=|2348
+3|bunchana-atthakor-scholarship.html|Bunchana Atthakor Scholarship|=|2416
+3|eoyang-lee-fellowship.html|Eoyang-Lee Fellowship|=|2814
+3|illo-scholarship.html|Irving and Lena Lo (ILLO) Scholarship Fund|=|3090
+3|rising-star-scholarship.html|Rising Star Scholarship|=|2072
+3|global-citizen-scholarship.html|Global Citizen Scholarship|=|5147
+2|external.html|External Scholarships|Scholarship opportunities beyond IU|4071
+1|grants-fellowships/|Grants & Fellowships|Discover funding you don’t have to repay|2879
+1|loans/|Loans|Understand your student loan options|2370
+1|pay-bill/|Pay Your Bill|Manage your payments|2033
+0|campus-life/|Campus Life|Make this place your own|6359
+1|traditions.html|Campus Traditions|Experience Hoosier heritage|3686
+1|community/|Community & Involvement|Build your Hoosier circle|3832
+2|student-organizations.html|Student Organizations|Connect through what you love|1997
+2|student-ambassadors.html|Student Ambassadors|Your guides to IU Bloomington|4804
+1|athletics-recreation/|Athletics & Recreation|Where champions play|2235
+1|housing-dining.html|Housing & Dining|Make yourself at home|3891
+1|bloomington.html|Life in Bloomington|Welcome to your new hometown|4900
+1|events/|Campus Events|Explore what’s happening at IU Bloomington|4455
+2|america-250/|America 250|Celebrating 250 years of the American story|3967
+3|self-guided-tour.html|Revolution and Reflection Self-Guided Tour|Revolution and Reflection self-guided tour|7068
+3|grants.html|Small Grant Recipients|America 250 Small Grant Recipients|5344
+1|arts-culture.html|Arts and Culture|Arts & Culture|4820
+1|safety.html|Campus Safety|Your safety comes first|2311
+1|map-parking/|Campus Map, Parking & Transportation|Navigate campus with confidence|3559
+2|directions.html|Getting to Campus|Come visit us on campus|2725
+2|campus-buildings.html|Campus Buildings|Find building abbreviations for IU Bloomington|10038
+2|parking.html|Driving & Parking on Campus|What to know about driving on campus|2115
+0|research/|Research|Discoveries that change lives—in Indiana and beyond|9155
+1|events-workshops/|Events & Workshops|Research events & workshops|1059
+1|innovation-entrepreneurship/|Innovation & Entrepreneurship|Transforming ideas into impact|4248
+2|stories.html|Innovator Stories|Continuing a legacy of innovative solutions|4054
+1|centers-institutes/|Centers, Museums, & Institutes|Centers, museums, & institutes|3126
+1|libraries.html|Libraries|Where research fuels discovery|3609
+1|news-highlights/|In the News|Keeping current with research at IU Bloomington|2937
+1|opportunities/|Student Research Opportunities|Access research from your first semester|2712
+0|student-support/|Student Support|Own your Hoosier journey—with the strength of IU behind you|6578
+1|academic-advising-support/|Academic Advising & Support|IU Bloomington is full of people who will help you succeed|5861
+1|career-services-jobs/|Career Services & Jobs|Build a resume that gets noticed|3682
+2|internships/|Internships|Get a head start on your career with work experience|2987
+2|part-time-jobs/|Part-time Jobs|Earn while you learn|3118
+2|mentorship-coaching.html|Mentorship & Coaching|Support for your career path|4242
+1|health-wellness/|Health & Wellness|Get the help you need to feel your best|3245
+2|mental-health.html|Mental Health Resources|Find the support that’s right for you|900
+1|money-essential-needs/|Money & Essential Needs|Support for your financial and everyday needs|2189
+1|technology/|Campus Technology|Technology that keeps you connected|2675
+2|iu-account.html|IU Account Setup|Set up your IU accounts|2408
+1|recruit-students.html|Recruit IU Students|Find your next hire at IU Bloomington|8433
+0|alumni-giving/|Alumni & Giving|Stay connected to a network 806,000+ strong|8766
+1|donate/|Give to IU|Support the future of IU Bloomington|2630
+0|about/|About|A legendary campus building tomorrow|6466
+1|history.html|History|Our history and heritage|14627
+1|ranking-statistics.html|Rankings and Statistics|National impact by the numbers|5109
+1|strategic-plan/|Strategic Plan|Strategic planning at IU Bloomington|2987
+1|leadership/|Bloomington Leadership & Administration|Guiding Indiana University’s flagship campus|4563
+2|chancellor/|About the Bloomington Chancellor|Dr. David A. Reingold|3294
+2|cabinet.html|Bloomington Chancellor's Cabinet|Meet the Chancellor’s Cabinet|4517
+2|vice-chancellors.html|Bloomington Vice Chancellors|Meet the vice chancellors|1609
+1|initiatives/|Campus Initiatives|Big ideas making campus better|2964
+2|campus-policies/|Campus Policy Committee|=|6032
+1|faculty-staff/|Faculty & Staff Community|Your Hoosier legacy starts here|3399
+2|resources.html|Faculty & Staff Resources|Support for your work at IU|3887
+2|for-the-glory/|For the Glory Newsletter|Celebrating the people who move IU forward|4345
+3|2026-08-24-dallis-comentale.html|Ed Dallis-Comentale|Congratulations Edward Dallis-Comentale|2363
+3|2026-08-19-snow.html|Michael Snow|Congratulations Michael Snow|2311
+3|2026-08-17-rosenfeld.html|Alvin Rosenfeld|Congratulations Alvin Rosenfeld|2311
+3|2026-05-13-rodriguez.html|Roberto Rodriguez|Congratulations Roberto Rodriguez|2311
+3|2026-05-06-patel.html|Rita Patel|Congratulations Rita Patel|2311
+3|2026-04-29-guggenheim.html|Christoph Irmscher and David Polly|Congratulations Christoph Irmscher and David Polly|2363
+3|2026-04-22-irsay.html|Brea Perry, Bernice Pescosolido, and Kosali Simon|Congratulations Brea Perry, Bernice Pescosolido, and Kosali Simon|2387
+3|2026-04-15-ids-arbutus.html|Indiana Daily Student and Arbutus|Congratulations to the Indiana Daily Student and Arbutus|2363
+3|2026-04-08-aaas.html|AAAS Fellows|Congratulations AAAS Fellows|2311
+3|2026-04-01-debate.html|IU Debate Team|Congratulations IU Debate Team|2311
+3|2026-03-25-habeeb.html|Dana Habeeb|Congratulations Dana Habeeb|2311
+3|2026-03-11-distinguished-prof.html|Distinguished Professors|=|2311
+3|2026-03-04-sarah-commodore.html|Sarah Commodore|Congratulations Sarah Commodore|2311
+3|2026-02-25-brian-yanites.html|Brian Yanites|Congratulations Brian Yanites|2311
+3|2026-02-18-brad-fulton.html|Brad Fulton|Congratulations Brad Fulton|2311
+3|2026-02-11-michael-wasserman.html|Michael Wasserman|Congratulations Michael Wasserman|2311
+3|2026-02-04-jingjing-zhang.html|Jingjing Zhang|Congratulations Jingjing Zhang|2311
+3|2026-01-14-pete-kollbaum.html|Pete Kollbaum|Congratulations Pete Kollbaum|2311
+3|2026-01-21-iu-football.html|Indiana University Football|Congratulations to Indiana University Football|2363
+3|2026-01-28-andersson-mcafee.html|Paige Andersson and Rachael Jones McAfee|Congratulations to Paige Andersson and Rachael Jones McAfee|2363
+3|2025-12-10-michel-chaouli.html|Michel Chaouli|Congratulations Michel Chaouli|2311
+3|2025-12-03-julia-kelson.html|Julia Kelson|Congratulations Julia Kelson|2311
+3|2025-11-19-jeremy-siek.html|Jeremy Siek|Congratulations to Jeremy Siek|2311
+3|2025-11-12-phillip-shushkov.html|Philip Shushkov|Congratulations Philip Shushkov|2311
+3|2025-11-05-monica-nesbitt.html|Monica Nesbitt|Congratulations Monica Nesbitt|2311
+3|2025-10-29-kevin-zumbrun.html|Kevin Zumbrun|Congratulations Kevin Zumbrun|2311
+3|2025-10-22-amar-flood.html|Amar Flood|Congratulations Amar Flood|2311
+3|2025-10-14-bernice-pescosolido.html|Bernice Pescosolido|Congratulates Bernice Pescosolido|2311
+3|2025-10-07-ore-koren.html|Ore Koren|Congratulations Ore Koren|2311
+3|2025-10-01-jacobs.html|Jacobs School of Music|Congratulations to the Jacobs School of Music|2363
+3|2025-09-23-paul-wright.html|Paul Wright|Congratulations Paul Wright|2311
+3|2025-09-17-bridger-ehli.html|Bridger Ehli|Congratulations Bridger Ehli|2311
+3|2025-09-10-david-crandall.html|David Crandall|Congratulations David Crandall|2311
+3|2025-09-03-roger-innes.html|Roger Innes|Congratulations Roger Innes|2311
+2|faculty-council-reports/|Faculty Council Reports|Chancellor’s Reports to the Council|1297
+3|2026-01-27-chancellor-report.html|January 27, 2026 Faculty Council report|January 27, 2026|2132
+3|2026-01-13-chancellor-report.html|January 13, 2026 Faculty Council report|January 13, 2026|3028
+3|2025-11-18-chancellor-report.html|November 18, 2025 Faculty Council report|November 18, 2025|2496
+3|2025-11-04-chancellor-report.html|November 4, 2025 Faculty Council report|November 4, 2025|2804
+3|2025-10-14-chancellor-report.html|October 14, 2025 Faculty Council report|October 14, 2025|2104
+3|2025-09-23-chancellor-report.html|September 23, 2025 Faculty Council report|September 23, 2025|2652
+1|news-communication/|News & Communication|News and communication|3601
+2|state-of-campus/|State of the Campus|=|1017
+3|2026-state-of-campus.html|2026 State of the Campus|=|13774
