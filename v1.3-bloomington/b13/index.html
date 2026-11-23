@@ -4410,6 +4410,13 @@
      phones to 48px on desktop, line 32 to 52, Bold 700, width 100. It was
      the same size but heavier (750) and narrower (width 87.5). */
   main .rvt-hero__title.hero-title { font-weight: 700; font-stretch: 100%; }
+  /* headline-wrap (2026-11-23, Jenn): page headlines wrap sooner so they
+     do not run the full width of the page and pull focus. The limit is 14
+     times the text size (672px for a 48px headline, about 30 characters;
+     406px on phones), and lines are balanced so no line is much longer
+     than the others. Applies to detail-page headlines and the italic main
+     section and home headlines. */
+  main .rvt-hero__title { max-width: 14em; text-wrap: balance; }
   /* Underlines (2026-11-23, Jenn): every underline (selected, current
      page, hover, focus; header, drop-downs, mega menus, side menu,
      breadcrumbs, footer) is the same 1px line at the same distance from
