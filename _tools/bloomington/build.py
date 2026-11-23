@@ -192,8 +192,8 @@ A7_CSS = '''<style id="sidenav-a7">
      menu text is width 100.
      Round 2 (Figma 14755:4462): the title is underlined when it is the
      page you are on (as before; underline now from-font); 16px from the
-     title to the first row; rows are one 20px line with 12px between them
-     (each link's click area still reaches 6px above and below, 32px in
+     title to the first row; rows are one 20px line with 16px between them (12px until 2026-11-23 4:45 pm)
+     (each link's click area still reaches 8px above and below, 36px in
      all); the chevron sits 0.75px low (Figma: 1.5px above it in a centered
      box) so it reads centered on the text. */
   /* The chevron drawing (Rivet rvt-chevron-right-12) as a mask, so it takes
@@ -222,9 +222,9 @@ A7_CSS = '''<style id="sidenav-a7">
     #sidenav a.sidenav-title .sidenav-title-label { font-size: 16px; line-height: 24px; font-variation-settings: 'wght' 600, 'wdth' 100; }
     #sidenav .sidenav-after-back > ul > li::after { display: none; }
     #sidenav a.sidenav-title .sidenav-title-label { text-underline-position: from-font; }
-    #sidenav .sidenav-after-back > ul { display: flex; flex-direction: column; gap: 12px; padding-top: 16px; }
+    #sidenav .sidenav-after-back > ul { display: flex; flex-direction: column; gap: 16px; padding-top: 16px; }
     #sidenav ul a.sidenav-item { position: relative; padding: 0; gap: 4px; }
-    #sidenav ul a.sidenav-item::before { content: ''; position: absolute; inset: -6px 0; }
+    #sidenav ul a.sidenav-item::before { content: ''; position: absolute; inset: -8px 0; }
     #sidenav ul a.sidenav-item .sidenav-item-label { font-variation-settings: 'wght' 350, 'wdth' 100; }
     /* Round 4 (Jenn): the chevron is back after the page name and hugs the
        text: it rides inline, 4px after the last word, and can never drop
