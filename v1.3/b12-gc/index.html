@@ -4657,11 +4657,14 @@
 </script>
 <style id="sidenav-grandchildren">
   /* Children + Grandchildren side menu. */
-  #sidenav .sidenav-after-back > ul.sg-list { padding: 20px 0 0; margin: 0; display: flex; flex-direction: column; gap: 28px; }
+  #sidenav .sidenav-after-back > ul.sg-list { padding: 0; margin: -1px 0 0; display: flex; flex-direction: column; gap: 0; }
   #sidenav .sidenav-after-back > ul.sg-list > li::after { display: none; }
-  #sidenav .sg-group { display: flex; flex-direction: column; gap: 12px; }
+  /* Figma _rvt-sidebar-menu-edit: each group is 12px top/bottom with a 1px
+     cream rule above it (none under the last), rules collapsed by 1px. */
+  #sidenav .sg-group { display: flex; flex-direction: column; gap: 12px; padding: 12px 0; box-shadow: inset 0 1px 0 #F0E1CC; }
+  #sidenav .sg-group + .sg-group { margin-top: -1px; }
   #sidenav ul a.sg-child {
-    display: inline-flex; align-items: flex-start; gap: 8px; align-self: flex-start;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; width: 100%;
     padding: 0; border: 0; text-decoration: none; color: #1F2528;
     font-size: 14px; line-height: 20px; font-variation-settings: 'wght' 600, 'wdth' 115;
   }
@@ -4687,13 +4690,12 @@
     #sidenav ul a.sg-child:hover .sg-child-label,
     #sidenav ul a.sg-gc:hover .sg-gc-label { text-decoration: underline; text-underline-position: from-font; }
   }
-  /* 2026-11-23: menu title matches Figma. 16/20 wght 700, no rule under
-     it, 28px down to the first group. */
+  /* 2026-11-23: menu title matches Figma. 16/20 wght 700, 16px under it,
+     then the first group's rule. */
   #sidenav a.sidenav-title {
-    border-bottom: 0; padding-bottom: 0;
+    border-bottom: 0; padding-bottom: 16px;
     font-size: 16px; line-height: 20px; font-variation-settings: 'wght' 700, 'wdth' 115;
   }
-  #sidenav .sidenav-after-back > ul.sg-list { padding-top: 28px; }
 </style>
 </body>
 </html>
