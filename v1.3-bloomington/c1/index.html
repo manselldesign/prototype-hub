@@ -2545,7 +2545,12 @@
     width: 16px;
     height: 16px;
     margin-left: 8px;
-    vertical-align: -1px;
+    /* 2026-11-23: the arrow's middle sits on the optical middle of the
+       words, halfway between the middle of the capitals (0.355em up) and
+       the middle of the lowercase (0.254em up), so 0.305em above the
+       baseline. The 16px box's bottom is its baseline, so lift it by
+       0.305em minus half its height. Scales with the text size. */
+    vertical-align: calc(0.305em - 8px);
   }
   .mega-close {
     font-size: 14px;
