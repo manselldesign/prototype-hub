@@ -4286,6 +4286,14 @@
      and the mobile header is the 68px lockup row plus its 1px rule. */
   .masthead-ctas { display: none !important; }
   @media (max-width: 1023px) { :root { --header-h: 69px; } }
+  /* Long mega menus: the open menu is never taller than the screen below
+     the header, and scrolls inside itself so every link can be reached. */
+  .mega-panel {
+    max-height: calc(100vh - var(--header-h));
+    max-height: calc(100dvh - var(--header-h));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
   /* Cream placeholder boxes that stand in for page content. */
   .ph-stack { display: flex; flex-direction: column; gap: 32px; margin-top: 32px; max-width: 54rem; }
   .rvt-hero--statement .ph-stack { max-width: none; margin-top: 0; }
