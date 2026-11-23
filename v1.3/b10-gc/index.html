@@ -4689,6 +4689,13 @@
     #sidenav ul a.sg-child:hover .sg-child-label,
     #sidenav ul a.sg-gc:hover .sg-gc-label { text-decoration: underline; text-underline-position: from-font; }
   }
+  /* 2026-11-23: menu title matches Figma. 16/20 wght 700, no rule under
+     it, 28px down to the first group. */
+  #sidenav a.sidenav-title {
+    border-bottom: 0; padding-bottom: 0;
+    font-size: 16px; line-height: 20px; font-variation-settings: 'wght' 700, 'wdth' 115;
+  }
+  #sidenav .sidenav-after-back > ul.sg-list { padding-top: 28px; }
 </style>
 </body>
 </html>
