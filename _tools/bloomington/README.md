@@ -7,7 +7,8 @@ Run from anywhere: `python3 _tools/bloomington/build.py`
 ## What it does
 
 - Copies each v1.3 prototype (a6, b10–b13, each with a `-gc` version) into `v1.3-bloomington/`.
-- Builds C1 and C2 from b13 / b13-gc (4-column mega menu; C2 puts single links in column 2).
+- Builds C1 from b13 / b13-gc (4-column mega menu; pages with nothing under them are stacked
+  in the last column used, under a "More in {section}" line).
 - Swaps the zoo IA for bloomington.iu.edu's menu tree (`data.txt`).
 - Replaces page content with the real headline + breadcrumbs and cream placeholder boxes,
   stacked to the real page's length.

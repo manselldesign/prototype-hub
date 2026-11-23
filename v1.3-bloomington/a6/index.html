@@ -250,6 +250,7 @@
     font-weight:825; font-stretch:normal;
     font-size:clamp(36px, 1.5882rem + 3.3088vw, 54px);
     line-height:clamp(40px, 1.9118rem + 2.9412vw, 56px);
+    line-height:round(clamp(40px, 1.9118rem + 2.9412vw, 56px), 4px); /* 4px grid */
     font-variation-settings:'slnt' -10;
     text-transform:uppercase; text-wrap:balance;
   }
@@ -269,6 +270,7 @@
     font-weight:750; font-stretch:87.5%;
     font-size:clamp(29px, 1.114rem + 3.4926vw, 48px);
     line-height:clamp(32px, 1.2647rem + 3.6765vw, 52px);
+    line-height:round(clamp(32px, 1.2647rem + 3.6765vw, 52px), 4px); /* 4px grid */
     text-wrap:balance;
   }
 
@@ -278,6 +280,7 @@
     font-weight:350; font-stretch:112.5%;
     font-size:clamp(16px, .9265rem + .3676vw, 18px);
     line-height:clamp(24px, 1.3529rem + .7353vw, 28px);
+    line-height:round(clamp(24px, 1.3529rem + .7353vw, 28px), 4px); /* 4px grid */
     text-wrap:pretty; max-width:54rem;
   }
 
@@ -288,6 +291,7 @@
     font-weight:350; font-stretch:112.5%;
     font-size:clamp(18px, 1.0515rem + .3676vw, 20px);
     line-height:clamp(24px, 1.3529rem + .7353vw, 28px);
+    line-height:round(clamp(24px, 1.3529rem + .7353vw, 28px), 4px); /* 4px grid */
     text-wrap:pretty; max-width:54rem;
   }
 
@@ -1460,7 +1464,7 @@
   /* Children: the title row is 14/20 wght 600 with 12px under it and the
      cream rule; it underlines only when it is the page you are on. */
   #sidenav a.sidenav-title {
-    padding-bottom: 12px;
+    padding-bottom: 11px; /* + the 1px rule = 12 (4px grid) */
   }
   #sidenav a.sidenav-title .sidenav-title-label {
     line-height: 20px;
@@ -1817,7 +1821,7 @@
     align-items: center;
     gap: 8px;
     margin-top: 16px;
-    padding: 16px 0;
+    padding: 15px 0 16px; /* 15 + the 1px rule = 16 (4px grid) */
     border-top: 1px solid #6D0808;
     text-align: center;
   }
@@ -2003,7 +2007,7 @@
 
   @media screen(lg) {
     :root {
-      --header-h: 121px;     /* 20 top + 44 lockup + 16 + 24 nav + 16 + 1px rule */
+      --header-h: 120px;     /* 20 top + 44 lockup + 16 + 24 nav + 16 (the 1px rule is the last pixel of that 16) */
       --chrome-gutter: var(--sidenav-pad-x); /* 24px; equal L/R, matches sidenav text */
     }
 
@@ -2036,8 +2040,9 @@
       align-items: center;
       gap: 24px;
       /* A6 (4px grid): the nav row is 24px tall (20px line + 2px above and
-         below) with 16px under it. Header stays 121px (120 + the 1px rule). */
-      padding: 0 var(--chrome-gutter) 16px;
+         below) with 16px under it: 15px + the header's 1px rule, so the
+         header is 120px in all (4px grid, 2026-11-23). */
+      padding: 0 var(--chrome-gutter) 15px;
     }
 
     /* Mega menu — Figma CLICK frames under canvas `1497:134367`
@@ -2053,7 +2058,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      top: calc(100% - 1px);
+      top: 100%; /* header is 120px with its rule inside (was 121 - 1) */
       z-index: 30;
       pointer-events: none;
       visibility: hidden;
@@ -2566,7 +2571,10 @@
      capitals (their text boxes already start on the same line). */
   .crumbs-spacer { display: none; }
   @media (min-width: 1024px) {
-    .crumbs-spacer { display: block; height: 0; margin-bottom: -2px; }
+    .crumbs-spacer { display: block; height: 0; }
+    /* 4px grid (2026-11-23): the 2px optical pull is now a visual shift of
+       the heading only, so nothing under it leaves the grid. */
+    .crumbs-spacer + * { position: relative; top: -2px; }
   }
 
 </style>
@@ -2821,37 +2829,37 @@
       <nav class="mt-16" aria-labelledby="popular-searches-heading">
         <h2 id="popular-searches-heading" class="t14 text-ink">Popular searches</h2>
         <ul class="pt-2">
-          <li class="-mb-px">
+          <li>
             <a data-nav href="#/admissions-apply"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
+               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">How to Apply</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
-          <li class="-mb-px">
+          <li>
             <a data-nav href="#/cost-aid-cost-attendance"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
+               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Cost of Attendance</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
-          <li class="-mb-px">
+          <li>
             <a data-nav href="#/academics-calendars"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
+               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Academic Calendars</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
-          <li class="-mb-px">
+          <li>
             <a data-nav href="#/admissions-visit"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
+               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Visit IU</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
-          <li class="-mb-px">
+          <li>
             <a data-nav href="#/campus-life-housing-dining"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
+               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Housing &amp; Dining</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
@@ -3385,12 +3393,12 @@
     const bar = (w) => `<span class="ph-bar" style="width:${w}%"></span>`;
     let inner = '';
     if (kind === 'text') {
-      const n = Math.max(0, Math.floor((h - 48 - 36) / 24));
+      const n = Math.max(0, Math.floor((h - 48 - 40) / 24));
       const widths = [100, 96, 100, 92, 98, 64];
       inner = `<span class="ph-bar ph-bar--head" style="width:38%"></span>` +
         Array.from({ length: n }, (_, i) => bar(i === n - 1 ? 58 : widths[i % widths.length])).join('');
     } else if (kind === 'list') {
-      const n = Math.max(1, Math.floor((h - 48 + 14) / 24));
+      const n = Math.max(1, Math.floor((h - 48 + 16) / 24));
       inner = Array.from({ length: n }, (_, i) => {
         const sub = i % 4 >= 2;
         return `<span class="ph-row${sub ? ' ph-row--sub' : ''}"><span class="ph-dot"></span>${bar(sub ? 56 : 70)}</span>`;
@@ -3410,7 +3418,7 @@
     let left = target - main.firstElementChild.offsetHeight;
     let seed = 0;
     for (const ch of slug) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
-    const kinds = [['text', 228], ['media', 360], ['list', 178], ['cards', 264], ['text', 180], ['list', 226]];
+    const kinds = [['text', 228], ['media', 360], ['list', 180], ['cards', 264], ['text', 180], ['list', 228]];
     const gap = 32;
     let out = '';
     let i = seed % kinds.length;
@@ -3421,7 +3429,7 @@
       // Right under the headline the first box is always plain lines.
       if (first) { k = 'text'; h = 228; }
       const need = h + (first ? 0 : gap);
-      if (left - need < 120) { h = Math.max(48, left - (first ? 0 : gap)); left = 0; if (h < 150 && !first) k = 'media'; }
+      if (left - need < 120) { h = Math.max(48, Math.round((left - (first ? 0 : gap)) / 4) * 4); left = 0; if (h < 150 && !first) k = 'media'; }
       else left -= need;
       out += placeholderBlock(k, h);
       first = false;
@@ -4251,15 +4259,15 @@
   /* Cream placeholder boxes that stand in for page content. */
   .ph-stack { display: flex; flex-direction: column; gap: 32px; margin-top: 32px; max-width: 54rem; }
   .rvt-hero--statement .ph-stack { max-width: none; margin-top: 0; }
-  .ph { box-sizing: border-box; overflow: hidden; background: #FAF6EF; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
-  .ph-bar { display: block; height: 10px; background: #EDDDC4; flex: none; }
-  .ph-bar--head { height: 16px; margin-bottom: 6px; }
-  .ph-row { display: flex; align-items: center; gap: 12px; height: 10px; flex: none; }
+  .ph { box-sizing: border-box; overflow: hidden; background: #FAF6EF; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+  .ph-bar { display: block; height: 8px; background: #EDDDC4; flex: none; }
+  .ph-bar--head { height: 16px; margin-bottom: 8px; }
+  .ph-row { display: flex; align-items: center; gap: 12px; height: 8px; flex: none; }
   .ph-row--sub { padding-left: 32px; }
   .ph-dot { width: 8px; height: 8px; border-radius: 50%; background: #EDDDC4; flex: none; }
   .ph-row--sub .ph-dot { background: transparent; box-shadow: inset 0 0 0 1.5px #EDDDC4; }
   .ph-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; height: 100%; }
-  .ph-card { display: flex; flex-direction: column; gap: 14px; padding: 20px; box-shadow: inset 0 0 0 1px #EDDDC4; background: #fff; }
+  .ph-card { display: flex; flex-direction: column; gap: 16px; padding: 20px; box-shadow: inset 0 0 0 1px #EDDDC4; background: #fff; }
   @media (max-width: 639px) { .ph-cards { grid-template-columns: 1fr; } .ph-card:nth-child(n+2) { display: none; } }
 </style>
 </body>

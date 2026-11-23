@@ -60,12 +60,12 @@ JS_FUNCS = r'''
     const bar = (w) => `<span class="ph-bar" style="width:${w}%"></span>`;
     let inner = '';
     if (kind === 'text') {
-      const n = Math.max(0, Math.floor((h - 48 - 36) / 24));
+      const n = Math.max(0, Math.floor((h - 48 - 40) / 24));
       const widths = [100, 96, 100, 92, 98, 64];
       inner = `<span class="ph-bar ph-bar--head" style="width:38%"></span>` +
         Array.from({ length: n }, (_, i) => bar(i === n - 1 ? 58 : widths[i % widths.length])).join('');
     } else if (kind === 'list') {
-      const n = Math.max(1, Math.floor((h - 48 + 14) / 24));
+      const n = Math.max(1, Math.floor((h - 48 + 16) / 24));
       inner = Array.from({ length: n }, (_, i) => {
         const sub = i % 4 >= 2;
         return `<span class="ph-row${sub ? ' ph-row--sub' : ''}"><span class="ph-dot"></span>${bar(sub ? 56 : 70)}</span>`;
@@ -85,7 +85,7 @@ JS_FUNCS = r'''
     let left = target - main.firstElementChild.offsetHeight;
     let seed = 0;
     for (const ch of slug) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
-    const kinds = [['text', 228], ['media', 360], ['list', 178], ['cards', 264], ['text', 180], ['list', 226]];
+    const kinds = [['text', 228], ['media', 360], ['list', 180], ['cards', 264], ['text', 180], ['list', 228]];
     const gap = 32;
     let out = '';
     let i = seed % kinds.length;
@@ -96,7 +96,7 @@ JS_FUNCS = r'''
       // Right under the headline the first box is always plain lines.
       if (first) { k = 'text'; h = 228; }
       const need = h + (first ? 0 : gap);
-      if (left - need < 120) { h = Math.max(48, left - (first ? 0 : gap)); left = 0; if (h < 150 && !first) k = 'media'; }
+      if (left - need < 120) { h = Math.max(48, Math.round((left - (first ? 0 : gap)) / 4) * 4); left = 0; if (h < 150 && !first) k = 'media'; }
       else left -= need;
       out += placeholderBlock(k, h);
       first = false;
@@ -125,55 +125,59 @@ CSS = '''<style id="bloomington-placeholders">
   /* Cream placeholder boxes that stand in for page content. */
   .ph-stack { display: flex; flex-direction: column; gap: 32px; margin-top: 32px; max-width: 54rem; }
   .rvt-hero--statement .ph-stack { max-width: none; margin-top: 0; }
-  .ph { box-sizing: border-box; overflow: hidden; background: #FAF6EF; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
-  .ph-bar { display: block; height: 10px; background: #EDDDC4; flex: none; }
-  .ph-bar--head { height: 16px; margin-bottom: 6px; }
-  .ph-row { display: flex; align-items: center; gap: 12px; height: 10px; flex: none; }
+  .ph { box-sizing: border-box; overflow: hidden; background: #FAF6EF; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+  .ph-bar { display: block; height: 8px; background: #EDDDC4; flex: none; }
+  .ph-bar--head { height: 16px; margin-bottom: 8px; }
+  .ph-row { display: flex; align-items: center; gap: 12px; height: 8px; flex: none; }
   .ph-row--sub { padding-left: 32px; }
   .ph-dot { width: 8px; height: 8px; border-radius: 50%; background: #EDDDC4; flex: none; }
   .ph-row--sub .ph-dot { background: transparent; box-shadow: inset 0 0 0 1.5px #EDDDC4; }
   .ph-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; height: 100%; }
-  .ph-card { display: flex; flex-direction: column; gap: 14px; padding: 20px; box-shadow: inset 0 0 0 1px #EDDDC4; background: #fff; }
+  .ph-card { display: flex; flex-direction: column; gap: 16px; padding: 20px; box-shadow: inset 0 0 0 1px #EDDDC4; background: #fff; }
   @media (max-width: 639px) { .ph-cards { grid-template-columns: 1fr; } .ph-card:nth-child(n+2) { display: none; } }
 </style>
 '''
 
-C_JS = r'''    /* C1 (2026-11-23): four columns. Column 1 is Overview and Close, as in
+C_JS = r'''    /* C1: four columns. Column 1 is Overview and Close, as in
        B13. Pages with pages under them are sorted by how many they have
        (most first, ties A to Z) and fill the next columns row by row.
        Pages with nothing under them are stacked A to Z in the column right
-       after the last one used in the first row, never further right. */
+       after the last one used in the first row, never further right.
+       2026-11-23: that stack sits under a "More in {section}" line (left
+       out when the stack is the only thing in the menu). */
     const count = (s) => (PAGES[s].c || []).filter((g) => PAGES[g]).length;
     const all = (PAGES[sectionSlug].c || []).filter((s) => PAGES[s]);
     const byName = (a, b) => PAGES[a].l.localeCompare(PAGES[b].l);
     const groups = all.filter((s) => count(s) > 0).sort((a, b) => count(b) - count(a) || byName(a, b));
     const leaves = all.filter((s) => count(s) === 0).sort(byName);
     const per = leaves.length ? Math.min(groups.length, 2) : 3;
-    const cells = groups.map((s, i) => col(s).replace('<div class="mega-col">',
-      `<div class="mega-col" style="grid-column:${(i % per) + 1};grid-row:${Math.floor(i / per) + 1}">`)).join('');
+    /* The groups sit in their own grid, so a long stack beside them cannot
+       stretch their rows off the 4px grid. */
+    const cells = groups.length
+      ? `<div class="mega-groups" style="grid-column:1 / span ${per};grid-template-columns:repeat(${per},minmax(0,1fr))">${groups.map(col).join('')}</div>`
+      : '';
+    const more = groups.length
+      ? `<p class="mega-more" id="mega-more-label">More in ${esc(sectionNavLabel(sectionSlug))}</p>`
+      : '';
     const side = leaves.length
-      ? `<div class="mega-leaves" style="grid-column:${per + 1};grid-row:1 / span ${Math.max(1, Math.ceil(groups.length / Math.max(per, 1)))}">${leaves.map(col).join('')}</div>`
+      ? `<div class="mega-leaves"${more ? ' role="group" aria-labelledby="mega-more-label"' : ''} style="grid-column:${per + 1}">${more}${leaves.map(col).join('')}</div>`
       : '';
     return `<div class="mega-layout mega-c-layout">${overview}<div class="mega-grid">${cells}${side}</div></div>`;
 '''
 
-C2_JS = (C_JS
-  .replace("""Pages with nothing under them are stacked A to Z in the column right
-       after the last one used in the first row, never further right. */""",
-           """C2: pages with nothing under them are stacked A to Z in the second
-       column, right after Overview, and the rest follow to the right. */""")
-  .replace("`<div class=\"mega-col\" style=\"grid-column:${(i % per) + 1};", "`<div class=\"mega-col\" style=\"grid-column:${(i % per) + 1 + (leaves.length ? 1 : 0)};")
-  .replace('style="grid-column:${per + 1};grid-row', 'style="grid-column:1;grid-row')
-  .replace("const per = leaves.length ? Math.min(groups.length, 2) : 3;", "const per = leaves.length ? 2 : 3;")
-  .replace("${cells}${side}", "${side}${cells}"))
-assert "${side}${cells}" in C2_JS
-assert C2_JS.count('grid-column:1;grid-row') == 1 and '+ (leaves.length ? 1 : 0)' in C2_JS and 'C2: pages' in C2_JS
-
 C_CSS = '''<style id="mega-c">
-  /* C1: Overview and Close in column 1 (B13), then three equal columns. */
+  /* C1: Overview and Close in column 1 (B13), then three equal columns.
+     Spacing (4px grid, 2026-11-23): 12px from a heading to its list (from
+     B13); in the stack of pages with nothing under them, 12px from the
+     "More in" line to the first link and 12px between links.
+     "More in" line: 14/20 regular, body #343C42, same as the page links, in
+     a 24px row (2px above and below) so it sits level with the headings
+     beside it and the first link starts level with their first page link. */
   .mega-c-layout .mega-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 48px; row-gap: 40px; justify-content: stretch; }
-  .mega-c-layout .mega-leaves { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; min-width: 0; }
-  @media (max-width: 1279px) { .mega-c-layout .mega-grid { column-gap: 24px; } }
+  .mega-c-layout .mega-groups { display: grid; column-gap: 48px; row-gap: 40px; align-content: start; min-width: 0; }
+  .mega-c-layout .mega-leaves { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; min-width: 0; }
+  .mega-c-layout .mega-more { margin: 0; padding: 2px 0; font-size: 14px; line-height: 20px; font-weight: 350; font-variation-settings: 'wght' 350, 'wdth' 115; color: #343C42; }
+  @media (max-width: 1279px) { .mega-c-layout .mega-grid, .mega-c-layout .mega-groups { column-gap: 24px; } }
 </style>
 '''
 
@@ -204,9 +208,9 @@ def sub1(s, pat, rep, name, flags=0, count=1):
     return s2
 
 def popular_li(slug):
-    return ('          <li class="-mb-px">\n'
+    return ('          <li>\n'
             f'            <a data-nav href="#/{slug}"\n'
-            '               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">\n'
+            '               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">\n'
             f'              <span class="min-w-0 flex-1">{html.escape(pages[slug]["l"])}</span>\n'
             '              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>\n'
             '            </a>\n          </li>\n')
@@ -259,4 +263,3 @@ def build(name, src=None, c=False, c_js=None):
 for n in ['a6', 'a6-gc', 'b10', 'b10-gc', 'b11', 'b11-gc', 'b12', 'b12-gc', 'b13', 'b13-gc']:
     print(n, build(n))
 print('c1', build('c1', 'b13', True)); print('c1-gc', build('c1-gc', 'b13-gc', True))
-print('c2', build('c2', 'b13', True, C2_JS)); print('c2-gc', build('c2-gc', 'b13-gc', True, C2_JS))

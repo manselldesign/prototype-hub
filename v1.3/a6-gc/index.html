@@ -250,6 +250,7 @@
     font-weight:825; font-stretch:normal;
     font-size:clamp(36px, 1.5882rem + 3.3088vw, 54px);
     line-height:clamp(40px, 1.9118rem + 2.9412vw, 56px);
+    line-height:round(clamp(40px, 1.9118rem + 2.9412vw, 56px), 4px); /* 4px grid */
     font-variation-settings:'slnt' -10;
     text-transform:uppercase; text-wrap:balance;
   }
@@ -269,6 +270,7 @@
     font-weight:750; font-stretch:87.5%;
     font-size:clamp(29px, 1.114rem + 3.4926vw, 48px);
     line-height:clamp(32px, 1.2647rem + 3.6765vw, 52px);
+    line-height:round(clamp(32px, 1.2647rem + 3.6765vw, 52px), 4px); /* 4px grid */
     text-wrap:balance;
   }
 
@@ -278,6 +280,7 @@
     font-weight:350; font-stretch:112.5%;
     font-size:clamp(16px, .9265rem + .3676vw, 18px);
     line-height:clamp(24px, 1.3529rem + .7353vw, 28px);
+    line-height:round(clamp(24px, 1.3529rem + .7353vw, 28px), 4px); /* 4px grid */
     text-wrap:pretty; max-width:54rem;
   }
 
@@ -288,6 +291,7 @@
     font-weight:350; font-stretch:112.5%;
     font-size:clamp(18px, 1.0515rem + .3676vw, 20px);
     line-height:clamp(24px, 1.3529rem + .7353vw, 28px);
+    line-height:round(clamp(24px, 1.3529rem + .7353vw, 28px), 4px); /* 4px grid */
     text-wrap:pretty; max-width:54rem;
   }
 
@@ -1460,7 +1464,7 @@
   /* Children: the title row is 14/20 wght 600 with 12px under it and the
      cream rule; it underlines only when it is the page you are on. */
   #sidenav a.sidenav-title {
-    padding-bottom: 12px;
+    padding-bottom: 11px; /* + the 1px rule = 12 (4px grid) */
   }
   #sidenav a.sidenav-title .sidenav-title-label {
     line-height: 20px;
@@ -1817,7 +1821,7 @@
     align-items: center;
     gap: 8px;
     margin-top: 16px;
-    padding: 16px 0;
+    padding: 15px 0 16px; /* 15 + the 1px rule = 16 (4px grid) */
     border-top: 1px solid #6D0808;
     text-align: center;
   }
@@ -2003,7 +2007,7 @@
 
   @media screen(lg) {
     :root {
-      --header-h: 121px;     /* 20 top + 44 lockup + 16 + 24 nav + 16 + 1px rule */
+      --header-h: 120px;     /* 20 top + 44 lockup + 16 + 24 nav + 16 (the 1px rule is the last pixel of that 16) */
       --chrome-gutter: var(--sidenav-pad-x); /* 24px; equal L/R, matches sidenav text */
     }
 
@@ -2036,8 +2040,9 @@
       align-items: center;
       gap: 24px;
       /* A6 (4px grid): the nav row is 24px tall (20px line + 2px above and
-         below) with 16px under it. Header stays 121px (120 + the 1px rule). */
-      padding: 0 var(--chrome-gutter) 16px;
+         below) with 16px under it: 15px + the header's 1px rule, so the
+         header is 120px in all (4px grid, 2026-11-23). */
+      padding: 0 var(--chrome-gutter) 15px;
     }
 
     /* Mega menu — Figma CLICK frames under canvas `1497:134367`
@@ -2053,7 +2058,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      top: calc(100% - 1px);
+      top: 100%; /* header is 120px with its rule inside (was 121 - 1) */
       z-index: 30;
       pointer-events: none;
       visibility: hidden;
@@ -2566,7 +2571,10 @@
      capitals (their text boxes already start on the same line). */
   .crumbs-spacer { display: none; }
   @media (min-width: 1024px) {
-    .crumbs-spacer { display: block; height: 0; margin-bottom: -2px; }
+    .crumbs-spacer { display: block; height: 0; }
+    /* 4px grid (2026-11-23): the 2px optical pull is now a visual shift of
+       the heading only, so nothing under it leaves the grid. */
+    .crumbs-spacer + * { position: relative; top: -2px; }
   }
 
 </style>
@@ -2823,37 +2831,37 @@
       <nav class="mt-16" aria-labelledby="popular-searches-heading">
         <h2 id="popular-searches-heading" class="t14 text-ink">Popular searches</h2>
         <ul class="pt-2">
-          <li class="-mb-px">
+          <li>
             <a data-nav href="#/member-benefits"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
+               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Member Discounts &amp; Perks</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
-          <li class="-mb-px">
+          <li>
             <a data-nav href="#/field-trips"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
+               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">School Field Trips &amp; Teacher Guides</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
-          <li class="-mb-px">
+          <li>
             <a data-nav href="#/spring-baby-animal-days"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
+               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">New Zoo Babies</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
-          <li class="-mb-px">
+          <li>
             <a data-nav href="#/maps-guides"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
+               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Zoo Map &amp; Daily Hours</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
           </li>
-          <li class="-mb-px">
+          <li>
             <a data-nav href="#/private-events-rentals"
-               class="flex items-center gap-2 border-y border-cream py-3 t15 text-ink lg:hover:underline">
+               class="flex items-center gap-2 border-t border-cream pt-[11px] pb-3 shadow-[0_1px_0_#EDDDC4] t15 text-ink lg:hover:underline">
               <span class="min-w-0 flex-1">Private Venue Rentals &amp; Birthday Parties</span>
               <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>
             </a>
@@ -4657,14 +4665,14 @@
 </script>
 <style id="sidenav-grandchildren">
   /* Children + Grandchildren side menu. */
-  #sidenav .sidenav-after-back > ul.sg-list { padding: 0; margin: -1px 0 0; display: flex; flex-direction: column; gap: 0; }
+  #sidenav .sidenav-after-back > ul.sg-list { padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; }
   #sidenav .sidenav-after-back > ul.sg-list > li::after { display: none; }
   /* Figma _rvt-sidebar-menu-edit: each group is 12px top/bottom with a 1px
-     cream rule above it (none under the last), rules collapsed by 1px. */
+     cream rule above it (none under the last). The rule is drawn inside the
+     group's top padding, so every group stays on the 4px grid. */
   #sidenav .sg-group { display: flex; flex-direction: column; gap: 12px; padding: 16px 0; box-shadow: inset 0 1px 0 #EDDDC4; }
   /* A row with no pages under it stays 44px tall, as drawn in Figma. */
   #sidenav .sg-group:not(:has(.sg-grand)) { padding: 12px 0; }
-  #sidenav .sg-group + .sg-group { margin-top: -1px; }
   #sidenav ul a.sg-child {
     display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; width: 100%;
     padding: 0; border: 0; text-decoration: none; color: #1F2528;
