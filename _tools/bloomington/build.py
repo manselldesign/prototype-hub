@@ -187,15 +187,30 @@ A7_CSS = '''<style id="sidenav-a7">
      Rail 260px (A6 is 280), 8px above Back, 24px sides and bottom.
      Back: 12px arrow, 8px gap, action/sm/strong 14/20.
      Title: 32px under Back, action/lg/strong 16/24, no rule under it.
-     Rows: body/xs/regular 14/20, no rules between them, chevron 4px in
-     front of the label (round 3; it was after the label). All side menu
-     text is width 100.
+     Rows: body/xs/regular 14/20, no rules between them, chevron 4px after
+     the label (round 3 tried it in front; round 4 put it back). All side
+     menu text is width 100.
      Round 2 (Figma 14755:4462): the title is underlined when it is the
      page you are on (as before; underline now from-font); 16px from the
      title to the first row; rows are one 20px line with 12px between them
      (each link's click area still reaches 6px above and below, 32px in
      all); the chevron sits 0.75px low (Figma: 1.5px above it in a centered
      box) so it reads centered on the text. */
+  /* The chevron drawing (Rivet rvt-chevron-right-12) as a mask, so it takes
+     the link's color in every state. */
+  #sidenav ul a.sidenav-item .sidenav-chevron-glyph {
+    display: inline-block; width: 12px; height: 12px; margin-left: 4px;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M9.09668 6L4.42578 11.5205L2.89844 10.2295L6.47656 6L2.89844 1.77051L4.42578 0.479492L9.09668 6Z'/%3E%3C/svg%3E") no-repeat center / 12px 12px;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M9.09668 6L4.42578 11.5205L2.89844 10.2295L6.47656 6L2.89844 1.77051L4.42578 0.479492L9.09668 6Z'/%3E%3C/svg%3E") no-repeat center / 12px 12px;
+    /* Visual middle of the words: halfway between the middle of the
+       capitals and the middle of the lowercase letters. vertical-align puts
+       the box's middle on the middle of the capitals (browsers snap it to
+       whole pixels); the 0.75px shift lowers it to the visual middle (the
+       same 0.75px as Figma 14755:4462). */
+    vertical-align: -1px;
+    transform: translateY(0.75px);
+  }
   @media (min-width: 1024px) {
     :root { --sidenav-width: 260px; }
     #sidenav#sidenav { padding-top: 8px; padding-bottom: 24px; }
@@ -211,21 +226,31 @@ A7_CSS = '''<style id="sidenav-a7">
     #sidenav ul a.sidenav-item { position: relative; padding: 0; gap: 4px; }
     #sidenav ul a.sidenav-item::before { content: ''; position: absolute; inset: -6px 0; }
     #sidenav ul a.sidenav-item .sidenav-item-label { font-variation-settings: 'wght' 350, 'wdth' 100; }
-    /* Round 3 (Jenn, Figma 14755:4462): the chevron sits in front of the
-       page name, 4px before it. Rows with no pages under them keep the same
-       16px indent (Figma: a hidden chevron), so every name starts on the
-       same line; the menu title stays flush left. */
-    #sidenav ul a.sidenav-item > span[aria-hidden="true"] { order: -1; }
-    #sidenav ul a.sidenav-item:not(.has-subpages) { padding-left: 16px; }
+    /* Round 4 (Jenn): the chevron is back after the page name and hugs the
+       text: it rides inline, 4px after the last word, and can never drop
+       to a line of its own (the build swaps A6's end-of-row chevron for an
+       inline one, see A7_ITEM_NEW). On a name that wraps it follows the
+       last word. Its middle sits halfway between the middle of the
+       capitals and the middle of the lowercase (see .sidenav-chevron-glyph). */
+    #sidenav ul a.sidenav-item { display: block; }
+    #sidenav ul a.sidenav-item .sidenav-item-label { display: inline; }
     #sidenav ul a.sidenav-item .sidenav-item-label.is-current { font-variation-settings: 'wght' 600, 'wdth' 100; }
-    /* Chevron: stays on the first line when a name wraps (the row is top
-       aligned and the chevron's box is one 20px line tall). Optical: the
-       line box centers it on the capitals; 0.75px lower (Figma) puts it on
-       the visual middle of mixed-case text (a shift only, the layout does
-       not move). */
-    #sidenav ul a.sidenav-item .sidenav-chevron { transform: translateY(0.75px); }
   }
 </style>
+'''
+# A7 swaps A6's end-of-row chevron for one that rides inline after the name.
+# The word joiner (&#8288;) inside it has no width and cannot start a line,
+# so the chevron always stays with the last word.
+A7_ITEM_OLD = '''          (kids
+            ? `<span class="sr-only">, has subpages</span>` +
+              `<span class="flex h-5 w-3 shrink-0 items-center" aria-hidden="true">` +
+              `<span class="sidenav-chevron block size-3">${SIDENAV_CHEVRON}</span></span>`
+            : '') +
+'''
+A7_ITEM_NEW = '''          (kids
+            ? `<span class="sidenav-chevron-inline" aria-hidden="true">&#8288;<span class="sidenav-chevron-glyph"></span></span>` +
+              `<span class="sr-only">, has subpages</span>`
+            : '') +
 '''
 
 CTAS = """
@@ -303,6 +328,9 @@ def build(name, src=None, c=False, c_js=None, extra_css=''):
         s = s.replace(old, c_js or C_JS)
         s = s.replace('<style id="bloomington-placeholders">', C_CSS + '<style id="bloomington-placeholders">')
         assert 'mega-c-layout' in s
+    if name == 'a7':
+        assert s.count(A7_ITEM_OLD) == 1, 'A7: side menu row'
+        s = s.replace(A7_ITEM_OLD, A7_ITEM_NEW)
     if extra_css:
         assert s.count('</body>') == 1
         s = s.replace('</body>', extra_css + '</body>')
