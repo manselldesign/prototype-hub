@@ -4017,6 +4017,7 @@
       if (typeof alignSidenavBack === 'function') alignSidenavBack();
       if (typeof fitCrumbs === 'function') fitCrumbs();
       { const sl = currentSlug(); if (sl !== null) fillPlaceholders(sl); }
+      document.querySelectorAll('.masthead-nav-item').forEach((it) => placeDropdown(it));
     });
   }
   new MutationObserver(remeasureLayout).observe(document.head, { childList: true, subtree: true, characterData: true });
@@ -4026,6 +4027,7 @@
     remeasureRO.observe(document.getElementById('sidenav'));
   }
   window.addEventListener('load', remeasureLayout);
+  window.addEventListener('resize', remeasureLayout);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasureLayout);
 
   function render() {
@@ -4062,6 +4064,7 @@
     alignSidenavBack();
     renderHeaderNav(slug);
     closeMega();
+    document.querySelectorAll('.masthead-nav-item').forEach((it) => placeDropdown(it));
 
     if (drawerOpen) renderDrawer();
   }
