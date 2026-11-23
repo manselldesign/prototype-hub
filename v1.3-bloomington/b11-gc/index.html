@@ -2572,7 +2572,16 @@
           </a>
 
           <div class="masthead-tools">
-            <div class="masthead-ctas"></div>
+            <div class="masthead-ctas">
+              <a data-nav href="#/admissions-visit" class="masthead-cta">
+                <span class="t16">Visit</span>
+                <span data-icon="arrow-right" class="block size-3 shrink-0"></span>
+              </a>
+              <a data-nav href="#/admissions-apply" class="masthead-cta">
+                <span class="t16">Apply</span>
+                <span data-icon="arrow-right" class="block size-3 shrink-0"></span>
+              </a>
+            </div>
             <button id="search-toggle" type="button" aria-expanded="false" aria-controls="search-drawer"
                     class="masthead-tool masthead-search-btn">
               <span class="sr-only">Search</span>
@@ -2725,7 +2734,18 @@
 
         <!-- Header CTAs used to live here (spec 7). They now sit in the
              masthead at every breakpoint; this pair is display:none. -->
-        <div class="drawer-ctas flex flex-col gap-3 pt-12 sm:flex-row"></div>
+        <div class="drawer-ctas flex flex-col gap-3 pt-12 sm:flex-row">
+          <a data-nav href="#/admissions-visit"
+             class="nav-btn nav-btn-cta w-full border border-crimson text-crimson sm:flex-1">
+            <span class="t14 flex-1">Visit</span>
+            <span data-icon="arrow-right" class="block size-4 shrink-0"></span>
+          </a>
+          <a data-nav href="#/admissions-apply"
+             class="nav-btn nav-btn-cta w-full border border-crimson text-crimson sm:flex-1">
+            <span class="t14 flex-1">Apply</span>
+            <span data-icon="arrow-right" class="block size-4 shrink-0"></span>
+          </a>
+        </div>
       </div>
     </div>
   </rvt-prototype-header-menu>
@@ -4282,10 +4302,6 @@
   }
 </style>
 <style id="bloomington-placeholders">
-  /* Bloomington's header has no action buttons, so the button row is gone
-     and the mobile header is the 68px lockup row plus its 1px rule. */
-  .masthead-ctas { display: none !important; }
-  @media (max-width: 1023px) { :root { --header-h: 69px; } }
   /* Long mega menus: the open menu is never taller than the screen below
      the header, and scrolls inside itself so every link can be reached. */
   .mega-panel {
