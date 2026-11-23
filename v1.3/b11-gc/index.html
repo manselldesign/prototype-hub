@@ -4712,5 +4712,13 @@
     font-size: 16px; line-height: 20px; font-variation-settings: 'wght' 700, 'wdth' 115;
   }
 </style>
+<style id="sidenav-title-hover">
+  /* 2026-11-23: the menu title turns crimson on hover and keyboard focus,
+     like every other side menu link. */
+  #sidenav a.sidenav-title:focus-visible { color: #990000; }
+  @media (min-width: 1024px) {
+    #sidenav a.sidenav-title:hover { color: #990000; }
+  }
+</style>
 </body>
 </html>
