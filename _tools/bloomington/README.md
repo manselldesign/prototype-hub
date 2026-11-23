@@ -7,6 +7,7 @@ Run from anywhere: `python3 _tools/bloomington/build.py`
 ## What it does
 
 - Copies each v1.3 prototype (a6, b10–b13, each with a `-gc` version) into `v1.3-bloomington/`.
+- Builds A7 from a6 (alt side menu, Children only; CSS in build.py, Figma 14754:4280).
 - Builds C1 from b13 / b13-gc (4-column mega menu; pages with nothing under them are stacked
   in the last column used, under a "More in {section}" line).
 - Swaps the zoo IA for bloomington.iu.edu's menu tree (`data.txt`).

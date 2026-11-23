@@ -181,6 +181,53 @@ C_CSS = '''<style id="mega-c">
 </style>
 '''
 
+A7_CSS = '''<style id="sidenav-a7">
+  /* A7 (2026-11-23): alt side menu, Children only. Figma _rvt-sidebar-menu
+     14754:4280. Desktop only; the phone menu is A6's.
+     Rail 260px (A6 is 280), 8px above Back, 24px sides and bottom.
+     Back: 12px arrow, 8px gap, action/sm/strong 14/20.
+     Title: 32px under Back, action/lg/strong 16/24, no rule under it.
+     Rows: body/xs/regular 14/20, no rules between them, chevron 4px in
+     front of the label (round 3; it was after the label). All side menu
+     text is width 100.
+     Round 2 (Figma 14755:4462): the title is underlined when it is the
+     page you are on (as before; underline now from-font); 16px from the
+     title to the first row; rows are one 20px line with 12px between them
+     (each link's click area still reaches 6px above and below, 32px in
+     all); the chevron sits 0.75px low (Figma: 1.5px above it in a centered
+     box) so it reads centered on the text. */
+  @media (min-width: 1024px) {
+    :root { --sidenav-width: 260px; }
+    #sidenav#sidenav { padding-top: 8px; padding-bottom: 24px; }
+    #sidenav .nav-btn-back { gap: 8px; }
+    #sidenav .t-sidenav-back { font-variation-settings: 'wght' 600, 'wdth' 100; }
+    #sidenav .sidenav-after-back { padding-top: 32px; }
+    #sidenav a.sidenav-title { border-bottom: 0; padding-bottom: 0; }
+    #sidenav a.sidenav-title,
+    #sidenav a.sidenav-title .sidenav-title-label { font-size: 16px; line-height: 24px; font-variation-settings: 'wght' 600, 'wdth' 100; }
+    #sidenav .sidenav-after-back > ul > li::after { display: none; }
+    #sidenav a.sidenav-title .sidenav-title-label { text-underline-position: from-font; }
+    #sidenav .sidenav-after-back > ul { display: flex; flex-direction: column; gap: 12px; padding-top: 16px; }
+    #sidenav ul a.sidenav-item { position: relative; padding: 0; gap: 4px; }
+    #sidenav ul a.sidenav-item::before { content: ''; position: absolute; inset: -6px 0; }
+    #sidenav ul a.sidenav-item .sidenav-item-label { font-variation-settings: 'wght' 350, 'wdth' 100; }
+    /* Round 3 (Jenn, Figma 14755:4462): the chevron sits in front of the
+       page name, 4px before it. Rows with no pages under them keep the same
+       16px indent (Figma: a hidden chevron), so every name starts on the
+       same line; the menu title stays flush left. */
+    #sidenav ul a.sidenav-item > span[aria-hidden="true"] { order: -1; }
+    #sidenav ul a.sidenav-item:not(.has-subpages) { padding-left: 16px; }
+    #sidenav ul a.sidenav-item .sidenav-item-label.is-current { font-variation-settings: 'wght' 600, 'wdth' 100; }
+    /* Chevron: stays on the first line when a name wraps (the row is top
+       aligned and the chevron's box is one 20px line tall). Optical: the
+       line box centers it on the capitals; 0.75px lower (Figma) puts it on
+       the visual middle of mixed-case text (a shift only, the layout does
+       not move). */
+    #sidenav ul a.sidenav-item .sidenav-chevron { transform: translateY(0.75px); }
+  }
+</style>
+'''
+
 CTAS = """
               <a data-nav href="#/admissions-visit" class="masthead-cta">
                 <span class="t16">Visit</span>
@@ -215,7 +262,7 @@ def popular_li(slug):
             '              <span data-icon="arrow-right" class="block size-4 shrink-0" aria-hidden="true"></span>\n'
             '            </a>\n          </li>\n')
 
-def build(name, src=None, c=False, c_js=None):
+def build(name, src=None, c=False, c_js=None, extra_css=''):
     s = (SRC/(src or name)/'index.html').read_text()
     # data
     s = sub1(s, r'const SITE = \{.*\};?\n', '    const SITE = ' + json.dumps(SITE, ensure_ascii=False, separators=(',', ':')).replace('\\', '\\\\') + ';\n', 'SITE')
@@ -256,10 +303,14 @@ def build(name, src=None, c=False, c_js=None):
         s = s.replace(old, c_js or C_JS)
         s = s.replace('<style id="bloomington-placeholders">', C_CSS + '<style id="bloomington-placeholders">')
         assert 'mega-c-layout' in s
+    if extra_css:
+        assert s.count('</body>') == 1
+        s = s.replace('</body>', extra_css + '</body>')
     (DST/name).mkdir(parents=True, exist_ok=True)
     (DST/name/'index.html').write_text(s)
     return len(s)
 
 for n in ['a6', 'a6-gc', 'b10', 'b10-gc', 'b11', 'b11-gc', 'b12', 'b12-gc', 'b13', 'b13-gc']:
     print(n, build(n))
+print('a7', build('a7', 'a6', extra_css=A7_CSS))
 print('c1', build('c1', 'b13', True)); print('c1-gc', build('c1-gc', 'b13-gc', True))
