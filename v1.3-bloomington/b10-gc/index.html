@@ -4297,6 +4297,11 @@
   }
 </style>
 <style id="bloomington-placeholders">
+  /* underline-thickness (2026-11-23, Jenn): every underline (selected,
+     current page, hover, focus) is the same 1.5px line. Before, each one
+     took its thickness from the font size, so the 14px header label drew a
+     thinner line than the 16px side menu title. */
+  html body * { text-decoration-thickness: 1.5px !important; }
   /* Long mega menus: the open menu is never taller than the screen below
      the header, and scrolls inside itself so every link can be reached. */
   .mega-panel {
