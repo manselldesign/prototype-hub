@@ -3398,8 +3398,10 @@
     while (left > 0) {
       let [k, h] = kinds[i % kinds.length];
       i += 1;
+      // Right under the headline the first box is always plain lines.
+      if (first) { k = 'text'; h = 228; }
       const need = h + (first ? 0 : gap);
-      if (left - need < 120) { h = Math.max(48, left - (first ? 0 : gap)); left = 0; if (h < 150) k = 'media'; }
+      if (left - need < 120) { h = Math.max(48, left - (first ? 0 : gap)); left = 0; if (h < 150 && !first) k = 'media'; }
       else left -= need;
       out += placeholderBlock(k, h);
       first = false;
@@ -4218,7 +4220,7 @@
   #sidenav .sidenav-after-back > ul.sg-list > li::after { display: none; }
   /* Figma _rvt-sidebar-menu-edit: each group is 12px top/bottom with a 1px
      cream rule above it (none under the last), rules collapsed by 1px. */
-  #sidenav .sg-group { display: flex; flex-direction: column; gap: 8px; padding: 16px 0; box-shadow: inset 0 1px 0 #EDDDC4; }
+  #sidenav .sg-group { display: flex; flex-direction: column; gap: 12px; padding: 16px 0; box-shadow: inset 0 1px 0 #EDDDC4; }
   /* A row with no pages under it stays 44px tall, as drawn in Figma. */
   #sidenav .sg-group:not(:has(.sg-grand)) { padding: 12px 0; }
   #sidenav .sg-group + .sg-group { margin-top: -1px; }

@@ -3558,8 +3558,10 @@
     while (left > 0) {
       let [k, h] = kinds[i % kinds.length];
       i += 1;
+      // Right under the headline the first box is always plain lines.
+      if (first) { k = 'text'; h = 228; }
       const need = h + (first ? 0 : gap);
-      if (left - need < 120) { h = Math.max(48, left - (first ? 0 : gap)); left = 0; if (h < 150) k = 'media'; }
+      if (left - need < 120) { h = Math.max(48, left - (first ? 0 : gap)); left = 0; if (h < 150 && !first) k = 'media'; }
       else left -= need;
       out += placeholderBlock(k, h);
       first = false;
