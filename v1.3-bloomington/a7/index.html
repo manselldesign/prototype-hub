@@ -4321,8 +4321,8 @@
      the label (round 3 tried it in front; round 4 put it back). All side
      menu text is width 100.
      Round 2 (Figma 14755:4462): the title is underlined when it is the
-     page you are on (as before; underline now from-font); 16px from the
-     title to the first row; rows are one 20px line with 16px between them (12px until 2026-11-23 4:45 pm)
+     page you are on (as before; underline now from-font); 20px from the
+     title to the first row (16px until 2026-11-24); rows are one 20px line with 16px between them (12px until 2026-11-23 4:45 pm)
      (each link's click area still reaches 8px above and below, 36px in
      all); the chevron sits 0.75px low (Figma: 1.5px above it in a centered
      box) so it reads centered on the text. */
@@ -4354,14 +4354,20 @@
        visual shift to sit on the title's exact center (nothing else moves). */
     body.has-sidenav .interior-content { padding-top: 72px; }
     body.has-sidenav .crumbs-trail { position: relative; top: 2px; }
+    /* 2026-11-24 (Jenn): tried a thin rule under the title (4px, then 8px
+       below it); went back to no rule and added 4px between the title and
+       the list instead (16 -> 20). */
     #sidenav a.sidenav-title { border-bottom: 0; padding-bottom: 0; }
     #sidenav a.sidenav-title,
     #sidenav a.sidenav-title .sidenav-title-label { font-size: 16px; line-height: 24px; font-variation-settings: 'wght' 600, 'wdth' 100; }
     #sidenav .sidenav-after-back > ul > li::after { display: none; }
     #sidenav a.sidenav-title .sidenav-title-label { text-underline-position: from-font; }
-    #sidenav .sidenav-after-back > ul { display: flex; flex-direction: column; gap: 16px; padding-top: 16px; }
+    /* 2026-11-24 (Jenn): rows 12px apart (was 16). Each link's click area
+       reaches 6px above and below (was 8), so neighbors meet and never overlap
+       (32px in all). */
+    #sidenav .sidenav-after-back > ul { display: flex; flex-direction: column; gap: 12px; padding-top: 20px; }
     #sidenav ul a.sidenav-item { position: relative; padding: 0; gap: 4px; }
-    #sidenav ul a.sidenav-item::before { content: ''; position: absolute; inset: -8px 0; }
+    #sidenav ul a.sidenav-item::before { content: ''; position: absolute; inset: -6px 0; }
     #sidenav ul a.sidenav-item .sidenav-item-label { font-variation-settings: 'wght' 350, 'wdth' 100; }
     /* Round 4 (Jenn): the chevron is back after the page name and hugs the
        text: it rides inline, 4px after the last word, and can never drop
@@ -4371,7 +4377,12 @@
        capitals and the middle of the lowercase (see .sidenav-chevron-glyph). */
     #sidenav ul a.sidenav-item { display: block; }
     #sidenav ul a.sidenav-item .sidenav-item-label { display: inline; }
-    #sidenav ul a.sidenav-item .sidenav-item-label.is-current { font-variation-settings: 'wght' 600, 'wdth' 100; }
+    /* 2026-11-24 (Jenn): the page you are on is bold but must take up the same
+       room as the regular text, so nothing shifts when it is selected. Bold
+       (600) runs about 4.7% wider than regular (350) at 14px; width 69 cancels
+       that (measured over the menu labels: 0.0px average difference, at most
+       about 1px on any one label). */
+    #sidenav ul a.sidenav-item .sidenav-item-label.is-current { font-variation-settings: 'wght' 600, 'wdth' 69; }
   }
   /* MENU-CHANGE CUE (2026-11-24). Testers did not notice the side menu had
      swapped to a new list. When the side menu shows a different list, the
