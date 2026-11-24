@@ -180,17 +180,9 @@
       mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7h10.844L7.737 2.146 9.263.854 15.31 8l-6.047 7.146-1.526-1.292L11.844 9H1V7Z"/></svg>') center / 16px 16px no-repeat;
     }
     .prototype-list p { margin: 0; padding-top: 16px; }
-    .prototype-list a {
-      margin-top: auto;
-      padding-top: 24px;
-      font-family: var(--font-mono);
-      font-stretch: normal;
-      font-size: 12px;
-      line-height: 16px;
-      letter-spacing: 1px;
-      color: var(--text);
-      text-decoration: none;
-    }
+    /* 2026-11-24: the printed URL was removed from each card. The title is
+       the link, and its ::after still makes the whole card the click area. */
+    .prototype-list a { color: inherit; text-decoration: inherit; }
     .prototype-list a::after { content: ""; position: absolute; inset: 0; }
     .prototype-list a:focus-visible { outline: none; }
     .prototype-list li:has(a:focus-visible) { outline: 2px solid var(--text-accent-strong); outline-offset: 1px; }
@@ -296,28 +288,30 @@
           <h3 class="pair-title" id="pair-a6">A6</h3>
           <ul class="prototype-list">
             <li>
-              <h2>A6 · Children · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a6/#/" target="_blank" rel="noopener">A6 · Children · Bloomington IA</a></h2>
               <p>The side menu lists the pages under the current page.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a6/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a6/#/</a>
             </li>
             <li>
-              <h2>A6 · Children + Grandchildren · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a6-gc/#/" target="_blank" rel="noopener">A6 · Children + Grandchildren · Bloomington IA</a></h2>
               <p>Same as A6. The side menu also lists the pages under each child, as plain links with no icons.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a6-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a6-gc/#/</a>
             </li>
           </ul>
         </div>
       </section>
       <section class="group" id="group-header-alt">
         <h2 class="group-title">A - Visible Header (Alt sidenav design)</h2>
-        <p>The A6 header and drop-downs with a different side menu: no lines between rows, a larger menu title, and the chevron right after each page name.</p>
+        <p>The A6 header and drop-downs with a different side menu.</p>
+        <ul class="notes">
+          <li><strong>No lines between rows.</strong> With a larger menu title, the hierarchy is clearer.</li>
+          <li><strong>Chevron next to each page name.</strong> It stays in view with the name when the screen is magnified.</li>
+          <li><strong>Subtle fade.</strong> The side menu fades in when it changes, so the change is easier to notice. The drop-downs open with the same easing.</li>
+        </ul>
         <div class="pair" role="group" aria-labelledby="pair-a7">
           <h3 class="pair-title" id="pair-a7">A7</h3>
           <ul class="prototype-list">
             <li>
-              <h2>A7 · Children · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a7/#/" target="_blank" rel="noopener">A7 · Children · Bloomington IA</a></h2>
               <p>The side menu lists the pages under the current page.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a7/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/a7/#/</a>
             </li>
           </ul>
         </div>
@@ -329,14 +323,12 @@
           <h3 class="pair-title" id="pair-b10">B10</h3>
           <ul class="prototype-list">
             <li>
-              <h2>B10 · Children · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b10/#/" target="_blank" rel="noopener">B10 · Children · Bloomington IA</a></h2>
               <p>Each card has “Includes:” above the page names. The names are a plain list.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b10/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b10/#/</a>
             </li>
             <li>
-              <h2>B10 · Children + Grandchildren · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b10-gc/#/" target="_blank" rel="noopener">B10 · Children + Grandchildren · Bloomington IA</a></h2>
               <p>Same as B10. The side menu also lists the pages under each child, as plain links with no icons.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b10-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b10-gc/#/</a>
             </li>
           </ul>
         </div>
@@ -344,14 +336,12 @@
           <h3 class="pair-title" id="pair-b11">B11</h3>
           <ul class="prototype-list">
             <li>
-              <h2>B11 · Children · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b11/#/" target="_blank" rel="noopener">B11 · Children · Bloomington IA</a></h2>
               <p>Same as B10, without “Includes:”. The page names in each card are a bulleted list.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b11/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b11/#/</a>
             </li>
             <li>
-              <h2>B11 · Children + Grandchildren · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b11-gc/#/" target="_blank" rel="noopener">B11 · Children + Grandchildren · Bloomington IA</a></h2>
               <p>Same as B11. The side menu also lists the pages under each child, as plain links with no icons.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b11-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b11-gc/#/</a>
             </li>
           </ul>
         </div>
@@ -359,14 +349,12 @@
           <h3 class="pair-title" id="pair-b12">B12</h3>
           <ul class="prototype-list">
             <li>
-              <h2>B12 · Children · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b12/#/" target="_blank" rel="noopener">B12 · Children · Bloomington IA</a></h2>
               <p>Same as B10, without “Includes:”. The page names in each card are a plain list.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b12/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b12/#/</a>
             </li>
             <li>
-              <h2>B12 · Children + Grandchildren · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b12-gc/#/" target="_blank" rel="noopener">B12 · Children + Grandchildren · Bloomington IA</a></h2>
               <p>Same as B12. The side menu also lists the pages under each child, as plain links with no icons.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b12-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b12-gc/#/</a>
             </li>
           </ul>
         </div>
@@ -374,14 +362,12 @@
           <h3 class="pair-title" id="pair-b13">B13</h3>
           <ul class="prototype-list">
             <li>
-              <h2>B13 · Children · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b13/#/" target="_blank" rel="noopener">B13 · Children · Bloomington IA</a></h2>
               <p>No cards. Every page in the menu is a link. Tab moves between headings. Arrow keys move through the pages under a heading.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b13/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b13/#/</a>
             </li>
             <li>
-              <h2>B13 · Children + Grandchildren · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b13-gc/#/" target="_blank" rel="noopener">B13 · Children + Grandchildren · Bloomington IA</a></h2>
               <p>Same as B13. The side menu also lists the pages under each child, as plain links with no icons.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b13-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/b13-gc/#/</a>
             </li>
           </ul>
         </div>
@@ -393,14 +379,12 @@
           <h3 class="pair-title" id="pair-c1">C1</h3>
           <ul class="prototype-list">
             <li>
-              <h2>C1 · Children · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/c1/#/" target="_blank" rel="noopener">C1 · Children · Bloomington IA</a></h2>
               <p>No cards. Every page in the menu is a link, sorted by how many pages are under it.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/c1/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/c1/#/</a>
             </li>
             <li>
-              <h2>C1 · Children + Grandchildren · Bloomington IA</h2>
+              <h2><a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/c1-gc/#/" target="_blank" rel="noopener">C1 · Children + Grandchildren · Bloomington IA</a></h2>
               <p>Same as C1. The side menu also lists the pages under each child, as plain links with no icons.</p>
-              <a href="https://manselldesign.github.io/prototype-hub/v1.3-bloomington/c1-gc/#/" target="_blank" rel="noopener">https://manselldesign.github.io/prototype-hub/v1.3-bloomington/c1-gc/#/</a>
             </li>
           </ul>
         </div>
